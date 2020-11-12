@@ -19,6 +19,9 @@
 #include <iostream>
 #include <string>
 #include <stdio.h>
+#include <armadillo>
+
+#include <fstream>
 
 #include <wx/string.h>
 #include <wx/textfile.h>
@@ -28,6 +31,7 @@
 #include <wx/intl.h>
 #include <wx/settings.h>
 
+#define SQUARE(val) val * val
 
 using std::cout;
 using std::cin;
@@ -124,9 +128,9 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
   Button2 = new wxButton(SashWindow1, ID_BUTTON2, _("Загрузить"), wxPoint(258,16), wxSize(127,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
   Notebook1 = new wxNotebook(SashWindow1, ID_NOTEBOOK1, wxPoint(124,214), wxDefaultSize, 0, _T("ID_NOTEBOOK1"));
   Button1 = new wxButton(SashWindow1, ID_BUTTON1, _("Label"), wxPoint(293,216), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
-  TextCtrlH = new wxTextCtrl(SashWindow1, ID_TEXTCTRL1, _("Введите h"), wxPoint(302,95), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
-  TextCtrlB = new wxTextCtrl(SashWindow1, ID_TEXTCTRL2, _("Введите B"), wxPoint(300,131), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
-  TextCtrlL = new wxTextCtrl(SashWindow1, ID_TEXTCTRL3, _("Введите L"), wxPoint(300,172), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL3"));
+  TextCtrlH = new wxTextCtrl(SashWindow1, ID_TEXTCTRL1, _("200"), wxPoint(302,95), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
+  TextCtrlB = new wxTextCtrl(SashWindow1, ID_TEXTCTRL2, _("55.716367"), wxPoint(300,131), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
+  TextCtrlL = new wxTextCtrl(SashWindow1, ID_TEXTCTRL3, _("37.554003"), wxPoint(300,172), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL3"));
   TextCtrlTEST1 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL4, wxEmptyString, wxPoint(316,308), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL4"));
   SashWindow1->SetSashVisible(wxSASH_TOP,    true);
   SashWindow1->SetSashVisible(wxSASH_BOTTOM, true);
@@ -266,11 +270,13 @@ for (k=0; k<max_sats; k++ )
     Grid->SetCellValue((k), 0,  wxString::Format("%.3f", SISerr[k].SISRE));
     Grid->SetCellValue((k), 1,  wxString::Format("%.3f", SISerr[k].SISVE));
   }
-for (k=0; k<max_sats; k++ )
+  // обнуление функц.
+/*for (k=0; k<max_sats; k++ )
   {
      SISerr[k].SISRE=0;
     SISerr[k].SISVE=0;
   }
+  */
 }
 
 
@@ -291,16 +297,16 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
 {
 //wxString s;
 double h;
-double Brad;
-double Lrad;
+double Bgrad;
+double Lgrad;
 TextCtrlH->GetValue().ToDouble(&h);
-TextCtrlB->GetValue().ToDouble(&Brad);
-TextCtrlL->GetValue().ToDouble(&Lrad);
+TextCtrlB->GetValue().ToDouble(&Bgrad);
+TextCtrlL->GetValue().ToDouble(&Lgrad);
 double PI = M_PI;
 double B; //Latitude
 double L; //Longitude
-B=Brad*PI/180;
-L=Lrad*PI/180;
+B=Bgrad*PI/180;
+L=Lgrad*PI/180;
 double N;
 double e=0;
 double a=6378136; // радиус З
@@ -313,16 +319,151 @@ double Coord_z;
 Coord_x = (N+h)*cos(B)*cos(L);
 Coord_y = (N+h)*cos(B)*sin(L);
 Coord_z = ((1-e*e)*N+h)*sin(B);
+double Coord_user[3];
+Coord_user[0]=Coord_x;
+Coord_user[1]= Coord_y;
+Coord_user[2]= Coord_z;
+
+double Coord_sput[3];
+double alpha;
+//GlonassCoordinates Coord_sp = ephemerids(5,1);
+
+using namespace std;
+setlocale(LC_ALL, "RUS");
+ofstream f;
+f.open("angle.txt", ios::out);
+
+f<< "Coord user"<<" x = "<< Coord_x <<"\t"<< "y = "<< Coord_y<<"\t" << "z = "<< Coord_z<<"\n";
+/*
+int vsb = 0 ;
+int sumvsb = 0;
+for (int i=1; i<=24; i++)
+{ = dy/Ri;
+H(2, numsput) = dz/Ri;
+H(3, numsput) = 1;
+
+  f<<"Hn["<<numsput<<"] = "<<H(0, numsput)<< "\t"<< H(1, numsput)<< "\t"<< H(2, numsput) << "\t"<<H(3 , numsput) <<"\n";
+}
+mat Dn1(24,24);
+Dn1 = inv (Dn,-1);
+for (int z=0; z<=23; z++)
+{
+   f<<"Dn^-1["<<z<<"] = "<< Dn1(z,z)<<"\n";
+}
 // Получение коорд спутников
-GlonassCoordinates myCoord = ephemerids(5,10);
-// Получние угла
+GlonassCoordinates Coord_sp = ephemerids(i,10000);
 
-//double angle(double xsput, double ysput, double zsput,double Coord_x,double Coord_y, double Coord_z, double B, double L)
 
-// p = angle(
+Coord_user[0]=a;
+Coord_user[1]=0;
+Coord_user[2]=0;
 
-double alpha = angle(myCoord.X, myCoord.Y, myCoord.Z, Coord_x, Coord_y, Coord_z, B, L); // в радианах
+Coord_sput[0] = a;
+Coord_sput[1] = a;
+Coord_sput[2] = 0;
 
+// Определение угла
+alpha = 90 - (angle(Coord_sput, Coord_user, B, L)*180/PI);
+// определение видимости спутника
+if (abs(alpha) >5)
+  {
+    vsb = 1;
+  }
+  else
+  {
+    vsb = 0;
+  }
+sumvsb = sumvsb+ vsb;
+// вывод  в txt
+f<<"N="<<i<< "\t alpha = " <<alpha<< "\t"<< vsb <<"\t"<< "[ " <<Coord_sp.X<<" ; "<<Coord_sp.Y<<" ; "<<Coord_sp.Z<<" ]"<<"\n";
+}
+f<<"number of visible spt = "<< sumvsb;
+f.close();
+
+*/
+
+int vsb = 0 ;
+int sumvsb = 0;
+for (int i=1; i<=24; i++)
+{
+// Получение коорд спутников
+GlonassCoordinates Coord_sp = ephemerids(i,10000);
+Coord_sput[0] = Coord_sp.X;
+Coord_sput[1] = Coord_sp.Y;
+Coord_sput[2] = Coord_sp.Z;
+// Определение угла
+alpha = 90 - (angle(Coord_sput, Coord_user, B, L)*180/PI);
+// определение видимости спутника
+if ((alpha) >5)
+  {
+    vsb = 1;
+  }
+  else
+  {
+    vsb = 0;
+  }
+sumvsb = sumvsb+ vsb;
+// вывод  в txt
+f<<"N="<<i<< "\t alpha = " <<alpha<< "\t"<< vsb <<"\t"<< "[ " <<Coord_sp.X<<" ; "<<Coord_sp.Y<<" ; "<<Coord_sp.Z<<" ]"<<"\n";
+}
+
+f<<"number of visible spt = "<< sumvsb<<"\n";
+
+using namespace std;
+using namespace arma;
+
+  int inum = 24;
+  mat Dn(inum, inum);
+  Dn.zeros();
+  for (int k=0; k<=23; k++)
+  {
+  Dn(k,k) = SISerr[k].SISRE;
+  f<<"Dn["<<k<<"] = "<< Dn(k,k)<<"\n";
+  }
+
+
+double dx;
+double dy;
+double dz;
+double Ri;
+// начало цикла
+
+mat H(4, inum);
+H.zeros();
+
+for (int numsput=0; numsput<=23; numsput++)
+{
+GlonassCoordinates Coord_sp = ephemerids((numsput+1),10000);
+  dx=(Coord_sp.X-Coord_x);
+  dy=(Coord_sp.Y-Coord_y);
+  dz=(Coord_sp.Z- Coord_z);
+ // Ri = sqrt (SQUARE(dx)+SQUARE(dy)+SQUARE(dz));
+Ri = sqrt (pow(dx,2)+pow(dy,2)+pow(dz,2));
+H(0, numsput) = dx/Ri;
+H(1, numsput) = dy/Ri;
+H(2, numsput) = dz/Ri;
+H(3, numsput) = 1;
+
+  f<<"Hn["<<numsput<<"] = "<<H(0, numsput)<< "\t"<< H(1, numsput)<< "\t"<< H(2, numsput) << "\t"<<H(3 , numsput) <<"\n";
+}
+mat Dn1;
+Dn1 = inv (Dn);
+for (int z=0; z<=23; z++)
+{
+   f<<"Dn^-1["<<z<<"] = "<< Dn1(z,z)<<"\n";
+}
+
+mat sko ; // должна получиться матрица 24x24
+sko = Dn1*H;
+for (int zz= 0; zz<=23; zz++)
+{
+   f<<"SKO["<<zz<<"] = "<<sko(0, zz)<< "\t"<< sko(1, zz)<< "\t"<< sko(2, zz) << "\t"<<sko(3 , zz) <<"\n";
+}
+
+
+ f.close();
+
+ /*
 wxString FoobarX;
 FoobarX.Printf("Coord_x=%f", Coord_x);
 wxMessageBox(FoobarX);
@@ -335,10 +476,11 @@ wxString FoobarZ;
 FoobarZ.Printf("Coord_z=%f", Coord_z);
 wxMessageBox(FoobarZ);
 
+
 wxString Foobaralpha;
 Foobaralpha.Printf("угол %f", alpha);
 wxMessageBox(Foobaralpha);
-
+*/
 //std::cout << "My X = " << myCoord.x;
 //double Zy=5;
 //TextCtrlTEST1->SetValue(&Zy);

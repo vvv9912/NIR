@@ -147,7 +147,7 @@ double r = p/(1+e*cos(TETTA));
 Coordinates.X = r*(((cos(TETTA+Tsat))*(cos(OMEGA+Tear)))-((sin(TETTA+Tsat))*(sin(OMEGA+Tear)*ci)));
 Coordinates.Y = r*(cos(TETTA+Tsat)*sin(OMEGA+Tear)+sin(TETTA+Tsat)*cos(OMEGA+Tear)*ci);
 Coordinates.Z = r*(sin(TETTA+Tsat))*si;
-wxString FoobarX;
+/*wxString FoobarX;
 FoobarX.Printf("X=%f", Coordinates.X);
 wxMessageBox(FoobarX);
 
@@ -158,6 +158,6 @@ wxMessageBox(FoobarY);
 wxString FoobarZ;
 FoobarZ.Printf("Z=%f", Coordinates.Z);
 wxMessageBox(FoobarZ);
-
+*/
   return Coordinates;
 }

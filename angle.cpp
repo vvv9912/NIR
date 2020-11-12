@@ -4,7 +4,9 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-double angle(double xsput, double ysput, double zsput,double Coord_x,double Coord_y, double Coord_z, double B, double L)
+#define SQUARE(val) val * val
+
+double angle(double Coord_sput[3],double Coord[3], double B, double L)
 {
   double ES[3];
   double Renu[3];
@@ -12,12 +14,13 @@ double angle(double xsput, double ysput, double zsput,double Coord_x,double Coor
   double lengthES;
   double C[9];
   double a;
-  ES[0]=(xsput-Coord_x);
-  ES[1]=(ysput-Coord_y);
-  ES[2]=(zsput-Coord_z);
 
-  lengthES =  sqrt (pow((xsput-Coord_x),2)+pow((ysput-Coord_y),2)+pow((zsput-Coord_z),2));
+  ES[0]=(Coord_sput[0]-Coord[0]);
+  ES[1]=(Coord_sput[1]-Coord[1]);
+  ES[2]=(Coord_sput[2]- Coord[2]);
 
+  lengthES =  sqrt (pow((Coord_sput[0]- Coord[0]),2)+pow((Coord_sput[1]-Coord[1]),2)+pow((Coord_sput[2]- Coord[2]),2));
+//lengthES =  sqrt (SQUARE(Coord_sput[0]- Coord[0])+SQUARE(Coord_sput[1]-Coord[1])+SQUARE(Coord_sput[2]- Coord[2]));
   R[0]= ES[0]/lengthES; // вектор столбец
   R[1]= ES[1]/lengthES;
   R[2]= ES[2]/lengthES;
@@ -28,6 +31,6 @@ double angle(double xsput, double ysput, double zsput,double Coord_x,double Coor
   Renu[1]=C[3]*R[0]+C[4]*R[1]+C[5]*R[2];
   Renu[2]=C[6]*R[0]+C[7]*R[1]+C[8]*R[2];
 
-  a = acos (Renu[3]);
+  a = acos (Renu[2]); // rad
   return  a;
 }

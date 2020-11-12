@@ -36,16 +36,16 @@
 				<handler function="OnButton1Click1" entry="EVT_BUTTON" />
 			</object>
 			<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="TextCtrlH" member="yes">
-				<value>Введите h</value>
+				<value>200</value>
 				<pos>302,95</pos>
 				<handler function="OnTextCtrl1Text1" entry="EVT_TEXT" />
 			</object>
 			<object class="wxTextCtrl" name="ID_TEXTCTRL2" variable="TextCtrlB" member="yes">
-				<value>Введите B</value>
+				<value>55.716367</value>
 				<pos>300,131</pos>
 			</object>
 			<object class="wxTextCtrl" name="ID_TEXTCTRL3" variable="TextCtrlL" member="yes">
-				<value>Введите L</value>
+				<value>37.554003</value>
 				<pos>300,172</pos>
 			</object>
 			<object class="wxTextCtrl" name="ID_TEXTCTRL4" variable="TextCtrlTEST1" member="yes">

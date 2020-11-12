@@ -52,6 +52,7 @@ class dataDialog: public wxDialog
         void OnRichTextCtrl1Text(wxCommandEvent& event);
         void OnSpinCtrl1Change(wxSpinEvent& event);
         void OnCustom1Paint(wxPaintEvent& event);
+        void OnTextCtrlLText(wxCommandEvent& event);
         //*)
 
 
