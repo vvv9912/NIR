@@ -411,16 +411,53 @@ f<<"number of visible spt = "<< sumvsb<<"\n";
 
 using namespace std;
 using namespace arma;
+int inum = 24;
+/*
+ mat Dn(inum, inum);
+  //Dn.zeros(); // из-за этой строчки не работала функция inv
 
-  int inum = 24;
-  mat Dn(inum, inum);
-  Dn.zeros();
+  //mat Dn;
+  //Dn.zeros(inum, inum);
+
   for (int k=0; k<=23; k++)
   {
   Dn(k,k) = SISerr[k].SISRE;
-  f<<"Dn["<<k<<"] = "<< Dn(k,k)<<"\n";
+  }
+  */
+ // Test
+ //  mat Dn(inum, inum, fill::randu);
+
+  mat Dn2;
+  Dn2.zeros(inum, inum);
+ for (int i=0 ; i<inum; i++)
+ {
+   Dn2(i, i) = 1+i;
+ }
+
+Dn2(5,5) = 0; Dn2(10,10)= 0;
+f<< "Dn \n"<< Dn<<"\n";
+  //
+  mat Dn2 =  Dn;
+  mat Dntest;
+  Dntest.zeros(inum, inum);
+  Dntest(1,1) = Dn2(1,1);
+  for (int i=1 ; i<inum; i++)
+  {
+      if (Dn2(i,i) == 0)
+      {
+        Dntest(i,i) = Dn2(i+1, i+1);
+        Dn2(i+1,i+1)=0;
+      }
+      else
+      {
+        Dntest(i,i)= Dn2(i,i);
+      }
   }
 
+
+f<< "Dn \n"<< Dn<<"\n";
+f<< "Dn2 \n"<< Dn2<<"\n";
+f<< "Dntest \n"<< Dntest<<"\n";
 
 double dx;
 double dy;
@@ -428,7 +465,7 @@ double dz;
 double Ri;
 // начало цикла
 
-mat H(4, inum);
+mat H(inum, 4);
 H.zeros();
 
 for (int numsput=0; numsput<=23; numsput++)
@@ -439,28 +476,24 @@ GlonassCoordinates Coord_sp = ephemerids((numsput+1),10000);
   dz=(Coord_sp.Z- Coord_z);
  // Ri = sqrt (SQUARE(dx)+SQUARE(dy)+SQUARE(dz));
 Ri = sqrt (pow(dx,2)+pow(dy,2)+pow(dz,2));
-H(0, numsput) = dx/Ri;
-H(1, numsput) = dy/Ri;
-H(2, numsput) = dz/Ri;
-H(3, numsput) = 1;
-
-  f<<"Hn["<<numsput<<"] = "<<H(0, numsput)<< "\t"<< H(1, numsput)<< "\t"<< H(2, numsput) << "\t"<<H(3 , numsput) <<"\n";
+H(numsput,0 ) = dx/Ri;
+H(numsput, 1) = dy/Ri;
+H(numsput, 2) = dz/Ri;
+H(numsput, 3) = 1;
 }
-mat Dn1;
-Dn1 = inv (Dn);
-for (int z=0; z<=23; z++)
-{
-   f<<"Dn^-1["<<z<<"] = "<< Dn1(z,z)<<"\n";
-}
+f<<"H \n" <<H<<"\n";
+// матрица Dn - квадратная : Sisre 0 0 0... ; 0 Sisre 0 0 ...; 0 0 Sisre 0...
+/*mat A(5, 5, fill::randu);
+mat CC = inv(A);
+*/
+/*
+mat Dn1 = inv(Dn);
 
-mat sko ; // должна получиться матрица 24x24
-sko = Dn1*H;
-for (int zz= 0; zz<=23; zz++)
-{
-   f<<"SKO["<<zz<<"] = "<<sko(0, zz)<< "\t"<< sko(1, zz)<< "\t"<< sko(2, zz) << "\t"<<sko(3 , zz) <<"\n";
-}
+f<<"Dn1 \n" <<Dn1<<"\n";
 
-
+mat sko = Dn1*H;
+f<<"Sko \n" <<sko<<"\n";
+*/
  f.close();
 
  /*

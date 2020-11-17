@@ -1,0 +1,15 @@
+
+angle.txt
+angle_od.txt
+bin/Debug/Data.exe
+data.depend
+data.layout
+desktop.ini
+MERMS-RSC_C.ete
+obj/Debug/angle.o
+obj/Debug/dataApp.o
+obj/Debug/dataMain.o
+obj/Debug/ephemerids.o
+obj/Debug/parser.o
+obj/Debug/resource.res
+obj/Debug/xyz2enu.o
