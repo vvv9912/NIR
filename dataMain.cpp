@@ -36,6 +36,9 @@
 using std::cout;
 using std::cin;
 using std::endl;
+using namespace std;
+using namespace arma;
+
 
 
 //(*InternalHeaders(dataDialog)
@@ -384,6 +387,8 @@ f.close();
 
 int vsb = 0 ;
 int sumvsb = 0;
+vector<int> Visibles;
+
 for (int i=1; i<=24; i++)
 {
 // Получение коорд спутников
@@ -394,40 +399,37 @@ Coord_sput[2] = Coord_sp.Z;
 // Определение угла
 alpha = 90 - (angle(Coord_sput, Coord_user, B, L)*180/PI);
 // определение видимости спутника
+
 if ((alpha) >5)
   {
-    vsb = 1;
+    sumvsb++;
+    Visibles.push_back(i);
   }
-  else
-  {
-    vsb = 0;
-  }
-sumvsb = sumvsb+ vsb;
+
 // вывод  в txt
 f<<"N="<<i<< "\t alpha = " <<alpha<< "\t"<< vsb <<"\t"<< "[ " <<Coord_sp.X<<" ; "<<Coord_sp.Y<<" ; "<<Coord_sp.Z<<" ]"<<"\n";
 }
 
 f<<"number of visible spt = "<< sumvsb<<"\n";
+f<<"number of visible spt = "<< Visibles.size() <<"\n";
 
-using namespace std;
-using namespace arma;
 int inum = 24;
-/*
- mat Dn(inum, inum);
+
+// mat Dn(inum, inum);
   //Dn.zeros(); // из-за этой строчки не работала функция inv
 
-  //mat Dn;
-  //Dn.zeros(inum, inum);
+  mat Dn;
+  Dn.zeros(inum, inum);
 
   for (int k=0; k<=23; k++)
   {
   Dn(k,k) = SISerr[k].SISRE;
   }
-  */
+
  // Test
  //  mat Dn(inum, inum, fill::randu);
 
-  mat Dn2;
+  /*mat Dn2;
   Dn2.zeros(inum, inum);
  for (int i=0 ; i<inum; i++)
  {
@@ -436,9 +438,9 @@ int inum = 24;
 
 Dn2(5,5) = 0; Dn2(10,10)= 0;
 f<< "Dn \n"<< Dn<<"\n";
-  //
+*/
   mat Dn2 =  Dn;
-  mat Dntest;
+/*  mat Dntest;
   Dntest.zeros(inum, inum);
   Dntest(1,1) = Dn2(1,1);
   for (int i=1 ; i<inum; i++)
@@ -453,11 +455,11 @@ f<< "Dn \n"<< Dn<<"\n";
         Dntest(i,i)= Dn2(i,i);
       }
   }
-
+*/
 
 f<< "Dn \n"<< Dn<<"\n";
 f<< "Dn2 \n"<< Dn2<<"\n";
-f<< "Dntest \n"<< Dntest<<"\n";
+//f<< "Dntest \n"<< Dntest<<"\n";
 
 double dx;
 double dy;
