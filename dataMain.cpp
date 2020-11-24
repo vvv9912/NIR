@@ -40,6 +40,7 @@ using namespace std;
 using namespace arma;
 
 
+//int numberSput;
 
 //(*InternalHeaders(dataDialog)
 #include <wx/intl.h>
@@ -273,13 +274,14 @@ for (k=0; k<max_sats; k++ )
     Grid->SetCellValue((k), 0,  wxString::Format("%.3f", SISerr[k].SISRE));
     Grid->SetCellValue((k), 1,  wxString::Format("%.3f", SISerr[k].SISVE));
   }
+//numberSput  = max_sats;
   // обнуление функц.
 /*for (k=0; k<max_sats; k++ )
   {
      SISerr[k].SISRE=0;
     SISerr[k].SISVE=0;
   }
-  */
+*/
 }
 
 
@@ -337,59 +339,16 @@ ofstream f;
 f.open("angle.txt", ios::out);
 
 f<< "Coord user"<<" x = "<< Coord_x <<"\t"<< "y = "<< Coord_y<<"\t" << "z = "<< Coord_z<<"\n";
-/*
-int vsb = 0 ;
+
+// Расчет матрицы Dn, Hn, SKO
+
+//int numberSput;
+int numberSput = 24;
+int vsb[numberSput] ;
 int sumvsb = 0;
-for (int i=1; i<=24; i++)
-{ = dy/Ri;
-H(2, numsput) = dz/Ri;
-H(3, numsput) = 1;
+vector<int> Visibles; //вектор из кол-во элементов - visibles
 
-  f<<"Hn["<<numsput<<"] = "<<H(0, numsput)<< "\t"<< H(1, numsput)<< "\t"<< H(2, numsput) << "\t"<<H(3 , numsput) <<"\n";
-}
-mat Dn1(24,24);
-Dn1 = inv (Dn,-1);
-for (int z=0; z<=23; z++)
-{
-   f<<"Dn^-1["<<z<<"] = "<< Dn1(z,z)<<"\n";
-}
-// Получение коорд спутников
-GlonassCoordinates Coord_sp = ephemerids(i,10000);
-
-
-Coord_user[0]=a;
-Coord_user[1]=0;
-Coord_user[2]=0;
-
-Coord_sput[0] = a;
-Coord_sput[1] = a;
-Coord_sput[2] = 0;
-
-// Определение угла
-alpha = 90 - (angle(Coord_sput, Coord_user, B, L)*180/PI);
-// определение видимости спутника
-if (abs(alpha) >5)
-  {
-    vsb = 1;
-  }
-  else
-  {
-    vsb = 0;
-  }
-sumvsb = sumvsb+ vsb;
-// вывод  в txt
-f<<"N="<<i<< "\t alpha = " <<alpha<< "\t"<< vsb <<"\t"<< "[ " <<Coord_sp.X<<" ; "<<Coord_sp.Y<<" ; "<<Coord_sp.Z<<" ]"<<"\n";
-}
-f<<"number of visible spt = "<< sumvsb;
-f.close();
-
-*/
-
-int vsb = 0 ;
-int sumvsb = 0;
-vector<int> Visibles;
-
-for (int i=1; i<=24; i++)
+for (int i=1; i<=numberSput; i++)
 {
 // Получение коорд спутников
 GlonassCoordinates Coord_sp = ephemerids(i,10000);
@@ -399,104 +358,79 @@ Coord_sput[2] = Coord_sp.Z;
 // Определение угла
 alpha = 90 - (angle(Coord_sput, Coord_user, B, L)*180/PI);
 // определение видимости спутника
-
+vsb[i]=0;
 if ((alpha) >5)
   {
+    vsb[i]=1;
     sumvsb++;
-    Visibles.push_back(i);
+    Visibles.push_back(i);  // добавление элемента в конец вектора
+
   }
 
 // вывод  в txt
-f<<"N="<<i<< "\t alpha = " <<alpha<< "\t"<< vsb <<"\t"<< "[ " <<Coord_sp.X<<" ; "<<Coord_sp.Y<<" ; "<<Coord_sp.Z<<" ]"<<"\n";
+f<<"N="<<i<< "\t alpha = " <<alpha<< "\t"<< vsb[i] <<"\t"<< "[ " <<Coord_sp.X<<" ; "<<Coord_sp.Y<<" ; "<<Coord_sp.Z<<" ]"<<"\n";
 }
-
+f<<" numberSput = "<<  numberSput<<"\n";
 f<<"number of visible spt = "<< sumvsb<<"\n";
 f<<"number of visible spt = "<< Visibles.size() <<"\n";
 
-int inum = 24;
-
-// mat Dn(inum, inum);
-  //Dn.zeros(); // из-за этой строчки не работала функция inv
 
   mat Dn;
-  Dn.zeros(inum, inum);
-
-  for (int k=0; k<=23; k++)
+  Dn.zeros(sumvsb, sumvsb);
+int i = 0;
+  for (int k=1; k<=numberSput; k++)
   {
-  Dn(k,k) = SISerr[k].SISRE;
+   if ((vsb[k]) == 1)
+     {
+      Dn(i,i) = SISerr[i].SISRE;
+      i++;
+     }
+
   }
-
- // Test
- //  mat Dn(inum, inum, fill::randu);
-
-  /*mat Dn2;
-  Dn2.zeros(inum, inum);
- for (int i=0 ; i<inum; i++)
- {
-   Dn2(i, i) = 1+i;
- }
-
-Dn2(5,5) = 0; Dn2(10,10)= 0;
-f<< "Dn \n"<< Dn<<"\n";
-*/
-  mat Dn2 =  Dn;
-/*  mat Dntest;
-  Dntest.zeros(inum, inum);
-  Dntest(1,1) = Dn2(1,1);
-  for (int i=1 ; i<inum; i++)
+  double max_val_Dn = Dn.max();
+for (int i= 0; i<sumvsb; i++)
+{
+  if ( Dn(i,i) == 0)
   {
-      if (Dn2(i,i) == 0)
-      {
-        Dntest(i,i) = Dn2(i+1, i+1);
-        Dn2(i+1,i+1)=0;
-      }
-      else
-      {
-        Dntest(i,i)= Dn2(i,i);
-      }
+    Dn(i,i) = max_val_Dn;
   }
-*/
+}
 
 f<< "Dn \n"<< Dn<<"\n";
-f<< "Dn2 \n"<< Dn2<<"\n";
-//f<< "Dntest \n"<< Dntest<<"\n";
 
 double dx;
 double dy;
 double dz;
 double Ri;
-// начало цикла
 
-mat H(inum, 4);
+mat H(sumvsb, 4);
 H.zeros();
 
-for (int numsput=0; numsput<=23; numsput++)
+int numsput = 0;
+
+for (int k=1; k<=numberSput; k++)
 {
-GlonassCoordinates Coord_sp = ephemerids((numsput+1),10000);
-  dx=(Coord_sp.X-Coord_x);
-  dy=(Coord_sp.Y-Coord_y);
-  dz=(Coord_sp.Z- Coord_z);
+     if ((vsb[k]) == 1)
+    {
+    GlonassCoordinates Coord_sp = ephemerids((k),10000);
+    dx=(Coord_sp.X-Coord_x);
+    dy=(Coord_sp.Y-Coord_y);
+    dz=(Coord_sp.Z- Coord_z);
  // Ri = sqrt (SQUARE(dx)+SQUARE(dy)+SQUARE(dz));
-Ri = sqrt (pow(dx,2)+pow(dy,2)+pow(dz,2));
-H(numsput,0 ) = dx/Ri;
-H(numsput, 1) = dy/Ri;
-H(numsput, 2) = dz/Ri;
-H(numsput, 3) = 1;
+    Ri = sqrt (pow(dx,2)+pow(dy,2)+pow(dz,2));
+
+    H(numsput, 0 ) = dx/Ri;
+    H(numsput, 1) = dy/Ri;
+    H(numsput, 2) = dz/Ri;
+    H(numsput, 3) = 1;
+    numsput++ ;
+    }
 }
 f<<"H \n" <<H<<"\n";
 // матрица Dn - квадратная : Sisre 0 0 0... ; 0 Sisre 0 0 ...; 0 0 Sisre 0...
-/*mat A(5, 5, fill::randu);
-mat CC = inv(A);
-*/
-/*
-mat Dn1 = inv(Dn);
-
-f<<"Dn1 \n" <<Dn1<<"\n";
-
-mat sko = Dn1*H;
+mat sko =inv(Dn)*H;
 f<<"Sko \n" <<sko<<"\n";
-*/
- f.close();
+f.close();
 
  /*
 wxString FoobarX;
@@ -524,9 +458,6 @@ wxString Foobar;
 Foobar.Printf("знач спутн по Y %f", myCoord.Y);
 wxMessageBox(Foobar);
 */
-//wxMessageBox( _("This is the message."), wxT("This is the title"), wxICON_INFORMATION);
-
-
 }
 /*
 
@@ -607,7 +538,7 @@ static long unsigned int dFiTableFrame::StaticMainProcess(void* Param)
 {
   dFiTableFrame* This = (dFiTableFrame*)Param;
   This->MainProcess();
-  return 0;
+  return 0;  // обнуление функц.
 }
 
 void dFiTableFrame::OnButton1Click(wxCommandEvent& event)
