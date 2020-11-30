@@ -84,6 +84,16 @@ const long dataDialog::ID_TEXTCTRL1 = wxNewId();
 const long dataDialog::ID_TEXTCTRL2 = wxNewId();
 const long dataDialog::ID_TEXTCTRL3 = wxNewId();
 const long dataDialog::ID_TEXTCTRL4 = wxNewId();
+const long dataDialog::ID_TEXTCTRL5 = wxNewId();
+const long dataDialog::ID_TEXTCTRL6 = wxNewId();
+const long dataDialog::ID_TEXTCTRL7 = wxNewId();
+const long dataDialog::ID_STATICTEXT1 = wxNewId();
+const long dataDialog::ID_STATICTEXT2 = wxNewId();
+const long dataDialog::ID_STATICTEXT3 = wxNewId();
+const long dataDialog::ID_STATICTEXT4 = wxNewId();
+const long dataDialog::ID_STATICTEXT5 = wxNewId();
+const long dataDialog::ID_STATICTEXT6 = wxNewId();
+const long dataDialog::ID_STATICTEXT7 = wxNewId();
 const long dataDialog::ID_SASHWINDOW1 = wxNewId();
 //*)
 
@@ -121,21 +131,31 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
 {
   //(*Initialize(dataDialog)
   Create(parent, wxID_ANY, _("Data app"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
-  SetClientSize(wxSize(582,579));
-  SashWindow1 = new wxSashWindow(this, ID_SASHWINDOW1, wxPoint(56,40), wxSize(416,520), wxSW_3D|wxCLIP_CHILDREN, _T("ID_SASHWINDOW1"));
-  Choice1 = new wxChoice(SashWindow1, ID_CHOICE1, wxPoint(29,16), wxSize(193,96), 0, 0, 0, wxDefaultValidator, _T("ID_CHOICE1"));
+  SetClientSize(wxSize(502,571));
+  SashWindow1 = new wxSashWindow(this, ID_SASHWINDOW1, wxPoint(56,40), wxSize(432,520), wxSW_3D|wxCLIP_CHILDREN, _T("ID_SASHWINDOW1"));
+  Choice1 = new wxChoice(SashWindow1, ID_CHOICE1, wxPoint(33,16), wxSize(244,21), 0, 0, 0, wxDefaultValidator, _T("ID_CHOICE1"));
   Choice1->SetSelection( Choice1->Append(_("Glonass")) );
   Choice1->Append(_("GPS"));
   Choice1->Append(_("Galileo"));
   Choice1->Append(_("Beidou"));
   Choice1->Append(_("QZSS"));
-  Button2 = new wxButton(SashWindow1, ID_BUTTON2, _("Загрузить"), wxPoint(258,16), wxSize(127,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+  Button2 = new wxButton(SashWindow1, ID_BUTTON2, _("Загрузить"), wxPoint(305,16), wxSize(127,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
   Notebook1 = new wxNotebook(SashWindow1, ID_NOTEBOOK1, wxPoint(124,214), wxDefaultSize, 0, _T("ID_NOTEBOOK1"));
-  Button1 = new wxButton(SashWindow1, ID_BUTTON1, _("Label"), wxPoint(293,216), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
-  TextCtrlH = new wxTextCtrl(SashWindow1, ID_TEXTCTRL1, _("200"), wxPoint(302,95), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
-  TextCtrlB = new wxTextCtrl(SashWindow1, ID_TEXTCTRL2, _("55.716367"), wxPoint(300,131), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
-  TextCtrlL = new wxTextCtrl(SashWindow1, ID_TEXTCTRL3, _("37.554003"), wxPoint(300,172), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL3"));
-  TextCtrlTEST1 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL4, wxEmptyString, wxPoint(316,308), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL4"));
+  Down = new wxButton(SashWindow1, ID_BUTTON1, _("Обработка "), wxPoint(305,216), wxSize(127,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+  TextCtrlH = new wxTextCtrl(SashWindow1, ID_TEXTCTRL1, _("200"), wxPoint(305,95), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
+  TextCtrlB = new wxTextCtrl(SashWindow1, ID_TEXTCTRL2, _("55.716367"), wxPoint(305,140), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
+  TextCtrlL = new wxTextCtrl(SashWindow1, ID_TEXTCTRL3, _("37.554003"), wxPoint(305,185), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL3"));
+  TextCtrlX = new wxTextCtrl(SashWindow1, ID_TEXTCTRL4, wxEmptyString, wxPoint(305,279), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL4"));
+  TextCtrlY = new wxTextCtrl(SashWindow1, ID_TEXTCTRL5, wxEmptyString, wxPoint(305,324), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL5"));
+  TextCtrlZ = new wxTextCtrl(SashWindow1, ID_TEXTCTRL6, wxEmptyString, wxPoint(305,369), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL6"));
+  TextCtrlD = new wxTextCtrl(SashWindow1, ID_TEXTCTRL7, wxEmptyString, wxPoint(305,414), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL7"));
+  StaticText1 = new wxStaticText(SashWindow1, ID_STATICTEXT1, _("Введите значение высоты:"), wxPoint(305,77), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
+  StaticText2 = new wxStaticText(SashWindow1, ID_STATICTEXT2, _("Введите значение B:"), wxPoint(305,122), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
+  StaticText3 = new wxStaticText(SashWindow1, ID_STATICTEXT3, _("Введите значение L:"), wxPoint(305,167), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
+  StaticText4 = new wxStaticText(SashWindow1, ID_STATICTEXT4, _("СКО для х:"), wxPoint(305,261), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
+  StaticText5 = new wxStaticText(SashWindow1, ID_STATICTEXT5, _("СКО для y:"), wxPoint(305,306), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
+  StaticText6 = new wxStaticText(SashWindow1, ID_STATICTEXT6, _("СКО для z:"), wxPoint(305,351), wxDefaultSize, 0, _T("ID_STATICTEXT6"));
+  StaticText7 = new wxStaticText(SashWindow1, ID_STATICTEXT7, _("СКО для Д:"), wxPoint(305,396), wxDefaultSize, 0, _T("ID_STATICTEXT7"));
   SashWindow1->SetSashVisible(wxSASH_TOP,    true);
   SashWindow1->SetSashVisible(wxSASH_BOTTOM, true);
   SashWindow1->SetSashVisible(wxSASH_LEFT,   true);
@@ -428,10 +448,27 @@ for (int k=1; k<=numberSput; k++)
 }
 f<<"H \n" <<H<<"\n";
 // матрица Dn - квадратная : Sisre 0 0 0... ; 0 Sisre 0 0 ...; 0 0 Sisre 0...
-mat sko =inv(Dn)*H;
+//mat sko =inv(Dn)*H;
+mat Htr = H.t();
+mat sko = (inv(Htr*inv(Dn)*H)).t();
 f<<"Sko \n" <<sko<<"\n";
 f.close();
-
+ostream streamX(TextCtrlX);
+ostream streamY(TextCtrlY);
+ostream streamZ(TextCtrlZ);
+ostream streamD(TextCtrlD);
+//setlocale(LC_ALL,"Russian");
+// sigma = \u03C3
+//streamX << "sigma x = "<< sko(0,0)<< "\n"; %"%.3f"
+streamX << "sigma x = "<< sko(0,0);
+streamY << "sigma y = "<< sko(1,1);
+streamZ << "sigma z = "<< sko(2,2);
+streamD << "sigma D = "<< sko(3,3);
+//stream << 123.456 << " some text\n";
+streamX.flush();
+streamY.flush();
+streamZ.flush();
+streamD.flush();
  /*
 wxString FoobarX;
 FoobarX.Printf("Coord_x=%f", Coord_x);
@@ -547,7 +584,6 @@ void dFiTableFrame::OnButton1Click(wxCommandEvent& event)
 }
 
 */
-
 
 
 

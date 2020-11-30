@@ -2,12 +2,12 @@
 <wxsmith>
 	<object class="wxDialog" name="dataDialog">
 		<title>Data app</title>
-		<size>582,579</size>
+		<size>502,571</size>
 		<id_arg>0</id_arg>
 		<handler function="OnInit" entry="EVT_INIT_DIALOG" />
 		<object class="wxSashWindow" name="ID_SASHWINDOW1" variable="SashWindow1" member="yes">
 			<pos>56,40</pos>
-			<size>416,520</size>
+			<size>432,520</size>
 			<handler function="OnSashWindow1SashDragged" entry="EVT_SASH_DRAGGED" />
 			<object class="wxChoice" name="ID_CHOICE1" variable="Choice1" member="yes">
 				<content>
@@ -18,38 +18,83 @@
 					<item>QZSS</item>
 				</content>
 				<selection>0</selection>
-				<pos>29,16</pos>
-				<size>193,96</size>
+				<pos>33,16</pos>
+				<size>244,21</size>
 			</object>
 			<object class="wxButton" name="ID_BUTTON2" variable="Button2" member="yes">
 				<label>Загрузить</label>
-				<pos>258,16</pos>
+				<pos>305,16</pos>
 				<size>127,23</size>
 				<handler function="OnButton2Click" entry="EVT_BUTTON" />
 			</object>
 			<object class="wxNotebook" name="ID_NOTEBOOK1" variable="Notebook1" member="yes">
 				<pos>124,214</pos>
 			</object>
-			<object class="wxButton" name="ID_BUTTON1" variable="Button1" member="yes">
-				<label>Label</label>
-				<pos>293,216</pos>
+			<object class="wxButton" name="ID_BUTTON1" variable="Down" member="yes">
+				<label>Обработка </label>
+				<pos>305,216</pos>
+				<size>127,23</size>
 				<handler function="OnButton1Click1" entry="EVT_BUTTON" />
 			</object>
 			<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="TextCtrlH" member="yes">
 				<value>200</value>
-				<pos>302,95</pos>
+				<pos>305,95</pos>
+				<size>127,-1</size>
 				<handler function="OnTextCtrl1Text1" entry="EVT_TEXT" />
 			</object>
 			<object class="wxTextCtrl" name="ID_TEXTCTRL2" variable="TextCtrlB" member="yes">
 				<value>55.716367</value>
-				<pos>300,131</pos>
+				<pos>305,140</pos>
+				<size>127,-1</size>
 			</object>
 			<object class="wxTextCtrl" name="ID_TEXTCTRL3" variable="TextCtrlL" member="yes">
 				<value>37.554003</value>
-				<pos>300,172</pos>
+				<pos>305,185</pos>
+				<size>127,-1</size>
 			</object>
-			<object class="wxTextCtrl" name="ID_TEXTCTRL4" variable="TextCtrlTEST1" member="yes">
-				<pos>316,308</pos>
+			<object class="wxTextCtrl" name="ID_TEXTCTRL4" variable="TextCtrlX" member="yes">
+				<pos>305,279</pos>
+				<size>127,-1</size>
+			</object>
+			<object class="wxTextCtrl" name="ID_TEXTCTRL5" variable="TextCtrlY" member="yes">
+				<pos>305,324</pos>
+				<size>127,-1</size>
+			</object>
+			<object class="wxTextCtrl" name="ID_TEXTCTRL6" variable="TextCtrlZ" member="yes">
+				<pos>305,369</pos>
+				<size>127,-1</size>
+			</object>
+			<object class="wxTextCtrl" name="ID_TEXTCTRL7" variable="TextCtrlD" member="yes">
+				<pos>305,414</pos>
+				<size>127,-1</size>
+			</object>
+			<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
+				<label>Введите значение высоты:</label>
+				<pos>305,77</pos>
+			</object>
+			<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
+				<label>Введите значение B:</label>
+				<pos>305,122</pos>
+			</object>
+			<object class="wxStaticText" name="ID_STATICTEXT3" variable="StaticText3" member="yes">
+				<label>Введите значение L:</label>
+				<pos>305,167</pos>
+			</object>
+			<object class="wxStaticText" name="ID_STATICTEXT4" variable="StaticText4" member="yes">
+				<label>СКО для х:</label>
+				<pos>305,261</pos>
+			</object>
+			<object class="wxStaticText" name="ID_STATICTEXT5" variable="StaticText5" member="yes">
+				<label>СКО для y:</label>
+				<pos>305,306</pos>
+			</object>
+			<object class="wxStaticText" name="ID_STATICTEXT6" variable="StaticText6" member="yes">
+				<label>СКО для z:</label>
+				<pos>305,351</pos>
+			</object>
+			<object class="wxStaticText" name="ID_STATICTEXT7" variable="StaticText7" member="yes">
+				<label>СКО для Д:</label>
+				<pos>305,396</pos>
 			</object>
 		</object>
 	</object>
