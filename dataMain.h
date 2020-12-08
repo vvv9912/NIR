@@ -80,7 +80,7 @@ class dataDialog: public wxDialog
         static const long ID_STATICTEXT7;
         static const long ID_SASHWINDOW1;
         //*)
-
+     // static const long ID_STATICTEXT4;
         static const long ID_GRID;
         //(*Declarations(dataDialog)
         wxButton* Button2;
@@ -104,7 +104,7 @@ class dataDialog: public wxDialog
         wxTextCtrl* TextCtrlZ;
         //*)
 
-
+       // wxStaticText* StaticText4;
         wxGrid* Grid;
 
         DECLARE_EVENT_TABLE()

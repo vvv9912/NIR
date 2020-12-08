@@ -268,6 +268,7 @@ if (!down)
   wxMessageBox(_("Error"), _("Error"));
   return;
 }
+
 Gridd(file);
 }
 
@@ -280,6 +281,7 @@ if (Grid != NULL)
 {
 delete Grid;
 }
+memset(&SISerr,0, sizeof(SISerr));
 int max_sats = parse(file);
 sizeY=490;
 Grid = new wxGrid(SashWindow1, ID_GRID, wxPoint(33,72), wxSize(244,sizeY), 0, _T("ID_GRID"));
@@ -319,6 +321,16 @@ void dataDialog::OnSpinCtrl1Change(wxSpinEvent& event)
 }
 
 void dataDialog::OnButton1Click1(wxCommandEvent& event)
+{
+TextCtrlX->Clear();
+TextCtrlY->Clear();
+TextCtrlZ->Clear();
+TextCtrlD->Clear();
+ostream streamX(TextCtrlX);
+ostream streamY(TextCtrlY);
+ostream streamZ(TextCtrlZ);
+ostream streamD(TextCtrlD);
+if ((Choice1->GetString(Choice1->GetSelection()))== "Glonass")
 {
 //wxString s;
 double h;
@@ -453,18 +465,15 @@ mat Htr = H.t();
 mat sko = (inv(Htr*inv(Dn)*H)).t();
 f<<"Sko \n" <<sko<<"\n";
 f.close();
-ostream streamX(TextCtrlX);
-ostream streamY(TextCtrlY);
-ostream streamZ(TextCtrlZ);
-ostream streamD(TextCtrlD);
-//setlocale(LC_ALL,"Russian");
-// sigma = \u03C3
-//streamX << "sigma x = "<< sko(0,0)<< "\n"; %"%.3f"
-streamX << "sigma x = "<< sko(0,0);
-streamY << "sigma y = "<< sko(1,1);
-streamZ << "sigma z = "<< sko(2,2);
-streamD << "sigma D = "<< sko(3,3);
-//stream << 123.456 << " some text\n";
+streamX << wxString::Format("%.3f", sko(0,0)) ;
+streamY << wxString::Format("%.3f", sko(1,1)) ;
+streamZ << wxString::Format("%.3f", sko(2,2)) ;
+streamD << wxString::Format("%.3f", sko(3,3)) ;
+}
+else
+{
+    wxMessageBox(_("Error"), _("Error"));
+}
 streamX.flush();
 streamY.flush();
 streamZ.flush();
