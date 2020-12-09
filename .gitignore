@@ -14,3 +14,6 @@ obj/Debug/parser.o
 obj/Debug/resource.res
 obj/Debug/xyz2enu.o
 MERMS-CSC_C.ete
+MERMS-ESC_C.ete
+MERMS-GSC_C.ete
+MERMS-JSC_C.ete

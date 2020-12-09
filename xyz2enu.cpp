@@ -31,9 +31,5 @@ void xyz2enu(const double lat, const double lon, double * xyz2enu)
 	xyz2enu[7] = xyz2enu[0] * xyz2enu[5];
 
 	xyz2enu[0] = -xyz2enu[0];
-/*
-  Renu[0]=xyz2enu[0]*R[0]+xyz2enu[1]*R[1]+xyz2enu[2]*R[2];
-  Renu[1]=xyz2enu[3]*R[0]+xyz2enu[4]*R[1]+xyz2enu[5]*R[2];
-  Renu[0]=xyz2enu[6]*R[0]+xyz2enu[7]*R[1]+xyz2enu[8]*R[2];
-  */
+
 }

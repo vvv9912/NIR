@@ -20,6 +20,7 @@
 				<selection>0</selection>
 				<pos>33,16</pos>
 				<size>244,21</size>
+				<handler function="OnChoice1Select4" entry="EVT_CHOICE" />
 			</object>
 			<object class="wxButton" name="ID_BUTTON2" variable="Button2" member="yes">
 				<label>Загрузить</label>
@@ -37,18 +38,18 @@
 				<handler function="OnButton1Click1" entry="EVT_BUTTON" />
 			</object>
 			<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="TextCtrlH" member="yes">
-				<value>200</value>
+				<value>0</value>
 				<pos>305,95</pos>
 				<size>127,-1</size>
 				<handler function="OnTextCtrl1Text1" entry="EVT_TEXT" />
 			</object>
 			<object class="wxTextCtrl" name="ID_TEXTCTRL2" variable="TextCtrlB" member="yes">
-				<value>55.716367</value>
+				<value>0</value>
 				<pos>305,140</pos>
 				<size>127,-1</size>
 			</object>
 			<object class="wxTextCtrl" name="ID_TEXTCTRL3" variable="TextCtrlL" member="yes">
-				<value>37.554003</value>
+				<value>0</value>
 				<pos>305,185</pos>
 				<size>127,-1</size>
 			</object>

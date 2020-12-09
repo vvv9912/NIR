@@ -10,10 +10,9 @@ typedef struct
   char systype;
   double SISRE;
   double SISVE;
- // double imax;
 } data_t;
 
-extern data_t SISerr[75];//
+extern data_t SISerr[75];
 int parse(const char* file);
 
 

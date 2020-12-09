@@ -142,9 +142,9 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
   Button2 = new wxButton(SashWindow1, ID_BUTTON2, _("Загрузить"), wxPoint(305,16), wxSize(127,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
   Notebook1 = new wxNotebook(SashWindow1, ID_NOTEBOOK1, wxPoint(124,214), wxDefaultSize, 0, _T("ID_NOTEBOOK1"));
   Down = new wxButton(SashWindow1, ID_BUTTON1, _("Обработка "), wxPoint(305,216), wxSize(127,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
-  TextCtrlH = new wxTextCtrl(SashWindow1, ID_TEXTCTRL1, _("200"), wxPoint(305,95), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
-  TextCtrlB = new wxTextCtrl(SashWindow1, ID_TEXTCTRL2, _("55.716367"), wxPoint(305,140), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
-  TextCtrlL = new wxTextCtrl(SashWindow1, ID_TEXTCTRL3, _("37.554003"), wxPoint(305,185), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL3"));
+  TextCtrlH = new wxTextCtrl(SashWindow1, ID_TEXTCTRL1, _(""), wxPoint(305,95), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
+  TextCtrlB = new wxTextCtrl(SashWindow1, ID_TEXTCTRL2, _(""), wxPoint(305,140), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
+  TextCtrlL = new wxTextCtrl(SashWindow1, ID_TEXTCTRL3, _(""), wxPoint(305,185), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL3"));
   TextCtrlX = new wxTextCtrl(SashWindow1, ID_TEXTCTRL4, wxEmptyString, wxPoint(305,279), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL4"));
   TextCtrlY = new wxTextCtrl(SashWindow1, ID_TEXTCTRL5, wxEmptyString, wxPoint(305,324), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL5"));
   TextCtrlZ = new wxTextCtrl(SashWindow1, ID_TEXTCTRL6, wxEmptyString, wxPoint(305,369), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL6"));
@@ -367,10 +367,10 @@ double alpha;
 
 using namespace std;
 setlocale(LC_ALL, "RUS");
-ofstream f;
-f.open("angle.txt", ios::out);
 
-f<< "Coord user"<<" x = "<< Coord_x <<"\t"<< "y = "<< Coord_y<<"\t" << "z = "<< Coord_z<<"\n";
+
+
+
 
 // Расчет матрицы Dn, Hn, SKO
 
@@ -399,17 +399,13 @@ if ((alpha) >5)
 
   }
 
-// вывод  в txt
-f<<"N="<<i<< "\t alpha = " <<alpha<< "\t"<< vsb[i] <<"\t"<< "[ " <<Coord_sp.X<<" ; "<<Coord_sp.Y<<" ; "<<Coord_sp.Z<<" ]"<<"\n";
+
 }
-f<<" numberSput = "<<  numberSput<<"\n";
-f<<"number of visible spt = "<< sumvsb<<"\n";
-f<<"number of visible spt = "<< Visibles.size() <<"\n";
 
 
+int i = 0;
   mat Dn;
   Dn.zeros(sumvsb, sumvsb);
-int i = 0;
   for (int k=1; k<=numberSput; k++)
   {
    if ((vsb[k]) == 1)
@@ -428,7 +424,7 @@ for (int i= 0; i<sumvsb; i++)
   }
 }
 
-f<< "Dn \n"<< Dn<<"\n";
+
 
 double dx;
 double dy;
@@ -458,13 +454,13 @@ for (int k=1; k<=numberSput; k++)
     numsput++ ;
     }
 }
-f<<"H \n" <<H<<"\n";
+
 // матрица Dn - квадратная : Sisre 0 0 0... ; 0 Sisre 0 0 ...; 0 0 Sisre 0...
 //mat sko =inv(Dn)*H;
 mat Htr = H.t();
 mat sko = (inv(Htr*inv(Dn)*H)).t();
-f<<"Sko \n" <<sko<<"\n";
-f.close();
+
+
 streamX << wxString::Format("%.3f", sko(0,0)) ;
 streamY << wxString::Format("%.3f", sko(1,1)) ;
 streamZ << wxString::Format("%.3f", sko(2,2)) ;
@@ -472,38 +468,13 @@ streamD << wxString::Format("%.3f", sko(3,3)) ;
 }
 else
 {
-    wxMessageBox(_("Error"), _("Error"));
+    wxMessageBox(_("Выберите другую ГНСС"), _("Error"));
 }
 streamX.flush();
 streamY.flush();
 streamZ.flush();
 streamD.flush();
- /*
-wxString FoobarX;
-FoobarX.Printf("Coord_x=%f", Coord_x);
-wxMessageBox(FoobarX);
 
-wxString FoobarY;
-FoobarY.Printf("Coord_y=%f", Coord_y);
-wxMessageBox(FoobarY);
-
-wxString FoobarZ;
-FoobarZ.Printf("Coord_z=%f", Coord_z);
-wxMessageBox(FoobarZ);
-
-
-wxString Foobaralpha;
-Foobaralpha.Printf("угол %f", alpha);
-wxMessageBox(Foobaralpha);
-*/
-//std::cout << "My X = " << myCoord.x;
-//double Zy=5;
-//TextCtrlTEST1->SetValue(&Zy);
-/*
-wxString Foobar;
-Foobar.Printf("знач спутн по Y %f", myCoord.Y);
-wxMessageBox(Foobar);
-*/
 }
 /*
 

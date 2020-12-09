@@ -55,6 +55,7 @@ class dataDialog: public wxDialog
         void OnCustom1Paint(wxPaintEvent& event);
         void OnTextCtrlLText(wxCommandEvent& event);
         void OnTextCtrlTEST1Text(wxCommandEvent& event);
+        void OnChoice1Select4(wxCommandEvent& event);
         //*)
 
 

@@ -55,15 +55,9 @@ data_t SISerr[75];
 int parse(const char* file)
 {
   int i;
- // int k;
-
   FILE* fd;
   char systype;
   char dummy[30];
-  //char hr[30];
- // char min[30];
-  //char sec[30];
-  //  fd = fopen("MERMS-ESC_C.ete", "r");
   fd = fopen(file, "r");
   while ( !feof(fd) )
   {
@@ -122,48 +116,7 @@ int parse(const char* file)
    fscanf(fd, "%c", &systype);
   }
   int imax=i;
- /* for (i=0; i<imax; i++)
-  {  // printf("ssi", i, "=" ,SISerr[i-1].SISRE);
-     if (SISerr[i].SISRE>0)
-     {
-   printf("N=%u\n",i+1);
-   printf("SISRE=%lf\n" ,SISerr[i].SISRE);
-   printf("SISVE=%lf\n\n" ,SISerr[i].SISVE);
-     }
-
-  }
-*/
- // printf("ii=%u\n",i);
-//printf("ssi1=%lf\n",SISerr[i-1].SISRE);
-// printf("min=%u\n",min[26]);
-//printf("ii=%u\n",i);
-
-/*
-  printf("hr=%u\n",hr[3]);
-printf("min=%u\n",min[26]);
-printf("ssi1=%lf\n",SISerr[0].SISRE);
-printf("ssi2=%lf\n",SISerr[1].SISRE);
-printf("ssi3=%lf\n",SISerr[2].SISRE);
-printf("ssi4=%lf\n",SISerr[3].SISRE);
-
-printf("ssi5=%lf\n",SISerr[4].SISRE);
-printf("ssi6=%lf\n",SISerr[5].SISRE);
-printf("ssi7=%lf\n",SISerr[6].SISRE);
-printf("ssi8=%lf\n",SISerr[7].SISRE);
-printf("ssi9=%lf\n",SISerr[8].SISRE);
-printf("ssi10=%lf\n",SISerr[9].SISRE);
-printf("ssi11=%lf\n",SISerr[10].SISRE);
-printf("ssi12=%lf\n",SISerr[11].SISRE);
-printf("ssi13=%lf\n",SISerr[12].SISRE);
-printf("ssi14=%lf\n",SISerr[13].SISRE);
-printf("ssi15=%lf\n",SISerr[14].SISRE);
-printf("ssi16=%lf\n",SISerr[15].SISRE);
-printf("ssi17=%lf\n",SISerr[16].SISRE);
-printf("ssi18=%lf\n",SISerr[17].SISRE);
-printf("ssi19=%lf\n",SISerr[18].SISRE);  */
-
   fclose(fd);
-
  return imax;
 }
 
