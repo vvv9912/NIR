@@ -142,9 +142,9 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
   Button2 = new wxButton(SashWindow1, ID_BUTTON2, _("Загрузить"), wxPoint(305,16), wxSize(127,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
   Notebook1 = new wxNotebook(SashWindow1, ID_NOTEBOOK1, wxPoint(124,214), wxDefaultSize, 0, _T("ID_NOTEBOOK1"));
   Down = new wxButton(SashWindow1, ID_BUTTON1, _("Обработка "), wxPoint(305,216), wxSize(127,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
-  TextCtrlH = new wxTextCtrl(SashWindow1, ID_TEXTCTRL1, _(""), wxPoint(305,95), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
-  TextCtrlB = new wxTextCtrl(SashWindow1, ID_TEXTCTRL2, _(""), wxPoint(305,140), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
-  TextCtrlL = new wxTextCtrl(SashWindow1, ID_TEXTCTRL3, _(""), wxPoint(305,185), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL3"));
+  TextCtrlH = new wxTextCtrl(SashWindow1, ID_TEXTCTRL1, _("0"), wxPoint(305,95), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
+  TextCtrlB = new wxTextCtrl(SashWindow1, ID_TEXTCTRL2, _("0"), wxPoint(305,140), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
+  TextCtrlL = new wxTextCtrl(SashWindow1, ID_TEXTCTRL3, _("0"), wxPoint(305,185), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL3"));
   TextCtrlX = new wxTextCtrl(SashWindow1, ID_TEXTCTRL4, wxEmptyString, wxPoint(305,279), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL4"));
   TextCtrlY = new wxTextCtrl(SashWindow1, ID_TEXTCTRL5, wxEmptyString, wxPoint(305,324), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL5"));
   TextCtrlZ = new wxTextCtrl(SashWindow1, ID_TEXTCTRL6, wxEmptyString, wxPoint(305,369), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL6"));
@@ -161,6 +161,7 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
   SashWindow1->SetSashVisible(wxSASH_LEFT,   true);
   SashWindow1->SetSashVisible(wxSASH_RIGHT,  true);
 
+  Connect(ID_CHOICE1,wxEVT_COMMAND_CHOICE_SELECTED,(wxObjectEventFunction)&dataDialog::OnChoice1Select4);
   Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton2Click);
   Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton1Click1);
   Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&dataDialog::OnTextCtrl1Text1);
@@ -458,7 +459,7 @@ for (int k=1; k<=numberSput; k++)
 // матрица Dn - квадратная : Sisre 0 0 0... ; 0 Sisre 0 0 ...; 0 0 Sisre 0...
 //mat sko =inv(Dn)*H;
 mat Htr = H.t();
-mat sko = (inv(Htr*inv(Dn)*H)).t();
+mat sko = sqrt((inv(Htr*inv(Dn)*H)).t());
 
 
 streamX << wxString::Format("%.3f", sko(0,0)) ;
