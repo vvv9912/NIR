@@ -33,14 +33,8 @@
 
 #define SQUARE(val) val * val
 
-using std::cout;
-using std::cin;
-using std::endl;
 using namespace std;
 using namespace arma;
-
-
-//int numberSput;
 
 //(*InternalHeaders(dataDialog)
 #include <wx/intl.h>
@@ -83,17 +77,10 @@ const long dataDialog::ID_BUTTON1 = wxNewId();
 const long dataDialog::ID_TEXTCTRL1 = wxNewId();
 const long dataDialog::ID_TEXTCTRL2 = wxNewId();
 const long dataDialog::ID_TEXTCTRL3 = wxNewId();
-const long dataDialog::ID_TEXTCTRL4 = wxNewId();
-const long dataDialog::ID_TEXTCTRL5 = wxNewId();
-const long dataDialog::ID_TEXTCTRL6 = wxNewId();
-const long dataDialog::ID_TEXTCTRL7 = wxNewId();
 const long dataDialog::ID_STATICTEXT1 = wxNewId();
 const long dataDialog::ID_STATICTEXT2 = wxNewId();
 const long dataDialog::ID_STATICTEXT3 = wxNewId();
 const long dataDialog::ID_STATICTEXT4 = wxNewId();
-const long dataDialog::ID_STATICTEXT5 = wxNewId();
-const long dataDialog::ID_STATICTEXT6 = wxNewId();
-const long dataDialog::ID_STATICTEXT7 = wxNewId();
 const long dataDialog::ID_SASHWINDOW1 = wxNewId();
 //*)
 
@@ -145,30 +132,21 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
   TextCtrlH = new wxTextCtrl(SashWindow1, ID_TEXTCTRL1, _("0"), wxPoint(305,95), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
   TextCtrlB = new wxTextCtrl(SashWindow1, ID_TEXTCTRL2, _("0"), wxPoint(305,140), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
   TextCtrlL = new wxTextCtrl(SashWindow1, ID_TEXTCTRL3, _("0"), wxPoint(305,185), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL3"));
-  TextCtrlX = new wxTextCtrl(SashWindow1, ID_TEXTCTRL4, wxEmptyString, wxPoint(305,279), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL4"));
-  TextCtrlY = new wxTextCtrl(SashWindow1, ID_TEXTCTRL5, wxEmptyString, wxPoint(305,324), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL5"));
-  TextCtrlZ = new wxTextCtrl(SashWindow1, ID_TEXTCTRL6, wxEmptyString, wxPoint(305,369), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL6"));
-  TextCtrlD = new wxTextCtrl(SashWindow1, ID_TEXTCTRL7, wxEmptyString, wxPoint(305,414), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL7"));
   StaticText1 = new wxStaticText(SashWindow1, ID_STATICTEXT1, _("Введите значение высоты:"), wxPoint(305,77), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
   StaticText2 = new wxStaticText(SashWindow1, ID_STATICTEXT2, _("Введите значение B:"), wxPoint(305,122), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
   StaticText3 = new wxStaticText(SashWindow1, ID_STATICTEXT3, _("Введите значение L:"), wxPoint(305,167), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
-  StaticText4 = new wxStaticText(SashWindow1, ID_STATICTEXT4, _("СКО для х:"), wxPoint(305,261), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
-  StaticText5 = new wxStaticText(SashWindow1, ID_STATICTEXT5, _("СКО для y:"), wxPoint(305,306), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
-  StaticText6 = new wxStaticText(SashWindow1, ID_STATICTEXT6, _("СКО для z:"), wxPoint(305,351), wxDefaultSize, 0, _T("ID_STATICTEXT6"));
-  StaticText7 = new wxStaticText(SashWindow1, ID_STATICTEXT7, _("СКО для Д:"), wxPoint(305,396), wxDefaultSize, 0, _T("ID_STATICTEXT7"));
+  StaticText4 = new wxStaticText(SashWindow1, ID_STATICTEXT4, _("Значения СКО:"), wxPoint(306,244), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
   SashWindow1->SetSashVisible(wxSASH_TOP,    true);
   SashWindow1->SetSashVisible(wxSASH_BOTTOM, true);
   SashWindow1->SetSashVisible(wxSASH_LEFT,   true);
   SashWindow1->SetSashVisible(wxSASH_RIGHT,  true);
 
-  Connect(ID_CHOICE1,wxEVT_COMMAND_CHOICE_SELECTED,(wxObjectEventFunction)&dataDialog::OnChoice1Select4);
   Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton2Click);
   Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton1Click1);
   Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&dataDialog::OnTextCtrl1Text1);
   Connect(ID_SASHWINDOW1,wxEVT_SASH_DRAGGED,(wxObjectEventFunction)&dataDialog::OnSashWindow1SashDragged);
   Connect(wxID_ANY,wxEVT_INIT_DIALOG,(wxObjectEventFunction)&dataDialog::OnInit);
   //*)
-
 
 Grid = new wxGrid(SashWindow1, ID_GRID, wxPoint(33,72), wxSize(244,490), 0, _T("ID_GRID"));
 
@@ -217,7 +195,7 @@ void dataDialog::OnButton2Click(wxCommandEvent& event)
   const char* File1 ;
   const char* file ;
   //wxMessageBox(Choice1->GetString(Choice1->GetSelection()), _(""));
-  if ((Choice1->GetString(Choice1->GetSelection()))== "GPS")
+  if ((Choice1->GetString(Choice1->GetSelection()))== "GPS"s)
   {
     File1 = "/MCC/PRODUCTS/LATEST/MERMS-GSC_C.ete";
     file = "MERMS-GSC_C.ete";
@@ -226,7 +204,7 @@ void dataDialog::OnButton2Click(wxCommandEvent& event)
         {wxRemoveFile(file);
         }
   }
-  if ((Choice1->GetString(Choice1->GetSelection()))== "Glonass")
+  if ((Choice1->GetString(Choice1->GetSelection()))== "Glonass"s)
   {
     File1 = "/MCC/PRODUCTS/LATEST/MERMS-RSC_C.ete";
     file = "MERMS-RSC_C.ete";
@@ -235,7 +213,7 @@ void dataDialog::OnButton2Click(wxCommandEvent& event)
         {wxRemoveFile(file);
         }
   }
-  if ((Choice1->GetString(Choice1->GetSelection()))== "Galileo")
+  if ((Choice1->GetString(Choice1->GetSelection()))== "Galileo"s)
   {
     File1 = "/MCC/PRODUCTS/LATEST/MERMS-ESC_C.ete";
     file = "MERMS-ESC_C.ete";
@@ -244,7 +222,7 @@ void dataDialog::OnButton2Click(wxCommandEvent& event)
         {wxRemoveFile(file);
         }
   }
-  if ((Choice1->GetString(Choice1->GetSelection()))== "Beidou")
+  if ((Choice1->GetString(Choice1->GetSelection()))== "Beidou"s)
   {
     File1 = "/MCC/PRODUCTS/LATEST/MERMS-CSC_C.ete";
     file = "MERMS-CSC_C.ete";
@@ -254,7 +232,7 @@ void dataDialog::OnButton2Click(wxCommandEvent& event)
         }
 
   }
-  if ((Choice1->GetString(Choice1->GetSelection()))== "QZSS")
+  if ((Choice1->GetString(Choice1->GetSelection()))== "QZSS"s)
   {
     File1 = "/MCC/PRODUCTS/LATEST/MERMS-JSC_C.ete";
     file = "MERMS-JSC_C.ete";
@@ -269,7 +247,6 @@ if (!down)
   wxMessageBox(_("Error"), _("Error"));
   return;
 }
-
 Gridd(file);
 }
 
@@ -297,14 +274,6 @@ for (k=0; k<max_sats; k++ )
     Grid->SetCellValue((k), 0,  wxString::Format("%.3f", SISerr[k].SISRE));
     Grid->SetCellValue((k), 1,  wxString::Format("%.3f", SISerr[k].SISVE));
   }
-//numberSput  = max_sats;
-  // обнуление функц.
-/*for (k=0; k<max_sats; k++ )
-  {
-     SISerr[k].SISRE=0;
-    SISerr[k].SISVE=0;
-  }
-*/
 }
 
 
@@ -320,20 +289,16 @@ void dataDialog::OnSpinCtrl1Change(wxSpinEvent& event)
 {
 
 }
+void dataDialog::OnChoice1Select4(wxCommandEvent& event)
+{
 
+}
 void dataDialog::OnButton1Click1(wxCommandEvent& event)
 {
-TextCtrlX->Clear();
-TextCtrlY->Clear();
-TextCtrlZ->Clear();
-TextCtrlD->Clear();
-ostream streamX(TextCtrlX);
-ostream streamY(TextCtrlY);
-ostream streamZ(TextCtrlZ);
-ostream streamD(TextCtrlD);
+StaticText4 ->ClearBackground();
 if ((Choice1->GetString(Choice1->GetSelection()))== "Glonass")
 {
-//wxString s;
+// Вводим значения h,B,L
 double h;
 double Bgrad;
 double Lgrad;
@@ -364,18 +329,8 @@ Coord_user[2]= Coord_z;
 
 double Coord_sput[3];
 double alpha;
-//GlonassCoordinates Coord_sp = ephemerids(5,1);
-
-using namespace std;
-setlocale(LC_ALL, "RUS");
-
-
-
-
-
 // Расчет матрицы Dn, Hn, SKO
 
-//int numberSput;
 int numberSput = 24;
 int vsb[numberSput] ;
 int sumvsb = 0;
@@ -397,13 +352,10 @@ if ((alpha) >5)
     vsb[i]=1;
     sumvsb++;
     Visibles.push_back(i);  // добавление элемента в конец вектора
-
   }
-
-
 }
 
-
+// получение матрицы Dn
 int i = 0;
   mat Dn;
   Dn.zeros(sumvsb, sumvsb);
@@ -414,7 +366,6 @@ int i = 0;
       Dn(i,i) = SISerr[i].SISRE;
       i++;
      }
-
   }
   double max_val_Dn = Dn.max();
 for (int i= 0; i<sumvsb; i++)
@@ -425,8 +376,7 @@ for (int i= 0; i<sumvsb; i++)
   }
 }
 
-
-
+// получение матрицы H
 double dx;
 double dy;
 double dz;
@@ -456,26 +406,17 @@ for (int k=1; k<=numberSput; k++)
     }
 }
 
-// матрица Dn - квадратная : Sisre 0 0 0... ; 0 Sisre 0 0 ...; 0 0 Sisre 0...
-//mat sko =inv(Dn)*H;
 mat Htr = H.t();
 mat sko = sqrt((inv(Htr*inv(Dn)*H)).t());
-
-
-streamX << wxString::Format("%.3f", sko(0,0)) ;
-streamY << wxString::Format("%.3f", sko(1,1)) ;
-streamZ << wxString::Format("%.3f", sko(2,2)) ;
-streamD << wxString::Format("%.3f", sko(3,3)) ;
+// вывод значения в стат. текст
+wxString s;
+s.Printf("Значение СКО:\nСКО для x: %.3f м\nСКО для y: %.3f м\nСКО для z: %.3f м\nСКО для D: %.3f м",sko(0,0), sko(1,1), sko(2,2), sko(3,3) );
+StaticText4->SetLabel(s);
 }
 else
 {
     wxMessageBox(_("Выберите другую ГНСС"), _("Error"));
 }
-streamX.flush();
-streamY.flush();
-streamZ.flush();
-streamD.flush();
-
 }
 /*
 
@@ -565,6 +506,7 @@ void dFiTableFrame::OnButton1Click(wxCommandEvent& event)
 }
 
 */
+
 
 
 

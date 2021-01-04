@@ -56,6 +56,7 @@ class dataDialog: public wxDialog
         void OnTextCtrlLText(wxCommandEvent& event);
         void OnTextCtrlTEST1Text(wxCommandEvent& event);
         void OnChoice1Select4(wxCommandEvent& event);
+        void OnTextCtrlZText(wxCommandEvent& event);
         //*)
 
 
@@ -68,17 +69,10 @@ class dataDialog: public wxDialog
         static const long ID_TEXTCTRL1;
         static const long ID_TEXTCTRL2;
         static const long ID_TEXTCTRL3;
-        static const long ID_TEXTCTRL4;
-        static const long ID_TEXTCTRL5;
-        static const long ID_TEXTCTRL6;
-        static const long ID_TEXTCTRL7;
         static const long ID_STATICTEXT1;
         static const long ID_STATICTEXT2;
         static const long ID_STATICTEXT3;
         static const long ID_STATICTEXT4;
-        static const long ID_STATICTEXT5;
-        static const long ID_STATICTEXT6;
-        static const long ID_STATICTEXT7;
         static const long ID_SASHWINDOW1;
         //*)
      // static const long ID_STATICTEXT4;
@@ -93,16 +87,9 @@ class dataDialog: public wxDialog
         wxStaticText* StaticText2;
         wxStaticText* StaticText3;
         wxStaticText* StaticText4;
-        wxStaticText* StaticText5;
-        wxStaticText* StaticText6;
-        wxStaticText* StaticText7;
         wxTextCtrl* TextCtrlB;
-        wxTextCtrl* TextCtrlD;
         wxTextCtrl* TextCtrlH;
         wxTextCtrl* TextCtrlL;
-        wxTextCtrl* TextCtrlX;
-        wxTextCtrl* TextCtrlY;
-        wxTextCtrl* TextCtrlZ;
         //*)
 
        // wxStaticText* StaticText4;
