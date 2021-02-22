@@ -12,7 +12,8 @@
 #include "angle.h"
 #include "ephemerids.h"
 #include "xyz2enu.h"
-
+#include "timeGlonass.H"
+#include "TimeGPS.H"
 #include <wx/msgdlg.h>
 #include <windows.h>
 #include <wininet.h>
@@ -118,8 +119,8 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
 {
   //(*Initialize(dataDialog)
   Create(parent, wxID_ANY, _("Data app"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
-  SetClientSize(wxSize(502,571));
-  SashWindow1 = new wxSashWindow(this, ID_SASHWINDOW1, wxPoint(56,40), wxSize(432,520), wxSW_3D|wxCLIP_CHILDREN, _T("ID_SASHWINDOW1"));
+  SetClientSize(wxSize(715,571));
+  SashWindow1 = new wxSashWindow(this, ID_SASHWINDOW1, wxPoint(56,40), wxSize(592,520), wxSW_3D|wxCLIP_CHILDREN, _T("ID_SASHWINDOW1"));
   Choice1 = new wxChoice(SashWindow1, ID_CHOICE1, wxPoint(33,16), wxSize(244,21), 0, 0, 0, wxDefaultValidator, _T("ID_CHOICE1"));
   Choice1->SetSelection( Choice1->Append(_("Glonass")) );
   Choice1->Append(_("GPS"));
@@ -405,12 +406,13 @@ for (int k=1; k<=numberSput; k++)
     numsput++ ;
     }
 }
+ timeGlonass();
 
 mat Htr = H.t();
 mat sko = sqrt((inv(Htr*inv(Dn)*H)).t());
 // âûâîä çíà÷åíèÿ â ñòàò. òåêñò
 wxString s;
-s.Printf("Çíà÷åíèå ÑÊÎ:\nÑÊÎ äëÿ x: %.3f ì\nÑÊÎ äëÿ y: %.3f ì\nÑÊÎ äëÿ z: %.3f ì\nÑÊÎ äëÿ D: %.3f ì",sko(0,0), sko(1,1), sko(2,2), sko(3,3) );
+s.Printf("Çíà÷åíèå ÑÊÎ:\nÑÊÎ äëÿ x: %.3f ì\nÑÊÎ äëÿ y: %.3f ì\nÑÊÎ äëÿ z: %.3f ì\nÑÊÎ äëÿ D: %.3f" ,sko(0,0), sko(1,1), sko(2,2), sko(3,3) );
 StaticText4->SetLabel(s);
 }
 else

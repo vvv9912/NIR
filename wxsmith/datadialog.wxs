@@ -2,12 +2,12 @@
 <wxsmith>
 	<object class="wxDialog" name="dataDialog">
 		<title>Data app</title>
-		<size>502,571</size>
+		<size>715,571</size>
 		<id_arg>0</id_arg>
 		<handler function="OnInit" entry="EVT_INIT_DIALOG" />
 		<object class="wxSashWindow" name="ID_SASHWINDOW1" variable="SashWindow1" member="yes">
 			<pos>56,40</pos>
-			<size>432,520</size>
+			<size>592,520</size>
 			<handler function="OnSashWindow1SashDragged" entry="EVT_SASH_DRAGGED" />
 			<object class="wxChoice" name="ID_CHOICE1" variable="Choice1" member="yes">
 				<content>
