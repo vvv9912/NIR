@@ -1,0 +1,4 @@
+# depslib dependency file v1.0
+1615752348 source:c:\temp\fopen\main.c
+	<stdio.h>
+
