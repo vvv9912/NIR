@@ -8,12 +8,12 @@
  **************************************************************/
 
 #include "dataMain.h"
+#include "FTPdownl.h"
 #include "parser.h"
+#include "parserGPS.H"
 #include "angle.h"
 #include "ephemerids.h"
 #include "xyz2enu.h"
-#include "timeGlonass.H"
-#include "TimeGPS.H"
 #include <wx/msgdlg.h>
 #include <windows.h>
 #include <wininet.h>
@@ -82,6 +82,8 @@ const long dataDialog::ID_STATICTEXT1 = wxNewId();
 const long dataDialog::ID_STATICTEXT2 = wxNewId();
 const long dataDialog::ID_STATICTEXT3 = wxNewId();
 const long dataDialog::ID_STATICTEXT4 = wxNewId();
+const long dataDialog::ID_BUTTON3 = wxNewId();
+const long dataDialog::ID_STATICTEXT5 = wxNewId();
 const long dataDialog::ID_SASHWINDOW1 = wxNewId();
 //*)
 
@@ -90,7 +92,7 @@ BEGIN_EVENT_TABLE(dataDialog,wxDialog)
   //(*EventTable(dataDialog)
   //*)
 END_EVENT_TABLE()
-
+/*
 bool download(LPCSTR server, LPCSTR login, LPCSTR pass, LPCSTR local_file, LPCSTR remote_file)
 {
   bool status;
@@ -112,7 +114,7 @@ bool download(LPCSTR server, LPCSTR login, LPCSTR pass, LPCSTR local_file, LPCST
   InternetCloseHandle(hOpen);
   return status;
 }
-
+*/
 
 
 dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
@@ -137,6 +139,8 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
   StaticText2 = new wxStaticText(SashWindow1, ID_STATICTEXT2, _("Введите значение B:"), wxPoint(305,122), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
   StaticText3 = new wxStaticText(SashWindow1, ID_STATICTEXT3, _("Введите значение L:"), wxPoint(305,167), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
   StaticText4 = new wxStaticText(SashWindow1, ID_STATICTEXT4, _("Значения СКО:"), wxPoint(306,244), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
+  Button1 = new wxButton(SashWindow1, ID_BUTTON3, _("Загрузка Альм"), wxPoint(474,92), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON3"));
+  StaticText5 = new wxStaticText(SashWindow1, ID_STATICTEXT5, _("Значения"), wxPoint(477,130), wxSize(66,13), 0, _T("ID_STATICTEXT5"));
   SashWindow1->SetSashVisible(wxSASH_TOP,    true);
   SashWindow1->SetSashVisible(wxSASH_BOTTOM, true);
   SashWindow1->SetSashVisible(wxSASH_LEFT,   true);
@@ -145,6 +149,7 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
   Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton2Click);
   Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton1Click1);
   Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&dataDialog::OnTextCtrl1Text1);
+  Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton1Click2);
   Connect(ID_SASHWINDOW1,wxEVT_SASH_DRAGGED,(wxObjectEventFunction)&dataDialog::OnSashWindow1SashDragged);
   Connect(wxID_ANY,wxEVT_INIT_DIALOG,(wxObjectEventFunction)&dataDialog::OnInit);
   //*)
@@ -406,7 +411,7 @@ for (int k=1; k<=numberSput; k++)
     numsput++ ;
     }
 }
- timeGlonass();
+
 
 mat Htr = H.t();
 mat sko = sqrt((inv(Htr*inv(Dn)*H)).t());
@@ -420,6 +425,37 @@ else
     wxMessageBox(_("Выберите другую ГНСС"), _("Error"));
 }
 }
+
+void dataDialog::OnButton1Click2(wxCommandEvent& event)
+{
+  //wxString s;
+  const char* File1 ;
+  const char* file ;
+  File1 = "/MCC/ALMANAC/2021/MCCJ_210102.agp";
+  file = "MCCJ_210102.agp";
+        wxTextFile file11(wxT("MCCJ_210102.agp"));
+        if (file11.Exists())
+        {wxRemoveFile(file);
+        }
+  bool down = download( "glonass-iac.ru", NULL, NULL, File1, file);
+int max_sats = parseGPS(file);
+wxString s;
+
+
+
+int k = max_sats-1;
+  s.Printf("Значение max_sats: %u\nЗначение PRN: %u\nЗначение t_almanax: %f\nЗначение v0m0: %E\nЗначение Om0: %E\nЗначение M0: %E\n",max_sats,almanax_GPS[k].PRN, almanax_GPS[k].t_almanax, almanax_GPS[k].vOm0, almanax_GPS[k].Om0, almanax_GPS[k].M0);
+   StaticText5->SetLabel(s);
+
+/*almanax_GPS[k].t_almanax
+almanax_GPS[k].vOm0
+almanax_GPS[k].I
+almanax_GPS[k].w
+almanax_GPS[k].E
+almanax_GPS[k].sqrtA*/
+}
+
+
 /*
 
 void dFiTableFrame::MainProcess(void)
@@ -508,6 +544,9 @@ void dFiTableFrame::OnButton1Click(wxCommandEvent& event)
 }
 
 */
+
+
+
 
 
 

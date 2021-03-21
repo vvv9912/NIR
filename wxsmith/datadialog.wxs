@@ -68,6 +68,16 @@
 				<label>Значения СКО:</label>
 				<pos>306,244</pos>
 			</object>
+			<object class="wxButton" name="ID_BUTTON3" variable="Button1" member="yes">
+				<label>Загрузка Альм</label>
+				<pos>474,92</pos>
+				<handler function="OnButton1Click2" entry="EVT_BUTTON" />
+			</object>
+			<object class="wxStaticText" name="ID_STATICTEXT5" variable="StaticText5" member="yes">
+				<label>Значения</label>
+				<pos>477,130</pos>
+				<size>66,13</size>
+			</object>
 		</object>
 	</object>
 </wxsmith>

@@ -57,6 +57,7 @@ class dataDialog: public wxDialog
         void OnTextCtrlTEST1Text(wxCommandEvent& event);
         void OnChoice1Select4(wxCommandEvent& event);
         void OnTextCtrlZText(wxCommandEvent& event);
+        void OnButton1Click2(wxCommandEvent& event);
         //*)
 
 
@@ -73,11 +74,14 @@ class dataDialog: public wxDialog
         static const long ID_STATICTEXT2;
         static const long ID_STATICTEXT3;
         static const long ID_STATICTEXT4;
+        static const long ID_BUTTON3;
+        static const long ID_STATICTEXT5;
         static const long ID_SASHWINDOW1;
         //*)
      // static const long ID_STATICTEXT4;
         static const long ID_GRID;
         //(*Declarations(dataDialog)
+        wxButton* Button1;
         wxButton* Button2;
         wxButton* Down;
         wxChoice* Choice1;
@@ -87,6 +91,7 @@ class dataDialog: public wxDialog
         wxStaticText* StaticText2;
         wxStaticText* StaticText3;
         wxStaticText* StaticText4;
+        wxStaticText* StaticText5;
         wxTextCtrl* TextCtrlB;
         wxTextCtrl* TextCtrlH;
         wxTextCtrl* TextCtrlL;

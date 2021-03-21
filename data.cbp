@@ -76,8 +76,8 @@
 			<Add directory="$(#wx)/lib/gcc_lib" />
 			<Add directory="." />
 		</Linker>
-		<Unit filename="TimeGPS.CPP" />
-		<Unit filename="TimeGPS.H" />
+		<Unit filename="FTPdownl.cpp" />
+		<Unit filename="FTPdownl.h" />
 		<Unit filename="angle.cpp" />
 		<Unit filename="angle.h" />
 		<Unit filename="angle.txt" />
@@ -92,13 +92,13 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="parser.h" />
+		<Unit filename="parserGPS.H" />
+		<Unit filename="parserGPS.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="resource.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
-		<Unit filename="timeGlonass.CPP" />
-		<Unit filename="timeGlonass.H" />
-		<Unit filename="timeGnss.CPP" />
-		<Unit filename="timeGnss.H" />
 		<Unit filename="wxsmith/datadialog.wxs" />
 		<Unit filename="xyz2enu.cpp" />
 		<Unit filename="xyz2enu.h" />
