@@ -302,7 +302,7 @@ void dataDialog::OnChoice1Select4(wxCommandEvent& event)
 void dataDialog::OnButton1Click1(wxCommandEvent& event)
 {
 StaticText4 ->ClearBackground();
-if ((Choice1->GetString(Choice1->GetSelection()))== "Glonass")
+if ((Choice1->GetString(Choice1->GetSelection()))== "GPS")
 {
 // Вводим значения h,B,L
 double h;
@@ -337,7 +337,7 @@ double Coord_sput[3];
 double alpha;
 // Расчет матрицы Dn, Hn, SKO
 
-int numberSput = 24;
+int numberSput = 30;
 int vsb[numberSput] ;
 int sumvsb = 0;
 vector<int> Visibles; //вектор из кол-во элементов - visibles
@@ -345,11 +345,24 @@ vector<int> Visibles; //вектор из кол-во элементов - visibles
 for (int i=1; i<=numberSput; i++)
 {
 // Получение коорд спутников
-GlonassCoordinates Coord_sp = ephemerids(i,10000);
+//ephemerids(double toe,int t_almanax, double M0, double sqrtA, double E, double I, double Om0, double time_week ))
+double toe=44271.777;
+
+
+GlonassCoordinates Coord_sp = ephemerids(toe,
+                                          almanax_GPS[i-1].t_almanax,
+                                          almanax_GPS[i-1].M0,
+                                          almanax_GPS[i-1].sqrtA,
+                                          almanax_GPS[i-1].E,
+                                          almanax_GPS[i-1].I,
+                                          almanax_GPS[i-1].Om0,
+                                          almanax_GPS[i-1].time_week);
+
 Coord_sput[0] = Coord_sp.X;
 Coord_sput[1] = Coord_sp.Y;
 Coord_sput[2] = Coord_sp.Z;
 // Определение угла
+
 alpha = 90 - (angle(Coord_sput, Coord_user, B, L)*180/PI);
 // определение видимости спутника
 vsb[i]=0;
@@ -392,15 +405,14 @@ mat H(sumvsb, 4);
 H.zeros();
 
 int numsput = 0;
-
 for (int k=1; k<=numberSput; k++)
 {
      if ((vsb[k]) == 1)
-    {
-    GlonassCoordinates Coord_sp = ephemerids((k),10000);
-    dx=(Coord_sp.X-Coord_x);
-    dy=(Coord_sp.Y-Coord_y);
-    dz=(Coord_sp.Z- Coord_z);
+    {//зачем?
+
+    dx=(...-Coord_x);
+    dy=(-Coord_y);
+    dz=(- Coord_z);
  // Ri = sqrt (SQUARE(dx)+SQUARE(dy)+SQUARE(dz));
     Ri = sqrt (pow(dx,2)+pow(dy,2)+pow(dz,2));
 
@@ -418,6 +430,7 @@ mat sko = sqrt((inv(Htr*inv(Dn)*H)).t());
 // вывод значения в стат. текст
 wxString s;
 s.Printf("Значение СКО:\nСКО для x: %.3f м\nСКО для y: %.3f м\nСКО для z: %.3f м\nСКО для D: %.3f" ,sko(0,0), sko(1,1), sko(2,2), sko(3,3) );
+//s.Printf("Значение :\ x: %.3f м\ny: %.3f м\n z: %.3f м\n " ,Coord_sput[0]/1000, Coord_sput[1]/1000, Coord_sput[2]/1000 );
 StaticText4->SetLabel(s);
 }
 else
@@ -431,9 +444,9 @@ void dataDialog::OnButton1Click2(wxCommandEvent& event)
   //wxString s;
   const char* File1 ;
   const char* file ;
-  File1 = "/MCC/ALMANAC/2021/MCCJ_210102.agp";
-  file = "MCCJ_210102.agp";
-        wxTextFile file11(wxT("MCCJ_210102.agp"));
+  File1 = "/MCC/ALMANAC/2015/MCCJ_150307.agp";
+  file = "MCCJ_150307.agp";
+        wxTextFile file11(wxT("MCCJ_150307.agp"));
         if (file11.Exists())
         {wxRemoveFile(file);
         }
@@ -443,7 +456,7 @@ wxString s;
 
 
 
-int k = max_sats-1;
+int k = 18;
   s.Printf("Значение max_sats: %u\nЗначение PRN: %u\nЗначение t_almanax: %f\nЗначение v0m0: %E\nЗначение Om0: %E\nЗначение M0: %E\n",max_sats,almanax_GPS[k].PRN, almanax_GPS[k].t_almanax, almanax_GPS[k].vOm0, almanax_GPS[k].Om0, almanax_GPS[k].M0);
    StaticText5->SetLabel(s);
 
