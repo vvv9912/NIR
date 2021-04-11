@@ -80,7 +80,6 @@
 		<Unit filename="FTPdownl.h" />
 		<Unit filename="angle.cpp" />
 		<Unit filename="angle.h" />
-		<Unit filename="angle.txt" />
 		<Unit filename="data.cbp" />
 		<Unit filename="dataApp.cpp" />
 		<Unit filename="dataApp.h" />
@@ -88,10 +87,16 @@
 		<Unit filename="dataMain.h" />
 		<Unit filename="ephemerids.cpp" />
 		<Unit filename="ephemerids.h" />
+		<Unit filename="ephemeridsGLNS.cpp" />
+		<Unit filename="ephemeridsGLNS.h" />
 		<Unit filename="parser.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="parser.h" />
+		<Unit filename="parserGLNS.H" />
+		<Unit filename="parserGLNS.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="parserGPS.H" />
 		<Unit filename="parserGPS.c">
 			<Option compilerVar="CC" />
@@ -99,6 +104,8 @@
 		<Unit filename="resource.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
+		<Unit filename="timeCalc.cpp" />
+		<Unit filename="timeCalc.h" />
 		<Unit filename="wxsmith/datadialog.wxs" />
 		<Unit filename="xyz2enu.cpp" />
 		<Unit filename="xyz2enu.h" />

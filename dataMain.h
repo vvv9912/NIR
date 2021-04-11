@@ -13,6 +13,8 @@
 //(*Headers(dataDialog)
 #include <wx/button.h>
 #include <wx/choice.h>
+#include <wx/datectrl.h>
+#include <wx/dateevt.h>
 #include <wx/dialog.h>
 #include <wx/notebook.h>
 #include <wx/sashwin.h>
@@ -58,6 +60,7 @@ class dataDialog: public wxDialog
         void OnChoice1Select4(wxCommandEvent& event);
         void OnTextCtrlZText(wxCommandEvent& event);
         void OnButton1Click2(wxCommandEvent& event);
+        void OnDatePickerCtrl1Changed(wxDateEvent& event);
         //*)
 
 
@@ -76,6 +79,7 @@ class dataDialog: public wxDialog
         static const long ID_STATICTEXT4;
         static const long ID_BUTTON3;
         static const long ID_STATICTEXT5;
+        static const long ID_DATEPICKERCTRL1;
         static const long ID_SASHWINDOW1;
         //*)
      // static const long ID_STATICTEXT4;
@@ -85,6 +89,7 @@ class dataDialog: public wxDialog
         wxButton* Button2;
         wxButton* Down;
         wxChoice* Choice1;
+        wxDatePickerCtrl* DatePickerCtrl1;
         wxNotebook* Notebook1;
         wxSashWindow* SashWindow1;
         wxStaticText* StaticText1;

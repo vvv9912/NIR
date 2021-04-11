@@ -21,7 +21,7 @@
 // Подключение необходимого минимума заголовочных файлов
 // Первым должен подключаться интерфейсный файл модуля
 #include <stdio.h>
-#include "parserGPS.H"
+#include "parserGLNS.H"
 
 //#include "parserGPS.h"
 /*******************************************************************************
@@ -33,7 +33,7 @@
  * Extern Data
  ******************************************************************************/
 // Объявления экземпляров экспортируемых данных
-data_almanax almanax_GPS[75];
+data_almanax_GLNS almanax_GLNS[75];
 /*******************************************************************************
  * Local Data
  ******************************************************************************/
@@ -61,7 +61,7 @@ data_almanax almanax_GPS[75];
  *****************************************************/
 
 
-int parseGPS(const char* file)
+int parseGLNS(const char* file)
 {
   int i;
   int  Numbb;
@@ -78,10 +78,10 @@ int parseGPS(const char* file)
     else{ printf("OK"); }
     while ( !feof(fd) )                               // пока не конец файла
     {
-    //   almanax_GPS[i-1].systype = systype;
+    //   almanax_GLNS[i-1].systype = systype;
 
 //Строка 1
-fscanf(fd, "%u", (int *)dummy); //1 - число получения альманаха
+fscanf(fd, "%u", (int *)dummy); //1 - число пhttps://vk.com/doc165113148_595394058?hash=f2e6d67d96e5f1a609&dl=ab5ddaf49d0048c0feолучения альманаха
 fscanf(fd, "%u", (int *)dummy); //2 - месяц получения альманаха
 fscanf(fd, "%u", (int *)dummy); //3 - год получения альманаха
 fscanf(fd, "%u", &Numbb); //4 -
@@ -89,34 +89,36 @@ fscanf(fd, "%u", &Numbb); //4 -
 
 //Строка 2
 fscanf(fd, "%u", &(i));//1 - номер PRN
-almanax_GPS[i-1].PRN=i;
-almanax_GPS[i-1].NN = Numbb;
-fscanf(fd, "%u", (int *)dummy);//2 - обобщенный признак здоровья
-fscanf(fd, "%u", &( almanax_GPS[i-1].num_week));//3 - неделя GPS (альманаха)
-fscanf(fd, "%u", &( almanax_GPS[i-1].time_week));//4 - время недели GPS, с (альманаха)
-fscanf(fd, "%u", (int *)dummy);//5 - число
-fscanf(fd, "%u", (int *)dummy);//6 - месяц
-fscanf(fd, "%u", (int *)dummy);//7 - год
-fscanf(fd, "%lf", &( almanax_GPS[i-1].t_almanax));//8 - время альманаха, с
-fscanf(fd, "%lf", (int *)dummy);//9 - поправка времени КА GPS относительно системного времени, с
-fscanf(fd, "%lf", (int *)dummy);//10- скорость поправки времени КА GPS относительно системного времени, с/с
-fscanf(fd, "%lf", &( almanax_GPS[i-1].vOm0));//11- Om0 - скорость долготы узла, полуциклы/c
+almanax_GLNS[i-1].PRN=i;
+almanax_GLNS[i-1].NN = Numbb;
+fscanf(fd, "%u", (int *)dummy);//2 - номер частотного слота (-7 - 24)
+fscanf(fd, "%u", (int *)dummy);//3 - признак здоровья по альманаху (0 - 1)
+fscanf(fd, "%u", &(almanax_GLNS[i-1].date));//4 - число
+fscanf(fd, "%u", &(almanax_GLNS[i-1].month));//5 - месяц
+fscanf(fd, "%u", &(almanax_GLNS[i-1].year));//6 - год
+fscanf(fd, "%lf", &(almanax_GLNS[i-1].tLA));//7 - время прохождения первого узла, на которое все дано, с
+fscanf(fd, "%lf", (int *)dummy);//8 - поправка ГЛОНАСС-UTC, с
+fscanf(fd, "%lf", (int *)dummy);//9- поправка GPS-ГЛОНАСС, с
+fscanf(fd, "%lf", (int *)dummy);//10 - поправка времени КА ГЛОНАСС относительно системного времени, с
+
+
+
 
 //Строка 3
-fscanf(fd, "%lf", &( almanax_GPS[i-1].Om0));//1 - Om0 - долгота узла, полуциклы
-fscanf(fd, "%lf", &( almanax_GPS[i-1].I));//2 - I - наклонение, полуциклы
-fscanf(fd, "%lf", &( almanax_GPS[i-1].w));//3 - w - аргумент перигея, полуциклы
-fscanf(fd, "%lf", &( almanax_GPS[i-1].E));//4 - E - эксцентриситет
-fscanf(fd, "%lf", &( almanax_GPS[i-1].sqrtA));//5 - SQRT(A) - корень из большой полуоси, м**0.5
-fscanf(fd, "%lf", &( almanax_GPS[i-1].M0));//6 - M0 - средняя аномалия, полуциклы
+fscanf(fd, "%lf", &( almanax_GLNS[i-1].Lam ));//1 - Lam - долгота узла, полуциклы
+fscanf(fd, "%lf", &( almanax_GLNS[i-1].dI));//2 - dI -коррекция наклонения, полуциклы
+fscanf(fd, "%lf", &( almanax_GLNS[i-1].w));//3 -  w - аргумент перигея, полуциклы
+fscanf(fd, "%lf", &( almanax_GLNS[i-1].E));//4 - E - эксцентриситет
+fscanf(fd, "%lf", &( almanax_GLNS[i-1].dT));//5 - dT - поправка к драконическому периоду, с
+fscanf(fd, "%lf", &( almanax_GLNS[i-1].dTT));//6 - dTT - поправка к драконическому периоду, с/виток
 
-almanax_GPS[i-1].PRN=i;
+almanax_GLNS[i-1].PRN=i;
 
 
 
    }
      int imax=i;
-     almanax_GPS[0].mass = imax;
+     almanax_GLNS[0].mass = imax;
   fclose(fd);
 
    //printf("num_week = %d " , almanax_GPS[1].num_week);

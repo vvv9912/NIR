@@ -14,6 +14,9 @@
 #include "angle.h"
 #include "ephemerids.h"
 #include "xyz2enu.h"
+#include "parserGLNS.H"
+#include "ephemeridsGLNS.h"
+#include "timeCalc.h"
 #include <wx/msgdlg.h>
 #include <windows.h>
 #include <wininet.h>
@@ -84,6 +87,7 @@ const long dataDialog::ID_STATICTEXT3 = wxNewId();
 const long dataDialog::ID_STATICTEXT4 = wxNewId();
 const long dataDialog::ID_BUTTON3 = wxNewId();
 const long dataDialog::ID_STATICTEXT5 = wxNewId();
+const long dataDialog::ID_DATEPICKERCTRL1 = wxNewId();
 const long dataDialog::ID_SASHWINDOW1 = wxNewId();
 //*)
 
@@ -141,6 +145,7 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
   StaticText4 = new wxStaticText(SashWindow1, ID_STATICTEXT4, _("Значения СКО:"), wxPoint(306,244), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
   Button1 = new wxButton(SashWindow1, ID_BUTTON3, _("Загрузка Альм"), wxPoint(474,92), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON3"));
   StaticText5 = new wxStaticText(SashWindow1, ID_STATICTEXT5, _("Значения"), wxPoint(477,130), wxSize(66,13), 0, _T("ID_STATICTEXT5"));
+  DatePickerCtrl1 = new wxDatePickerCtrl(SashWindow1, ID_DATEPICKERCTRL1, wxDefaultDateTime, wxPoint(301,393), wxDefaultSize, wxDP_DEFAULT|wxDP_SHOWCENTURY, wxDefaultValidator, _T("ID_DATEPICKERCTRL1"));
   SashWindow1->SetSashVisible(wxSASH_TOP,    true);
   SashWindow1->SetSashVisible(wxSASH_BOTTOM, true);
   SashWindow1->SetSashVisible(wxSASH_LEFT,   true);
@@ -150,6 +155,7 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
   Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton1Click1);
   Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&dataDialog::OnTextCtrl1Text1);
   Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton1Click2);
+  Connect(ID_DATEPICKERCTRL1,wxEVT_DATE_CHANGED,(wxObjectEventFunction)&dataDialog::OnDatePickerCtrl1Changed);
   Connect(ID_SASHWINDOW1,wxEVT_SASH_DRAGGED,(wxObjectEventFunction)&dataDialog::OnSashWindow1SashDragged);
   Connect(wxID_ANY,wxEVT_INIT_DIALOG,(wxObjectEventFunction)&dataDialog::OnInit);
   //*)
@@ -302,8 +308,6 @@ void dataDialog::OnChoice1Select4(wxCommandEvent& event)
 void dataDialog::OnButton1Click1(wxCommandEvent& event)
 {
 StaticText4 ->ClearBackground();
-if ((Choice1->GetString(Choice1->GetSelection()))== "GPS")
-{
 // Вводим значения h,B,L
 double h;
 double Bgrad;
@@ -322,6 +326,8 @@ double a=6378136; // радиус З
 
 // Получение координат потребителя
 N=a/sqrt(1-(e*e)*(sin(B))*(sin(B)));
+
+
 double Coord_x;
 double Coord_y;
 double Coord_z;
@@ -329,27 +335,28 @@ Coord_x = (N+h)*cos(B)*cos(L);
 Coord_y = (N+h)*cos(B)*sin(L);
 Coord_z = ((1-e*e)*N+h)*sin(B);
 double Coord_user[3];
-Coord_user[0]=Coord_x;
-Coord_user[1]= Coord_y;
-Coord_user[2]= Coord_z;
+Coord_user[0]=(N+h)*cos(B)*cos(L);
+Coord_user[1]= (N+h)*cos(B)*sin(L);
+Coord_user[2]= ((1-e*e)*N+h)*sin(B);
 
 double Coord_sput[3];
 double alpha;
+if ((Choice1->GetString(Choice1->GetSelection()))== "GPS")
+{
 // Расчет матрицы Dn, Hn, SKO
-
-int numberSput = 30;
+int numberSput = 32;
 int vsb[numberSput] ;
 int sumvsb = 0;
 vector<int> Visibles; //вектор из кол-во элементов - visibles
-
+double toe=44271.777;
 for (int i=1; i<=numberSput; i++)
 {
 // Получение коорд спутников
 //ephemerids(double toe,int t_almanax, double M0, double sqrtA, double E, double I, double Om0, double time_week ))
-double toe=44271.777;
 
 
-GlonassCoordinates Coord_sp = ephemerids(toe,
+
+Coordinates Coord_sp = ephemerids(toe,
                                           almanax_GPS[i-1].t_almanax,
                                           almanax_GPS[i-1].M0,
                                           almanax_GPS[i-1].sqrtA,
@@ -408,11 +415,18 @@ int numsput = 0;
 for (int k=1; k<=numberSput; k++)
 {
      if ((vsb[k]) == 1)
-    {//зачем?
-
-    dx=(...-Coord_x);
-    dy=(-Coord_y);
-    dz=(- Coord_z);
+    {
+Coordinates Coord_sp = ephemerids(toe,
+                                          almanax_GPS[k-1].t_almanax,
+                                          almanax_GPS[k-1].M0,
+                                          almanax_GPS[k-1].sqrtA,
+                                          almanax_GPS[k-1].E,
+                                          almanax_GPS[k-1].I,
+                                          almanax_GPS[k-1].Om0,
+                                          almanax_GPS[k-1].time_week);
+    dx=(Coord_sp.X-Coord_x);
+    dy=(Coord_sp.Y-Coord_y);
+    dz=(Coord_sp.Z- Coord_z);
  // Ri = sqrt (SQUARE(dx)+SQUARE(dy)+SQUARE(dz));
     Ri = sqrt (pow(dx,2)+pow(dy,2)+pow(dz,2));
 
@@ -425,11 +439,16 @@ for (int k=1; k<=numberSput; k++)
 }
 
 
+
 mat Htr = H.t();
 mat sko = sqrt((inv(Htr*inv(Dn)*H)).t());
+double dt1, dt2;
+
+//DatePickerCtrl1 -> GetValue(dt1);
 // вывод значения в стат. текст
 wxString s;
-s.Printf("Значение СКО:\nСКО для x: %.3f м\nСКО для y: %.3f м\nСКО для z: %.3f м\nСКО для D: %.3f" ,sko(0,0), sko(1,1), sko(2,2), sko(3,3) );
+s.Printf("Значение СКО:\nСКО для x: %.3f м\nСКО для y: %.3f м\nСКО для z: %.3f м\nСКО для D: %.3f, СКО: %.3f , \n dt1:  %.3f, dt2: %.3f" ,
+         sko(0,0), sko(1,1), sko(2,2), sko(3,3), sqrt (pow(sko(0,0),2)+pow(sko(1,1),2)+pow(sko(2,2),2)+pow(sko(3,3),2) ), dt1,dt2);
 //s.Printf("Значение :\ x: %.3f м\ny: %.3f м\n z: %.3f м\n " ,Coord_sput[0]/1000, Coord_sput[1]/1000, Coord_sput[2]/1000 );
 StaticText4->SetLabel(s);
 }
@@ -442,11 +461,34 @@ else
 void dataDialog::OnButton1Click2(wxCommandEvent& event)
 {
   //wxString s;
+  /* преобразование в слово для скачивания
+  string text5 = "MCCJ_";
+  string text2 = to_string(year-100);
+   string text3 ;
+  if (month<10)
+  {
+   text3 = "0"s + to_string(month);
+  }
+  else {
+  text3 = to_string(month);
+  }
+    string text4;
+  if (Date<10)
+  {
+    text4 = "0"s +to_string(Date);
+  }
+  else {
+  text4 = to_string(Date);
+  }
+  string text1 = text5+text2+text3+text4+".agp"s;
+  */
   const char* File1 ;
   const char* file ;
   File1 = "/MCC/ALMANAC/2015/MCCJ_150307.agp";
+ // File1 = "/MCC/ALMANAC/"s+"year"s+"/"s+text1;
   file = "MCCJ_150307.agp";
-        wxTextFile file11(wxT("MCCJ_150307.agp"));
+  //file = text1;
+        wxTextFile file11(wxT("MCCJ_150307.agp")); // надо заменить на text1; // появляется ошибка?!
         if (file11.Exists())
         {wxRemoveFile(file);
         }
@@ -454,10 +496,10 @@ void dataDialog::OnButton1Click2(wxCommandEvent& event)
 int max_sats = parseGPS(file);
 wxString s;
 
+int k = 31;
 
-
-int k = 18;
-  s.Printf("Значение max_sats: %u\nЗначение PRN: %u\nЗначение t_almanax: %f\nЗначение v0m0: %E\nЗначение Om0: %E\nЗначение M0: %E\n",max_sats,almanax_GPS[k].PRN, almanax_GPS[k].t_almanax, almanax_GPS[k].vOm0, almanax_GPS[k].Om0, almanax_GPS[k].M0);
+//int k = 31;
+  s.Printf("Значение max_sats: %u\nЗначение PRN: %u\nЗначение t_almanax: %f\nЗначение v0m0: %E\nЗначение Om0: %E\nЗначение M0: %E\n",almanax_GPS[0].mass,almanax_GPS[k].PRN, almanax_GPS[k].t_almanax, almanax_GPS[k].vOm0, almanax_GPS[k].Om0, almanax_GPS[k].M0);
    StaticText5->SetLabel(s);
 
 /*almanax_GPS[k].t_almanax
@@ -565,3 +607,7 @@ void dFiTableFrame::OnButton1Click(wxCommandEvent& event)
 
 
 
+
+void dataDialog::OnDatePickerCtrl1Changed(wxDateEvent& event)
+{
+}

@@ -24,6 +24,7 @@ typedef struct
   double E;
   double sqrtA;
   double M0;
+  int mass;
 } data_almanax;
 
 

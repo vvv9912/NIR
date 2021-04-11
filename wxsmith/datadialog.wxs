@@ -78,6 +78,10 @@
 				<pos>477,130</pos>
 				<size>66,13</size>
 			</object>
+			<object class="wxDatePickerCtrl" name="ID_DATEPICKERCTRL1" variable="DatePickerCtrl1" member="yes">
+				<pos>301,393</pos>
+				<handler function="OnDatePickerCtrl1Changed" entry="EVT_DATE_CHANGED" />
+			</object>
 		</object>
 	</object>
 </wxsmith>
