@@ -9,6 +9,13 @@
 			<pos>56,40</pos>
 			<size>592,520</size>
 			<handler function="OnSashWindow1SashDragged" entry="EVT_SASH_DRAGGED" />
+			<object class="wxDatePickerCtrl" name="ID_DATEPICKERCTRL1" variable="DatePickerCtrl1" member="yes">
+				<pos>317,431</pos>
+				<size>-1,-1</size>
+				<fg>wxSYS_COLOUR_ACTIVEBORDER</fg>
+				<bg>wxSYS_COLOUR_HIGHLIGHT</bg>
+				<handler function="OnDatePickerCtrl1Changed" entry="EVT_DATE_CHANGED" />
+			</object>
 			<object class="wxChoice" name="ID_CHOICE1" variable="Choice1" member="yes">
 				<content>
 					<item>Glonass</item>
@@ -78,9 +85,8 @@
 				<pos>477,130</pos>
 				<size>66,13</size>
 			</object>
-			<object class="wxDatePickerCtrl" name="ID_DATEPICKERCTRL1" variable="DatePickerCtrl1" member="yes">
-				<pos>301,393</pos>
-				<handler function="OnDatePickerCtrl1Changed" entry="EVT_DATE_CHANGED" />
+			<object class="wxTimePickerCtrl" name="ID_TIMEPICKERCTRL1" variable="TimePickerCtrl1" member="yes">
+				<pos>461,434</pos>
 			</object>
 		</object>
 	</object>

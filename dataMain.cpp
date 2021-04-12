@@ -42,6 +42,7 @@ using namespace arma;
 
 //(*InternalHeaders(dataDialog)
 #include <wx/intl.h>
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
@@ -74,6 +75,7 @@ wxString wxbuildinfo(wxbuildinfoformat format)
 }
 
 //(*IdInit(dataDialog)
+const long dataDialog::ID_DATEPICKERCTRL1 = wxNewId();
 const long dataDialog::ID_CHOICE1 = wxNewId();
 const long dataDialog::ID_BUTTON2 = wxNewId();
 const long dataDialog::ID_NOTEBOOK1 = wxNewId();
@@ -87,7 +89,8 @@ const long dataDialog::ID_STATICTEXT3 = wxNewId();
 const long dataDialog::ID_STATICTEXT4 = wxNewId();
 const long dataDialog::ID_BUTTON3 = wxNewId();
 const long dataDialog::ID_STATICTEXT5 = wxNewId();
-const long dataDialog::ID_DATEPICKERCTRL1 = wxNewId();
+const long dataDialog::ID_TIMEPICKERCTRL1 = wxNewId();
+const long dataDialog::ID_BUTTON4 = wxNewId();
 const long dataDialog::ID_SASHWINDOW1 = wxNewId();
 //*)
 
@@ -127,6 +130,9 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
   Create(parent, wxID_ANY, _("Data app"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
   SetClientSize(wxSize(715,571));
   SashWindow1 = new wxSashWindow(this, ID_SASHWINDOW1, wxPoint(56,40), wxSize(592,520), wxSW_3D|wxCLIP_CHILDREN, _T("ID_SASHWINDOW1"));
+  DatePickerCtrl1 = new wxDatePickerCtrl(SashWindow1, ID_DATEPICKERCTRL1, wxDefaultDateTime, wxPoint(317,431), wxSize(-1,-1), wxDP_DEFAULT|wxDP_SHOWCENTURY, wxDefaultValidator, _T("ID_DATEPICKERCTRL1"));
+  DatePickerCtrl1->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_ACTIVEBORDER));
+  DatePickerCtrl1->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_HIGHLIGHT));
   Choice1 = new wxChoice(SashWindow1, ID_CHOICE1, wxPoint(33,16), wxSize(244,21), 0, 0, 0, wxDefaultValidator, _T("ID_CHOICE1"));
   Choice1->SetSelection( Choice1->Append(_("Glonass")) );
   Choice1->Append(_("GPS"));
@@ -145,17 +151,19 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
   StaticText4 = new wxStaticText(SashWindow1, ID_STATICTEXT4, _("Значения СКО:"), wxPoint(306,244), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
   Button1 = new wxButton(SashWindow1, ID_BUTTON3, _("Загрузка Альм"), wxPoint(474,92), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON3"));
   StaticText5 = new wxStaticText(SashWindow1, ID_STATICTEXT5, _("Значения"), wxPoint(477,130), wxSize(66,13), 0, _T("ID_STATICTEXT5"));
-  DatePickerCtrl1 = new wxDatePickerCtrl(SashWindow1, ID_DATEPICKERCTRL1, wxDefaultDateTime, wxPoint(301,393), wxDefaultSize, wxDP_DEFAULT|wxDP_SHOWCENTURY, wxDefaultValidator, _T("ID_DATEPICKERCTRL1"));
+  TimePickerCtrl1 = new wxTimePickerCtrl(SashWindow1, ID_TIMEPICKERCTRL1, wxDateTime::Now(), wxPoint(461,434), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TIMEPICKERCTRL1"));
+  Button3 = new wxButton(SashWindow1, ID_BUTTON4, _("Label"), wxPoint(474,295), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON4"));
   SashWindow1->SetSashVisible(wxSASH_TOP,    true);
   SashWindow1->SetSashVisible(wxSASH_BOTTOM, true);
   SashWindow1->SetSashVisible(wxSASH_LEFT,   true);
   SashWindow1->SetSashVisible(wxSASH_RIGHT,  true);
 
+  Connect(ID_DATEPICKERCTRL1,wxEVT_DATE_CHANGED,(wxObjectEventFunction)&dataDialog::OnDatePickerCtrl1Changed);
   Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton2Click);
   Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton1Click1);
   Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&dataDialog::OnTextCtrl1Text1);
   Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton1Click2);
-  Connect(ID_DATEPICKERCTRL1,wxEVT_DATE_CHANGED,(wxObjectEventFunction)&dataDialog::OnDatePickerCtrl1Changed);
+  Connect(ID_BUTTON4,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton3Click1);
   Connect(ID_SASHWINDOW1,wxEVT_SASH_DRAGGED,(wxObjectEventFunction)&dataDialog::OnSashWindow1SashDragged);
   Connect(wxID_ANY,wxEVT_INIT_DIALOG,(wxObjectEventFunction)&dataDialog::OnInit);
   //*)
@@ -357,13 +365,13 @@ for (int i=1; i<=numberSput; i++)
 
 
 Coordinates Coord_sp = ephemerids(toe,
-                                          almanax_GPS[i-1].t_almanax,
-                                          almanax_GPS[i-1].M0,
-                                          almanax_GPS[i-1].sqrtA,
-                                          almanax_GPS[i-1].E,
-                                          almanax_GPS[i-1].I,
-                                          almanax_GPS[i-1].Om0,
-                                          almanax_GPS[i-1].time_week);
+                                  almanax_GPS[i-1].t_almanax,
+                                  almanax_GPS[i-1].M0,
+                                  almanax_GPS[i-1].sqrtA,
+                                  almanax_GPS[i-1].E,
+                                  almanax_GPS[i-1].I,
+                                  almanax_GPS[i-1].Om0,
+                                  almanax_GPS[i-1].time_week);
 
 Coord_sput[0] = Coord_sp.X;
 Coord_sput[1] = Coord_sp.Y;
@@ -417,13 +425,13 @@ for (int k=1; k<=numberSput; k++)
      if ((vsb[k]) == 1)
     {
 Coordinates Coord_sp = ephemerids(toe,
-                                          almanax_GPS[k-1].t_almanax,
-                                          almanax_GPS[k-1].M0,
-                                          almanax_GPS[k-1].sqrtA,
-                                          almanax_GPS[k-1].E,
-                                          almanax_GPS[k-1].I,
-                                          almanax_GPS[k-1].Om0,
-                                          almanax_GPS[k-1].time_week);
+                                  almanax_GPS[k-1].t_almanax,
+                                  almanax_GPS[k-1].M0,
+                                  almanax_GPS[k-1].sqrtA,
+                                  almanax_GPS[k-1].E,
+                                  almanax_GPS[k-1].I,
+                                  almanax_GPS[k-1].Om0,
+                                  almanax_GPS[k-1].time_week);
     dx=(Coord_sp.X-Coord_x);
     dy=(Coord_sp.Y-Coord_y);
     dz=(Coord_sp.Z- Coord_z);
@@ -436,27 +444,114 @@ Coordinates Coord_sp = ephemerids(toe,
     H(numsput, 3) = 1;
     numsput++ ;
     }
-}
-
-
-
-mat Htr = H.t();
-mat sko = sqrt((inv(Htr*inv(Dn)*H)).t());
-double dt1, dt2;
-
-//DatePickerCtrl1 -> GetValue(dt1);
-// вывод значения в стат. текст
-wxString s;
-s.Printf("Значение СКО:\nСКО для x: %.3f м\nСКО для y: %.3f м\nСКО для z: %.3f м\nСКО для D: %.3f, СКО: %.3f , \n dt1:  %.3f, dt2: %.3f" ,
+  }
+  mat Htr = H.t();
+  mat sko = sqrt((inv(Htr*inv(Dn)*H)).t());
+  double dt1, dt2;
+  //DatePickerCtrl1 -> GetValue(dt1);
+  // вывод значения в стат. текст
+  wxString s;
+  s.Printf("Значение СКО:\nСКО для x: %.3f м\nСКО для y: %.3f м\nСКО для z: %.3f м\nСКО для D: %.3f, СКО: %.3f , \n dt1:  %.3f, dt2: %.3f" ,
          sko(0,0), sko(1,1), sko(2,2), sko(3,3), sqrt (pow(sko(0,0),2)+pow(sko(1,1),2)+pow(sko(2,2),2)+pow(sko(3,3),2) ), dt1,dt2);
-//s.Printf("Значение :\ x: %.3f м\ny: %.3f м\n z: %.3f м\n " ,Coord_sput[0]/1000, Coord_sput[1]/1000, Coord_sput[2]/1000 );
-StaticText4->SetLabel(s);
-}
-else
-{
+  StaticText4->SetLabel(s);
+  }
+ /* else if ((Choice1->GetString(Choice1->GetSelection()))== "Glonass")
+  {
+  int numberSput = 24;
+  int vsb[numberSput] ;
+  int sumvsb = 0;
+  vector<int> Visibles; //вектор из кол-во элементов - visibles
+  double toe=44271.777;//время
+  for (int i=1; i<=numberSput; i++)
+  {
+// Получение коорд спутников
+//ephemerids(double toe,int t_almanax, double M0, double sqrtA, double E, double I, double Om0, double time_week ))
+
+
+  CoordinatesGlonass Coord_sp = ephemeridsGLNS(
+                                              );
+
+
+  Coord_sput[0] = Coord_sp.X;
+  Coord_sput[1] = Coord_sp.Y;
+  Coord_sput[2] = Coord_sp.Z;
+// Определение угла
+
+  alpha = 90 - (angle(Coord_sput, Coord_user, B, L)*180/PI);
+// определение видимости спутника
+  vsb[i]=0;
+  if ((alpha) >5)
+  {
+    vsb[i]=1;
+    sumvsb++;
+    Visibles.push_back(i);  // добавление элемента в конец вектора
+  }
+  }
+
+// получение матрицы Dn
+  int i = 0;
+  mat Dn;
+  Dn.zeros(sumvsb, sumvsb);
+  for (int k=1; k<=numberSput; k++)
+  {
+   if ((vsb[k]) == 1)
+     {
+      Dn(i,i) = SISerr[i].SISRE;
+      i++;
+     }
+  }
+  double max_val_Dn = Dn.max();
+  for (int i= 0; i<sumvsb; i++)
+  {
+  if ( Dn(i,i) == 0)
+  {
+    Dn(i,i) = max_val_Dn;
+  }
+  }
+
+// получение матрицы H
+  double dx;
+  double dy;
+  double dz;
+  double Ri;
+
+  mat H(sumvsb, 4);
+  H.zeros();
+
+  int numsput = 0;
+  for (int k=1; k<=numberSput; k++)
+  {
+     if ((vsb[k]) == 1)
+    {
+    CoordinatesGlonass Coord_sp = ephemeridsGLNS(
+                                                );
+    dx=(Coord_sp.X-Coord_x);
+    dy=(Coord_sp.Y-Coord_y);
+    dz=(Coord_sp.Z- Coord_z);
+ // Ri = sqrt (SQUARE(dx)+SQUARE(dy)+SQUARE(dz));
+    Ri = sqrt (pow(dx,2)+pow(dy,2)+pow(dz,2));
+    H(numsput, 0 ) = dx/Ri;
+    H(numsput, 1) = dy/Ri;
+    H(numsput, 2) = dz/Ri;
+    H(numsput, 3) = 1;
+    numsput++ ;
+    }
+  }
+  mat Htr = H.t();
+  mat sko = sqrt((inv(Htr*inv(Dn)*H)).t());
+  double dt1, dt2;
+  //DatePickerCtrl1 -> GetValue(dt1);
+  // вывод значения в стат. текст
+  wxString s;
+  s.Printf("Значение СКО:\nСКО для x: %.3f м\nСКО для y: %.3f м\nСКО для z: %.3f м\nСКО для D: %.3f, СКО: %.3f , \n dt1:  %.3f, dt2: %.3f" ,
+         sko(0,0), sko(1,1), sko(2,2), sko(3,3), sqrt (pow(sko(0,0),2)+pow(sko(1,1),2)+pow(sko(2,2),2)+pow(sko(3,3),2) ), dt1,dt2);
+  StaticText4->SetLabel(s);
+  }*/
+  else
+  {
     wxMessageBox(_("Выберите другую ГНСС"), _("Error"));
-}
-}
+  }
+  }
 
 void dataDialog::OnButton1Click2(wxCommandEvent& event)
 {
@@ -482,7 +577,14 @@ void dataDialog::OnButton1Click2(wxCommandEvent& event)
   }
   string text1 = text5+text2+text3+text4+".agp"s;
   */
-  const char* File1 ;
+  string datee;
+  int *hour;
+  int *minn;
+  int *sec;
+ //DatePickerCtrl1 -> GetValue().(&datee);
+// getValue(DatePickerCtrl1)->datee;
+TimePickerCtrl1->GetTime(hour, minn, sec);
+ /* const char* File1 ;
   const char* file ;
   File1 = "/MCC/ALMANAC/2015/MCCJ_150307.agp";
  // File1 = "/MCC/ALMANAC/"s+"year"s+"/"s+text1;
@@ -499,15 +601,34 @@ wxString s;
 int k = 31;
 
 //int k = 31;
-  s.Printf("Значение max_sats: %u\nЗначение PRN: %u\nЗначение t_almanax: %f\nЗначение v0m0: %E\nЗначение Om0: %E\nЗначение M0: %E\n",almanax_GPS[0].mass,almanax_GPS[k].PRN, almanax_GPS[k].t_almanax, almanax_GPS[k].vOm0, almanax_GPS[k].Om0, almanax_GPS[k].M0);
+  s.Printf("Значение max_sats: %u\nЗначение PRN: %u\nЗначение t_almanax: %f\nЗначение v0m0: %E\nЗначение Om0: %E\nЗначение M0: %E\n",hour,minn, sec, almanax_GPS[k].vOm0, almanax_GPS[k].Om0, almanax_GPS[k].M0);
    StaticText5->SetLabel(s);
-
+*/
+wxString s;
+s.Printf("Значение max_sats: %u\nЗначение PRN: %u\nЗначение t_almanax: %f\nЗначение v0m0:", hour, minn,sec);
+   StaticText5->SetLabel(s);
 /*almanax_GPS[k].t_almanax
 almanax_GPS[k].vOm0
 almanax_GPS[k].I
 almanax_GPS[k].w
 almanax_GPS[k].E
 almanax_GPS[k].sqrtA*/
+}
+
+
+void dataDialog::OnDatePickerCtrl1Changed(wxDateEvent& event)
+{
+}
+
+void dataDialog::OnButton3Click1(wxCommandEvent& event)
+{ int *hour;
+  int *minn;
+  int *sec;
+
+TimePickerCtrl1->GetTime(hour, minn, sec);
+wxString s;
+s.Printf("Значение max_sats: %f\nЗначение PRN: %f\nЗначение t_almanax: %f\nЗначение v0m0:", hour, minn,sec);
+StaticText5->SetLabel(s);
 }
 
 
@@ -606,8 +727,3 @@ void dFiTableFrame::OnButton1Click(wxCommandEvent& event)
 
 
 
-
-
-void dataDialog::OnDatePickerCtrl1Changed(wxDateEvent& event)
-{
-}

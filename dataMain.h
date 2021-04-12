@@ -20,6 +20,7 @@
 #include <wx/sashwin.h>
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
+#include <wx/timectrl.h>
 //*)
 #include <wx/grid.h>
 #include <wx/spinctrl.h>
@@ -61,11 +62,13 @@ class dataDialog: public wxDialog
         void OnTextCtrlZText(wxCommandEvent& event);
         void OnButton1Click2(wxCommandEvent& event);
         void OnDatePickerCtrl1Changed(wxDateEvent& event);
+        void OnButton3Click1(wxCommandEvent& event);
         //*)
 
 
         void Gridd(const char* file);
         //(*Identifiers(dataDialog)
+        static const long ID_DATEPICKERCTRL1;
         static const long ID_CHOICE1;
         static const long ID_BUTTON2;
         static const long ID_NOTEBOOK1;
@@ -79,7 +82,7 @@ class dataDialog: public wxDialog
         static const long ID_STATICTEXT4;
         static const long ID_BUTTON3;
         static const long ID_STATICTEXT5;
-        static const long ID_DATEPICKERCTRL1;
+        static const long ID_TIMEPICKERCTRL1;
         static const long ID_SASHWINDOW1;
         //*)
      // static const long ID_STATICTEXT4;
@@ -100,6 +103,7 @@ class dataDialog: public wxDialog
         wxTextCtrl* TextCtrlB;
         wxTextCtrl* TextCtrlH;
         wxTextCtrl* TextCtrlL;
+        wxTimePickerCtrl* TimePickerCtrl1;
         //*)
 
        // wxStaticText* StaticText4;
