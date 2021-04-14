@@ -29,41 +29,41 @@ tm.tm_sec=sec;
 time_t time = mktime(&tm);
 timeSec =time;
 int dt=0;
-  if ((year) > 81)
+  if ((tm.tm_year) > 81)
   dt++;
-  if ((year) > 82)
+  if ((tm.tm_year) > 82)
   dt++;
-  if ((year) > 83)
+  if ((tm.tm_year) > 83)
   dt++;
-  if ((year) > 85)
+  if ((tm.tm_year) > 85)
   dt++;
-  if ((year) > 87)
+  if ((tm.tm_year) > 87)
   dt++;
-  if ((year) > 89)
+  if ((tm.tm_year) > 89)
   dt++;
-  if ((year) > 90)
+  if ((tm.tm_year) > 90)
   dt++;
-  if ((year) > 92)
+  if ((tm.tm_year) > 92)
   dt++;
-  if ((year) > 93)
+  if ((tm.tm_year) > 93)
   dt++;
-  if ((year) > 94)
+  if ((tm.tm_year) > 94)
   dt++;
-  if ((year) > 95)
+  if ((tm.tm_year) > 95)
   dt++;
-  if ((year) > 97)
+  if ((tm.tm_year) > 97)
   dt++;
-  if ((year) > 98)
+  if ((tm.tm_year) > 98)
   dt++;
-  if ((year) > 105)
+  if ((tm.tm_year) > 105)
   dt++;
-  if ((year) > 108)
+  if ((tm.tm_year) > 108)
   dt++;
-  if ((year) > 112)
+  if ((tm.tm_year) > 112)
   dt++;
-   if ((year) > 115)
+   if ((tm.tm_year) > 115)
   dt++;
-   if ((year) > 116)
+   if ((tm.tm_year) > 116)
   dt++;
 dT = dt;
 }
@@ -73,7 +73,13 @@ timeCalc::~timeCalc()
 }
 void timeCalc::timeGLNS()
 {
-timee glonass;
+tm tmm;
+tmm.tm_year=c_year-1900;
+tmm.tm_mon = c_month-1;
+tmm.tm_mday = c_date;
+tmm.tm_hour = c_hour;
+tmm.tm_min=c_minutes;
+tmm.tm_sec=c_sec;
 tm GlonassVis;
 tm tmGlonass;
 tmGlonass.tm_year=96;//год (1900 год = 0)
@@ -82,27 +88,29 @@ tmGlonass.tm_mday = 1;// день месяца [1,31]
 tmGlonass.tm_hour = 0; // часы после полуночи [0,23]
 tmGlonass.tm_min=0; //минуты после часов [0,59]
 tmGlonass.tm_sec=0;  // секунды после минут [0,59]
-double time = timeSec + 3*60*60;
+timee glonass;
+tmm.tm_hour = tmm.tm_hour+3;
+time_t time22 = mktime(&tmm);;
 time_t timebaseGlonass = mktime(&tmGlonass);
-double timeGlonass = time - timebaseGlonass;
-glonass.numb_fouryear_period = (static_cast<double>(c_year) - static_cast<double>(c_year))/4;
-int deltayear = c_year%4;
-GlonassVis.tm_year = c_year - deltayear;
+double timeGlonass = time22 - timebaseGlonass;
+glonass.numb_fouryear_period = (static_cast<double>(tmm.tm_year) - static_cast<double>(tmGlonass.tm_year))/4;
+int deltayear = tmm.tm_year%4;
+
+GlonassVis.tm_year = tmm.tm_year - deltayear;
 GlonassVis.tm_mon = 0; // месяц года (январь = 0) [0,11]
 GlonassVis.tm_mday = 1;// день месяца [1,31]
 GlonassVis.tm_hour = 0; // часы после полуночи [0,23]
 GlonassVis.tm_min=0; //минуты после часов [0,59]
 GlonassVis.tm_sec=0;  // секунды после минут [0,59]
 time_t time_aftet_vis_year = mktime(&GlonassVis);
-glonass.delta_day_after_vis_year = time - time_aftet_vis_year;
+glonass.delta_day_after_vis_year = time22 - time_aftet_vis_year;
 glonass.day_after_vis_year =glonass.delta_day_after_vis_year/(60*60*24); //дней после висок года .. учесть 1 дей.
-//double yearGlonass = timeGlonass/(60*60*24/365);
 glonass.week = timeGlonass/(60*60*24*7);
 glonass.sec_after_week=fmod(timeGlonass,(60*60*24*7));
-glonass.sum_sec = c_hour*60*60 + c_minutes *60 + c_minutes +c_m_sec;
-numb_fouryear_period = glonass.numb_fouryear_period;
-day_after_vis_year = ceil(glonass.day_after_vis_year);
-sec_since_week = glonass.sum_sec ;
+glonass.sum_sec = tmm.tm_hour*60*60 + tmm.tm_min*60 + tmm.tm_sec;
+GLNS_sec_since_week = glonass.sum_sec;
+GLNS_numb_fouryear_period = ceil(glonass.numb_fouryear_period); //N4 -for GLONASS ;
+GLNS_day_after_vis_year = ceil(glonass.day_after_vis_year) ;
 }
 
 void timeCalc::timeGPS()

@@ -90,6 +90,7 @@ const long dataDialog::ID_STATICTEXT4 = wxNewId();
 const long dataDialog::ID_BUTTON3 = wxNewId();
 const long dataDialog::ID_STATICTEXT5 = wxNewId();
 const long dataDialog::ID_TIMEPICKERCTRL1 = wxNewId();
+const long dataDialog::ID_BUTTON4 = wxNewId();
 const long dataDialog::ID_SASHWINDOW1 = wxNewId();
 //*)
 
@@ -129,7 +130,7 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
   Create(parent, wxID_ANY, _("Data app"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
   SetClientSize(wxSize(715,571));
   SashWindow1 = new wxSashWindow(this, ID_SASHWINDOW1, wxPoint(56,40), wxSize(592,520), wxSW_3D|wxCLIP_CHILDREN, _T("ID_SASHWINDOW1"));
-  DatePickerCtrl1 = new wxDatePickerCtrl(SashWindow1, ID_DATEPICKERCTRL1, wxDefaultDateTime, wxPoint(317,431), wxSize(-1,-1), wxDP_DEFAULT|wxDP_SHOWCENTURY, wxDefaultValidator, _T("ID_DATEPICKERCTRL1"));
+  DatePickerCtrl1 = new wxDatePickerCtrl(SashWindow1, ID_DATEPICKERCTRL1, wxDefaultDateTime, wxPoint(460,403), wxSize(-1,-1), wxDP_DEFAULT|wxDP_SHOWCENTURY, wxDefaultValidator, _T("ID_DATEPICKERCTRL1"));
   DatePickerCtrl1->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_ACTIVEBORDER));
   DatePickerCtrl1->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_HIGHLIGHT));
   Choice1 = new wxChoice(SashWindow1, ID_CHOICE1, wxPoint(33,16), wxSize(244,21), 0, 0, 0, wxDefaultValidator, _T("ID_CHOICE1"));
@@ -151,6 +152,7 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
   Button1 = new wxButton(SashWindow1, ID_BUTTON3, _("Загрузка Альм"), wxPoint(474,92), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON3"));
   StaticText5 = new wxStaticText(SashWindow1, ID_STATICTEXT5, _("Значения"), wxPoint(477,130), wxSize(66,13), 0, _T("ID_STATICTEXT5"));
   TimePickerCtrl1 = new wxTimePickerCtrl(SashWindow1, ID_TIMEPICKERCTRL1, wxDateTime::Now(), wxPoint(461,434), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TIMEPICKERCTRL1"));
+  Button3 = new wxButton(SashWindow1, ID_BUTTON4, _("Label"), wxPoint(314,418), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON4"));
   SashWindow1->SetSashVisible(wxSASH_TOP,    true);
   SashWindow1->SetSashVisible(wxSASH_BOTTOM, true);
   SashWindow1->SetSashVisible(wxSASH_LEFT,   true);
@@ -161,6 +163,7 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
   Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton1Click1);
   Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&dataDialog::OnTextCtrl1Text1);
   Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton1Click2);
+  Connect(ID_BUTTON4,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton3Click2);
   Connect(ID_SASHWINDOW1,wxEVT_SASH_DRAGGED,(wxObjectEventFunction)&dataDialog::OnSashWindow1SashDragged);
   Connect(wxID_ANY,wxEVT_INIT_DIALOG,(wxObjectEventFunction)&dataDialog::OnInit);
   //*)
@@ -574,13 +577,16 @@ void dataDialog::OnButton1Click2(wxCommandEvent& event)
   }
   string text1 = text5+text2+text3+text4+".agp"s;
   */
-  string datee;
-  int *hour;
-  int *minn;
-  int *sec;
- //DatePickerCtrl1 -> GetValue().(&datee);
-// getValue(DatePickerCtrl1)->datee;
-TimePickerCtrl1->GetTime(hour, minn, sec);
+ /* string datee;
+  int hour;
+  int minn;
+  int sec;
+wxDateTime T;
+T = DatePickerCtrl1->GetValue();
+int D = T.GetDay();
+int Month = T.GetMonth();
+int Year = T.GetYear();
+TimePickerCtrl1->GetTime(&hour, &minn, &sec);
  /* const char* File1 ;
   const char* file ;
   File1 = "/MCC/ALMANAC/2015/MCCJ_150307.agp";
@@ -601,9 +607,9 @@ int k = 31;
   s.Printf("Значение max_sats: %u\nЗначение PRN: %u\nЗначение t_almanax: %f\nЗначение v0m0: %E\nЗначение Om0: %E\nЗначение M0: %E\n",hour,minn, sec, almanax_GPS[k].vOm0, almanax_GPS[k].Om0, almanax_GPS[k].M0);
    StaticText5->SetLabel(s);
 */
-wxString s;
-s.Printf("Значение max_sats: %u\nЗначение PRN: %u\nЗначение t_almanax: %f\nЗначение v0m0:", hour, minn,sec);
-   StaticText5->SetLabel(s);
+//wxString s;
+//s.Printf("Значение max_sats: %u\nЗначение PRN: %u\nЗначение t_almanax: %u\nЗначение v0m0:", D, minn,sec);
+ //  StaticText5->SetLabel(s);
 /*almanax_GPS[k].t_almanax
 almanax_GPS[k].vOm0
 almanax_GPS[k].I
@@ -618,7 +624,7 @@ void dataDialog::OnDatePickerCtrl1Changed(wxDateEvent& event)
 }
 
 void dataDialog::OnButton3Click1(wxCommandEvent& event)
-{ int *hour;
+{ /*int *hour;
   int *minn;
   int *sec;
 
@@ -626,6 +632,57 @@ TimePickerCtrl1->GetTime(hour, minn, sec);
 wxString s;
 s.Printf("Значение max_sats: %f\nЗначение PRN: %f\nЗначение t_almanax: %f\nЗначение v0m0:", hour, minn,sec);
 StaticText5->SetLabel(s);
+*/}
+
+void dataDialog::OnButton3Click2(wxCommandEvent& event)
+{
+  timeCalc calc(31,12,2016,23,59,60,00);
+  calc.timeGPS();
+  ofstream f;
+  f.open("test/test.txt");
+  //f <<"timeGLNS\n"<<"gps.sec_after_week" <<calc.day_after_vis_year<<endl;
+  f <<"sec_since_week" <<calc.sec_since_week<<endl;
+  f <<"week" <<calc.week<<endl;
+  f <<"dT" <<calc.dT<<endl;
+    f <<"timeSec" <<calc.timeSec<<endl;
+    f <<"c_date" <<calc.c_date<<endl;
+    f <<"c_month" <<calc.c_month<<endl;
+    f <<"c_date" <<calc.c_date<<endl;
+    f <<"c_year" <<calc.c_year<<endl;
+    f <<"c_hour" <<calc.c_hour<<endl;
+    f <<"c_minutes" <<calc.c_minutes<<endl;
+    calc.timeGLL();
+  f <<"Galileo\n"<<"sec_since_week" <<calc.sec_since_week<<endl;
+  f <<"week" <<calc.week<<endl;
+  f <<"dT" <<calc.dT<<endl;
+  calc.timeGLNS();
+  f <<"-----------------\nGLonass \n"<<"GLNS_day_after_vis_year" <<calc.GLNS_day_after_vis_year<<endl;
+  f <<"numb_fouryear_period" <<calc.GLNS_numb_fouryear_period<<endl;
+  f <<"GLNS_sec_since_week" <<calc.GLNS_sec_since_week<<endl;
+
+// Получение коорд спутников
+//ephemerids(double toe,int t_almanax, double M0, double sqrtA, double E, double I, double Om0, double time_week ))
+
+GlonassCoordinates Coord_sp = ephemeridsGLNS(5,789,54000,
+                                             788, 0.452390625e+4,-0.2656127e+4,0.6758690E-02,
+                                             0.1220703E-02,0.5750656E-03,  0.3695374E+00, 0.5243139E+00 );
+
+//my coord
+/*
+Coordinates Coord_sp = ephemerids(44271.777,
+                                  61440,
+                                  0.84951556,
+                                  0.51536460*pow(10,4),
+                                  0.11027813*pow(10, -1),
+                                  0.30822450,
+                                  -0.47967029,
+                                  1835);
+*/
+ f <<"-----------------\ncoord \n"<<"Coord_sp.X=" <<Coord_sp.X<<endl;
+  f <<"Coord_sp.Y" <<Coord_sp.Y<<endl;
+    f <<"Coord_sp.Z" <<Coord_sp.Z<<endl;
+  f.close();
+
 }
 
 

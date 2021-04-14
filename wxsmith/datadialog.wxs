@@ -10,7 +10,7 @@
 			<size>592,520</size>
 			<handler function="OnSashWindow1SashDragged" entry="EVT_SASH_DRAGGED" />
 			<object class="wxDatePickerCtrl" name="ID_DATEPICKERCTRL1" variable="DatePickerCtrl1" member="yes">
-				<pos>317,431</pos>
+				<pos>460,403</pos>
 				<size>-1,-1</size>
 				<fg>wxSYS_COLOUR_ACTIVEBORDER</fg>
 				<bg>wxSYS_COLOUR_HIGHLIGHT</bg>
@@ -87,6 +87,11 @@
 			</object>
 			<object class="wxTimePickerCtrl" name="ID_TIMEPICKERCTRL1" variable="TimePickerCtrl1" member="yes">
 				<pos>461,434</pos>
+			</object>
+			<object class="wxButton" name="ID_BUTTON4" variable="Button3" member="yes">
+				<label>Label</label>
+				<pos>314,418</pos>
+				<handler function="OnButton3Click2" entry="EVT_BUTTON" />
 			</object>
 		</object>
 	</object>

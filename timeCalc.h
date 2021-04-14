@@ -23,23 +23,32 @@ public:
      int m_sec ); // msec пока не используется.
   ~timeCalc(); // дописать
   int dT; // поправки ко времени
-  int sec_since_week;
-  int week;
-  int numb_fouryear_period; //N4 -for GLONASS ;
-  int day_after_vis_year;//NT - for GLONASS
+  int sec_since_week; //GPS,GALILEO
+  int week;//GPS,GALILEO
+  int GLNS_sec_since_week;
+  int GLNS_numb_fouryear_period; //N4 -for GLONASS ;
+  int GLNS_day_after_vis_year;//NT - for GLONASS
 
   void timeGLNS();
   void timeGPS();
   void timeGLL();
-protected:
   double timeSec;
   int c_date;
   int c_month;
-  int c_year;
+  int c_year; //в формате 2015
   int c_hour;
   int c_minutes;
   int c_sec;
   int c_m_sec;
+protected:
+  /*double timeSec;
+  int c_date;
+  int c_month;
+  int c_year; //в формате 2015
+  int c_hour;
+  int c_minutes;
+  int c_sec;
+  int c_m_sec;*/
 };
 
 #endif
