@@ -72,7 +72,7 @@ double a_old = 0;
 a = 1;
 Tosk = Tdr;
 p = 0;
-
+// в матлаб работают оба алгоритма
 /*
 while (abs(a-a_old)>1e-2)
 {a_old = a;
