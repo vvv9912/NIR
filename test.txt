@@ -1,0 +1,14 @@
+sec_since_week44271
+week1835
+dT16
+timeSec1.42581e+009
+c_date8
+c_month3
+c_date8
+c_year2015
+c_hour12
+c_minutes17
+Galileo
+sec_since_week44271
+week811
+dT16
