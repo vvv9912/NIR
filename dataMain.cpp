@@ -129,7 +129,7 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
   //(*Initialize(dataDialog)
   Create(parent, wxID_ANY, _("Data app"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
   SetClientSize(wxSize(715,571));
-  SashWindow1 = new wxSashWindow(this, ID_SASHWINDOW1, wxPoint(56,40), wxSize(592,520), wxSW_3D|wxCLIP_CHILDREN, _T("ID_SASHWINDOW1"));
+  SashWindow1 = new wxSashWindow(this, ID_SASHWINDOW1, wxPoint(56,40), wxSize(600,520), wxSW_3D|wxCLIP_CHILDREN, _T("ID_SASHWINDOW1"));
   DatePickerCtrl1 = new wxDatePickerCtrl(SashWindow1, ID_DATEPICKERCTRL1, wxDefaultDateTime, wxPoint(460,403), wxSize(-1,-1), wxDP_DEFAULT|wxDP_SHOWCENTURY, wxDefaultValidator, _T("ID_DATEPICKERCTRL1"));
   DatePickerCtrl1->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_ACTIVEBORDER));
   DatePickerCtrl1->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_HIGHLIGHT));
@@ -186,7 +186,7 @@ dataDialog::~dataDialog()
 
 void dataDialog::OnQuit(wxCommandEvent& event)
 {
-  Close();
+    Close();
 }
 
 void dataDialog::OnInit(wxInitDialogEvent& event) {};

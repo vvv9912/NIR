@@ -7,7 +7,7 @@
 		<handler function="OnInit" entry="EVT_INIT_DIALOG" />
 		<object class="wxSashWindow" name="ID_SASHWINDOW1" variable="SashWindow1" member="yes">
 			<pos>56,40</pos>
-			<size>592,520</size>
+			<size>600,520</size>
 			<handler function="OnSashWindow1SashDragged" entry="EVT_SASH_DRAGGED" />
 			<object class="wxDatePickerCtrl" name="ID_DATEPICKERCTRL1" variable="DatePickerCtrl1" member="yes">
 				<pos>460,403</pos>
