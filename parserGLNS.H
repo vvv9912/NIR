@@ -14,9 +14,6 @@ typedef struct
   int month;
   int year;
   double t_almanax;
-
-  //  double dt;
- // double vt;
   unsigned int PRN;
   double tLA; // строка 2 -п.7
   double Lam ;

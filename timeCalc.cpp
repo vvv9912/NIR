@@ -90,7 +90,7 @@ tmGlonass.tm_min=0; //минуты после часов [0,59]
 tmGlonass.tm_sec=0;  // секунды после минут [0,59]
 timee glonass;
 tmm.tm_hour = tmm.tm_hour+3;
-time_t time22 = mktime(&tmm);;
+time_t time22 = mktime(&tmm);
 time_t timebaseGlonass = mktime(&tmGlonass);
 double timeGlonass = time22 - timebaseGlonass;
 glonass.numb_fouryear_period = (static_cast<double>(tmm.tm_year) - static_cast<double>(tmGlonass.tm_year))/4;

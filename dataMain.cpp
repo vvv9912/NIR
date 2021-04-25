@@ -87,10 +87,9 @@ const long dataDialog::ID_STATICTEXT1 = wxNewId();
 const long dataDialog::ID_STATICTEXT2 = wxNewId();
 const long dataDialog::ID_STATICTEXT3 = wxNewId();
 const long dataDialog::ID_STATICTEXT4 = wxNewId();
-const long dataDialog::ID_BUTTON3 = wxNewId();
-const long dataDialog::ID_STATICTEXT5 = wxNewId();
 const long dataDialog::ID_TIMEPICKERCTRL1 = wxNewId();
 const long dataDialog::ID_BUTTON4 = wxNewId();
+const long dataDialog::ID_STATICTEXT5 = wxNewId();
 const long dataDialog::ID_SASHWINDOW1 = wxNewId();
 //*)
 
@@ -128,9 +127,14 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
 {
   //(*Initialize(dataDialog)
   Create(parent, wxID_ANY, _("Data app"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
-  SetClientSize(wxSize(715,571));
-  SashWindow1 = new wxSashWindow(this, ID_SASHWINDOW1, wxPoint(56,40), wxSize(600,520), wxSW_3D|wxCLIP_CHILDREN, _T("ID_SASHWINDOW1"));
-  DatePickerCtrl1 = new wxDatePickerCtrl(SashWindow1, ID_DATEPICKERCTRL1, wxDefaultDateTime, wxPoint(460,403), wxSize(-1,-1), wxDP_DEFAULT|wxDP_SHOWCENTURY, wxDefaultValidator, _T("ID_DATEPICKERCTRL1"));
+  SetClientSize(wxSize(494,556));
+  SetMinSize(wxSize(-1,-1));
+  SetMaxSize(wxSize(-1,-1));
+  SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_INACTIVEBORDER));
+  SashWindow1 = new wxSashWindow(this, ID_SASHWINDOW1, wxPoint(56,40), wxSize(440,504), wxSW_3D|wxCLIP_CHILDREN, _T("ID_SASHWINDOW1"));
+  SashWindow1->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOWTEXT));
+  SashWindow1->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_MENUBAR));
+  DatePickerCtrl1 = new wxDatePickerCtrl(SashWindow1, ID_DATEPICKERCTRL1, wxDefaultDateTime, wxPoint(305,65), wxSize(85,21), wxDP_DEFAULT|wxDP_SHOWCENTURY, wxDefaultValidator, _T("ID_DATEPICKERCTRL1"));
   DatePickerCtrl1->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_ACTIVEBORDER));
   DatePickerCtrl1->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_HIGHLIGHT));
   Choice1 = new wxChoice(SashWindow1, ID_CHOICE1, wxPoint(33,16), wxSize(244,21), 0, 0, 0, wxDefaultValidator, _T("ID_CHOICE1"));
@@ -141,18 +145,17 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
   Choice1->Append(_("QZSS"));
   Button2 = new wxButton(SashWindow1, ID_BUTTON2, _("Загрузить"), wxPoint(305,16), wxSize(127,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
   Notebook1 = new wxNotebook(SashWindow1, ID_NOTEBOOK1, wxPoint(124,214), wxDefaultSize, 0, _T("ID_NOTEBOOK1"));
-  Down = new wxButton(SashWindow1, ID_BUTTON1, _("Обработка "), wxPoint(305,216), wxSize(127,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
-  TextCtrlH = new wxTextCtrl(SashWindow1, ID_TEXTCTRL1, _("0"), wxPoint(305,95), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
-  TextCtrlB = new wxTextCtrl(SashWindow1, ID_TEXTCTRL2, _("0"), wxPoint(305,140), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
-  TextCtrlL = new wxTextCtrl(SashWindow1, ID_TEXTCTRL3, _("0"), wxPoint(305,185), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL3"));
-  StaticText1 = new wxStaticText(SashWindow1, ID_STATICTEXT1, _("Введите значение высоты:"), wxPoint(305,77), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
-  StaticText2 = new wxStaticText(SashWindow1, ID_STATICTEXT2, _("Введите значение B:"), wxPoint(305,122), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
-  StaticText3 = new wxStaticText(SashWindow1, ID_STATICTEXT3, _("Введите значение L:"), wxPoint(305,167), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
-  StaticText4 = new wxStaticText(SashWindow1, ID_STATICTEXT4, _("Значения СКО:"), wxPoint(306,244), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
-  Button1 = new wxButton(SashWindow1, ID_BUTTON3, _("Загрузка Альм"), wxPoint(474,92), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON3"));
-  StaticText5 = new wxStaticText(SashWindow1, ID_STATICTEXT5, _("Значения"), wxPoint(477,130), wxSize(66,13), 0, _T("ID_STATICTEXT5"));
-  TimePickerCtrl1 = new wxTimePickerCtrl(SashWindow1, ID_TIMEPICKERCTRL1, wxDateTime::Now(), wxPoint(461,434), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TIMEPICKERCTRL1"));
-  Button3 = new wxButton(SashWindow1, ID_BUTTON4, _("Label"), wxPoint(314,418), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON4"));
+  Down = new wxButton(SashWindow1, ID_BUTTON1, _("Обработка "), wxPoint(305,266), wxSize(127,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+  TextCtrlH = new wxTextCtrl(SashWindow1, ID_TEXTCTRL1, _("0"), wxPoint(305,145), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
+  TextCtrlB = new wxTextCtrl(SashWindow1, ID_TEXTCTRL2, _("0"), wxPoint(305,190), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
+  TextCtrlL = new wxTextCtrl(SashWindow1, ID_TEXTCTRL3, _("0"), wxPoint(305,235), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL3"));
+  StaticText1 = new wxStaticText(SashWindow1, ID_STATICTEXT1, _("Введите значение высоты:"), wxPoint(305,127), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
+  StaticText2 = new wxStaticText(SashWindow1, ID_STATICTEXT2, _("Введите значение B:"), wxPoint(305,172), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
+  StaticText3 = new wxStaticText(SashWindow1, ID_STATICTEXT3, _("Введите значение L:"), wxPoint(305,217), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
+  StaticText4 = new wxStaticText(SashWindow1, ID_STATICTEXT4, _("Значения СКО:"), wxPoint(306,294), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
+  TimePickerCtrl1 = new wxTimePickerCtrl(SashWindow1, ID_TIMEPICKERCTRL1, wxDateTime::Now(), wxPoint(305,93), wxSize(85,21), 0, wxDefaultValidator, _T("ID_TIMEPICKERCTRL1"));
+  Button3 = new wxButton(SashWindow1, ID_BUTTON4, _("для отладки/test"), wxPoint(303,463), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON4"));
+  StaticText5 = new wxStaticText(SashWindow1, ID_STATICTEXT5, _("Время прогнозирования"), wxPoint(305,49), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
   SashWindow1->SetSashVisible(wxSASH_TOP,    true);
   SashWindow1->SetSashVisible(wxSASH_BOTTOM, true);
   SashWindow1->SetSashVisible(wxSASH_LEFT,   true);
@@ -162,13 +165,12 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
   Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton2Click);
   Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton1Click1);
   Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&dataDialog::OnTextCtrl1Text1);
-  Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton1Click2);
   Connect(ID_BUTTON4,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton3Click2);
   Connect(ID_SASHWINDOW1,wxEVT_SASH_DRAGGED,(wxObjectEventFunction)&dataDialog::OnSashWindow1SashDragged);
   Connect(wxID_ANY,wxEVT_INIT_DIALOG,(wxObjectEventFunction)&dataDialog::OnInit);
   //*)
 
-Grid = new wxGrid(SashWindow1, ID_GRID, wxPoint(33,72), wxSize(244,490), 0, _T("ID_GRID"));
+Grid = new wxGrid(SashWindow1, ID_GRID, wxPoint(33,60), wxSize(244,490), 0, _T("ID_GRID"));
 
 Grid->CreateGrid(24,2);
 Grid->SetColLabelValue(0, _("SISRE, m"));
@@ -282,7 +284,7 @@ delete Grid;
 memset(&SISerr,0, sizeof(SISerr));
 int max_sats = parse(file);
 sizeY=490;
-Grid = new wxGrid(SashWindow1, ID_GRID, wxPoint(33,72), wxSize(244,sizeY), 0, _T("ID_GRID"));
+Grid = new wxGrid(SashWindow1, ID_GRID, wxPoint(33,60), wxSize(244,sizeY), 0, _T("ID_GRID"));
 wxString s;
 Grid->CreateGrid(max_sats,2);
 Grid->SetColLabelValue(0, _("SISRE, m"));
@@ -349,21 +351,131 @@ Coord_user[2]= ((1-e*e)*N+h)*sin(B);
 
 double Coord_sput[3];
 double alpha;
+ //передаем в класс определения времени
+//Т.е получили время на которое необходимо предсказать
+//Далее "найдем" файл от которого будет высчитывать само предсказание
+//если от сегодн. дня, то день -1; тк файл загружается ~ в 18 00;
+
+// Считаем сегодняшн. дату
+int year_predsk;
+int month_predsk;
+int day_predsk;
+int hour_predsk;
+int min_predsk;
+int sec_predsk;
+//время от которого скачиваем
+int year_down;
+int month_down;
+int day_down;
+//int hour_down;
+//int min_down;
+//int sec_down ;
+wxDateTime T;
+T = DatePickerCtrl1->GetValue();
+day_predsk = T.GetDay(); //для скачивания файла
+month_predsk = T.GetMonth()+1; // тк 1 месяц равен 0;
+year_predsk = T.GetYear();
+//получаем дату и время
+// Дата и время от которой предсказывать:
+TimePickerCtrl1->GetTime(&hour_predsk, &min_predsk, &sec_predsk);
+
+
+time_t nowsec = time(0);
+tm *ltm = localtime(&nowsec);
+int yeartoday = 1900+ltm->tm_year;
+int monthtoday = 1 + ltm->tm_mon;
+int daytoday = ltm->tm_mday;
+int hourrtoday = ltm->tm_hour;
+int mintoday = 1 + ltm->tm_min;
+int sectoday = 1 + ltm->tm_sec;
+ // Если предсказание  в прошлом, то год ии месяц предсказания остется тот же, но день - прошлый
+day_down = day_predsk-1;
+year_down = year_predsk;
+month_down = month_predsk;
+ofstream f;
+  f.open("test/test2.txt");
+   f<< "year_predsk"<< year_predsk<<endl;
+    f<< "month_predsk"<< month_predsk<<endl;
+     f<< "day_predsk"<< day_predsk<<endl;
+       f<< "hour_predsk"<< hour_predsk<<endl;
+         f<< "min_predsk"<< min_predsk<<endl;
+           f<< "sec_predsk"<< sec_predsk<<endl;
+
+
+
+//если предсказание уже на будущее, то год,месяц остается сегодняшний, а день минус 1
+//если год = году сейчас, но день больше или равен, то день минус 1
+// по сути можно облегчить и сделать 1 цикл через "или"
+if (year_predsk>yeartoday)
+{
+  day_down = daytoday -1;
+  year_down = yeartoday;
+  month_down = monthtoday;
+}
+if (year_predsk == yeartoday)
+{
+  if ( day_predsk >= daytoday)
+  {
+    day_down = daytoday -1;
+    year_down = yeartoday;
+    month_down = monthtoday;
+  }
+}
+  f<< "day_down"<< day_down<<endl;
+  f<< "month_down"<< month_down<<endl;
+  f<< "year_down"<< year_down<<endl;
+timeCalc calc(day_predsk,month_predsk,year_predsk ,hour_predsk,min_predsk,sec_predsk,00);
+
+//
 if ((Choice1->GetString(Choice1->GetSelection()))== "GPS")
 {
+  //преобразование в слово для скачивания
+  string textYear = to_string(year_down);
+  string text5 = "MCCJ_";
+  string text2 = to_string(year_down -2000);
+  string text3 ;
+  if (month_down<10)
+  {
+   text3 = "0"s + to_string(month_down);
+  }
+  else {
+  text3 = to_string(month_down);
+  }
+    string text4;
+
+  if (day_down<10)
+  {
+    text4 = "0"s +to_string(day_down);
+  }
+  else {
+  text4 = to_string(day_down);
+  }
+  string text1 = text5+text2+text3+text4+".agp"s;
+  string text0 = "/MCC/ALMANAC/"+ textYear +"/"+text1;
+    f<< " day_down="<< day_down<<endl;
+  f<< " text4="<< text4<<endl;
+  const char* File1 ;
+  const char* file ;
+  File1 = text0.c_str();//"/MCC/ALMANAC/2015/MCCJ_150307.agp"//перевод строки с строку Си
+  file = text1.c_str();
+  //! добавить если файла нет, искать ближайший!
+  f<< "const char* File1"<< File1<<endl;
+  f<< " file"<< file<<endl;
+   f.close();
+  bool down = download( "glonass-iac.ru", NULL, NULL, File1, file);
+  int max_sats = parseGPS(file);
+
 // Расчет матрицы Dn, Hn, SKO
 int numberSput = 32;
 int vsb[numberSput] ;
 int sumvsb = 0;
 vector<int> Visibles; //вектор из кол-во элементов - visibles
-double toe=44271.777;
+calc.timeGPS();
+double toe=calc.sec_since_week;
 for (int i=1; i<=numberSput; i++)
 {
 // Получение коорд спутников
 //ephemerids(double toe,int t_almanax, double M0, double sqrtA, double E, double I, double Om0, double time_week ))
-
-
-
 Coordinates Coord_sp = ephemerids(toe,
                                   almanax_GPS[i-1].t_almanax,
                                   almanax_GPS[i-1].M0,
@@ -377,7 +489,6 @@ Coord_sput[0] = Coord_sp.X;
 Coord_sput[1] = Coord_sp.Y;
 Coord_sput[2] = Coord_sp.Z;
 // Определение угла
-
 alpha = 90 - (angle(Coord_sput, Coord_user, B, L)*180/PI);
 // определение видимости спутника
 vsb[i]=0;
@@ -424,6 +535,7 @@ for (int k=1; k<=numberSput; k++)
 {
      if ((vsb[k]) == 1)
     {
+
 Coordinates Coord_sp = ephemerids(toe,
                                   almanax_GPS[k-1].t_almanax,
                                   almanax_GPS[k-1].M0,
@@ -447,16 +559,49 @@ Coordinates Coord_sp = ephemerids(toe,
   }
   mat Htr = H.t();
   mat sko = sqrt((inv(Htr*inv(Dn)*H)).t());
-  double dt1, dt2;
-  //DatePickerCtrl1 -> GetValue(dt1);
-  // вывод значения в стат. текст
   wxString s;
-  s.Printf("Значение СКО:\nСКО для x: %.3f м\nСКО для y: %.3f м\nСКО для z: %.3f м\nСКО для D: %.3f, СКО: %.3f , \n dt1:  %.3f, dt2: %.3f" ,
-         sko(0,0), sko(1,1), sko(2,2), sko(3,3), sqrt (pow(sko(0,0),2)+pow(sko(1,1),2)+pow(sko(2,2),2)+pow(sko(3,3),2) ), dt1,dt2);
+  s.Printf("Значение СКО:\nСКО для x: %.3f м\nСКО для y: %.3f м\nСКО для z: %.3f м\nСКО для D: %.3f, СКО: %.3f" ,
+         sko(0,0), sko(1,1), sko(2,2), sko(3,3), sqrt (pow(sko(0,0),2)+pow(sko(1,1),2)+pow(sko(2,2),2)+pow(sko(3,3),2) ));
   StaticText4->SetLabel(s);
   }
- /* else if ((Choice1->GetString(Choice1->GetSelection()))== "Glonass")
+ else if ((Choice1->GetString(Choice1->GetSelection()))== "Glonass")
   {
+     //преобразование в слово для скачивания
+  string textYear = to_string(year_down);
+  string text5 = "MCCJ_";
+  string text2 = to_string(year_down -2000);
+  string text3 ;
+  if (month_down<10)
+  {
+   text3 = "0"s + to_string(month_down);
+  }
+  else {
+  text3 = to_string(month_down);
+  }
+    string text4;
+
+  if (day_down<10)
+  {
+    text4 = "0"s +to_string(day_down);
+  }
+  else {
+  text4 = to_string(day_down);
+  }
+  string text1 = text5+text2+text3+text4+".agl"s;
+  string text0 = "/MCC/ALMANAC/"+ textYear +"/"+text1;
+    f<< " day_down="<< day_down<<endl;
+  f<< " text4="<< text4<<endl;
+  const char* File1 ;
+  const char* file ;
+  File1 = text0.c_str();//"/MCC/ALMANAC/2015/MCCJ_150307.agl"//перевод строки с строку Си
+  file = text1.c_str();
+  //! добавить если файла нет, искать ближайший!
+  f<< "const char* File1"<< File1<<endl;
+  f<< " file"<< file<<endl;
+   f.close();
+  bool down = download( "glonass-iac.ru", NULL, NULL, File1, file);
+  int max_sats = parseGLNS(file);
+
   int numberSput = 24;
   int vsb[numberSput] ;
   int sumvsb = 0;
@@ -467,10 +612,19 @@ Coordinates Coord_sp = ephemerids(toe,
 // Получение коорд спутников
 //ephemerids(double toe,int t_almanax, double M0, double sqrtA, double E, double I, double Om0, double time_week ))
 
-
-  CoordinatesGlonass Coord_sp = ephemeridsGLNS(
-                                              );
-
+    calc.timeGLL();
+    timeCalc GLNSephemTime( almanax_GLNS[i-1].date,almanax_GLNS[i-1].month, almanax_GLNS[i-1].year ,0,0,0,0);
+  GlonassCoordinates Coord_sp = ephemeridsGLNS(calc.GLNS_numb_fouryear_period, //N4
+                                               calc.GLNS_day_after_vis_year,
+                                               calc.GLNS_sec_since_week,
+                                               GLNSephemTime.GLNS_numb_fouryear_period, //Na берем из расчета даты альманаха
+                                               almanax_GLNS[i-1].tLA,
+                                               almanax_GLNS[i-1].dT,
+                                               almanax_GLNS[i-1].dT,
+                                               almanax_GLNS[i-1].dTT,
+                                               almanax_GLNS[i-1].E,
+                                               almanax_GLNS[i-1].w,
+                                               almanax_GLNS[i-1].Lam);
 
   Coord_sput[0] = Coord_sp.X;
   Coord_sput[1] = Coord_sp.Y;
@@ -523,8 +677,18 @@ Coordinates Coord_sp = ephemerids(toe,
   {
      if ((vsb[k]) == 1)
     {
-    CoordinatesGlonass Coord_sp = ephemeridsGLNS(
-                                                );
+      timeCalc GLNSephemTime( almanax_GLNS[k-1].date,almanax_GLNS[k-1].month, almanax_GLNS[k-1].year ,0,0,0,0);
+      GlonassCoordinates Coord_sp = ephemeridsGLNS(calc.GLNS_numb_fouryear_period, //N4
+                                               calc.GLNS_day_after_vis_year,
+                                               calc.GLNS_sec_since_week,
+                                               GLNSephemTime.GLNS_numb_fouryear_period, //Na берем из расчета даты альманаха
+                                               almanax_GLNS[k-1].tLA,
+                                               almanax_GLNS[k-1].dT,
+                                               almanax_GLNS[k-1].dT,
+                                               almanax_GLNS[k-1].dTT,
+                                               almanax_GLNS[k-1].E,
+                                               almanax_GLNS[k-1].w,
+                                               almanax_GLNS[k-1].Lam);
     dx=(Coord_sp.X-Coord_x);
     dy=(Coord_sp.Y-Coord_y);
     dz=(Coord_sp.Z- Coord_z);
@@ -543,80 +707,17 @@ Coordinates Coord_sp = ephemerids(toe,
   //DatePickerCtrl1 -> GetValue(dt1);
   // вывод значения в стат. текст
   wxString s;
-  s.Printf("Значение СКО:\nСКО для x: %.3f м\nСКО для y: %.3f м\nСКО для z: %.3f м\nСКО для D: %.3f, СКО: %.3f , \n dt1:  %.3f, dt2: %.3f" ,
-         sko(0,0), sko(1,1), sko(2,2), sko(3,3), sqrt (pow(sko(0,0),2)+pow(sko(1,1),2)+pow(sko(2,2),2)+pow(sko(3,3),2) ), dt1,dt2);
+  s.Printf("Значение СКО:\nСКО для x: %.3f м\nСКО для y: %.3f м\nСКО для z: %.3f м\nСКО для D: %.3f, СКО: %.3f" ,
+         sko(0,0), sko(1,1), sko(2,2), sko(3,3), sqrt (pow(sko(0,0),2)+pow(sko(1,1),2)+pow(sko(2,2),2)+pow(sko(3,3),2) ));
   StaticText4->SetLabel(s);
-  }*/
+  }
   else
   {
     wxMessageBox(_("Выберите другую ГНСС"), _("Error"));
   }
   }
 
-void dataDialog::OnButton1Click2(wxCommandEvent& event)
-{
-  //wxString s;
-  /* преобразование в слово для скачивания
-  string text5 = "MCCJ_";
-  string text2 = to_string(year-100);
-   string text3 ;
-  if (month<10)
-  {
-   text3 = "0"s + to_string(month);
-  }
-  else {
-  text3 = to_string(month);
-  }
-    string text4;
-  if (Date<10)
-  {
-    text4 = "0"s +to_string(Date);
-  }
-  else {
-  text4 = to_string(Date);
-  }
-  string text1 = text5+text2+text3+text4+".agp"s;
-  */
- /* string datee;
-  int hour;
-  int minn;
-  int sec;
-wxDateTime T;
-T = DatePickerCtrl1->GetValue();
-int D = T.GetDay();
-int Month = T.GetMonth();
-int Year = T.GetYear();
-TimePickerCtrl1->GetTime(&hour, &minn, &sec);
- /* const char* File1 ;
-  const char* file ;
-  File1 = "/MCC/ALMANAC/2015/MCCJ_150307.agp";
- // File1 = "/MCC/ALMANAC/"s+"year"s+"/"s+text1;
-  file = "MCCJ_150307.agp";
-  //file = text1;
-        wxTextFile file11(wxT("MCCJ_150307.agp")); // надо заменить на text1; // появляется ошибка?!
-        if (file11.Exists())
-        {wxRemoveFile(file);
-        }
-  bool down = download( "glonass-iac.ru", NULL, NULL, File1, file);
-int max_sats = parseGPS(file);
-wxString s;
 
-int k = 31;
-
-//int k = 31;
-  s.Printf("Значение max_sats: %u\nЗначение PRN: %u\nЗначение t_almanax: %f\nЗначение v0m0: %E\nЗначение Om0: %E\nЗначение M0: %E\n",hour,minn, sec, almanax_GPS[k].vOm0, almanax_GPS[k].Om0, almanax_GPS[k].M0);
-   StaticText5->SetLabel(s);
-*/
-//wxString s;
-//s.Printf("Значение max_sats: %u\nЗначение PRN: %u\nЗначение t_almanax: %u\nЗначение v0m0:", D, minn,sec);
- //  StaticText5->SetLabel(s);
-/*almanax_GPS[k].t_almanax
-almanax_GPS[k].vOm0
-almanax_GPS[k].I
-almanax_GPS[k].w
-almanax_GPS[k].E
-almanax_GPS[k].sqrtA*/
-}
 
 
 void dataDialog::OnDatePickerCtrl1Changed(wxDateEvent& event)
@@ -636,14 +737,30 @@ StaticText5->SetLabel(s);
 
 void dataDialog::OnButton3Click2(wxCommandEvent& event)
 {
-  timeCalc calc(31,12,2016,23,59,60,00);
+int hour;
+int minn;
+int sec;
+wxDateTime T;
+T = DatePickerCtrl1->GetValue();
+int D = T.GetDay();
+int Month = T.GetMonth()+1; // тк 1 месяц равен 0;
+int Year = T.GetYear();
+TimePickerCtrl1->GetTime(&hour, &minn, &sec);
+  timeCalc calc(D ,Month,Year ,hour,minn,sec,00);
   calc.timeGPS();
+  //отладочные данные/
   ofstream f;
   f.open("test/test.txt");
+  f<< "hour"<< hour<<endl;
+  f<< "minn"<< minn<<endl;
+  f<<"sec"<<sec<<endl;
+  f<<"D"<<D<<endl;
+  f<<"Month"<<Month<<endl;
+  f<<"Year"<<Year<<endl;
   //f <<"timeGLNS\n"<<"gps.sec_after_week" <<calc.day_after_vis_year<<endl;
-  f <<"sec_since_week" <<calc.sec_since_week<<endl;
-  f <<"week" <<calc.week<<endl;
-  f <<"dT" <<calc.dT<<endl;
+    f <<"sec_since_week" <<calc.sec_since_week<<endl;
+    f <<"week" <<calc.week<<endl;
+    f <<"dT" <<calc.dT<<endl;
     f <<"timeSec" <<calc.timeSec<<endl;
     f <<"c_date" <<calc.c_date<<endl;
     f <<"c_month" <<calc.c_month<<endl;
