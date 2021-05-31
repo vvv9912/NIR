@@ -24,7 +24,6 @@
 #include <string>
 #include <stdio.h>
 #include <armadillo>
-
 #include <fstream>
 
 #include <wx/string.h>
@@ -170,13 +169,13 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
   Connect(wxID_ANY,wxEVT_INIT_DIALOG,(wxObjectEventFunction)&dataDialog::OnInit);
   //*)
 
-Grid = new wxGrid(SashWindow1, ID_GRID, wxPoint(33,60), wxSize(244,490), 0, _T("ID_GRID"));
+  Grid = new wxGrid(SashWindow1, ID_GRID, wxPoint(33,60), wxSize(244,490), 0, _T("ID_GRID"));
 
-Grid->CreateGrid(24,2);
-Grid->SetColLabelValue(0, _("SISRE, m"));
-Grid->SetColLabelValue(1, _("SISVE, mm/s"));
-Grid->SetDefaultCellFont( Grid->GetFont() );
-Grid->SetDefaultCellTextColour( Grid->GetForegroundColour() );
+  Grid->CreateGrid(24,2);
+  Grid->SetColLabelValue(0, _("SISRE, m"));
+  Grid->SetColLabelValue(1, _("SISVE, mm/s"));
+  Grid->SetDefaultCellFont( Grid->GetFont() );
+  Grid->SetDefaultCellTextColour( Grid->GetForegroundColour() );
 }
 
 
@@ -188,7 +187,7 @@ dataDialog::~dataDialog()
 
 void dataDialog::OnQuit(wxCommandEvent& event)
 {
-    Close();
+  Close();
 }
 
 void dataDialog::OnInit(wxInitDialogEvent& event) {};
@@ -221,77 +220,82 @@ void dataDialog::OnButton2Click(wxCommandEvent& event)
   {
     File1 = "/MCC/PRODUCTS/LATEST/MERMS-GSC_C.ete";
     file = "MERMS-GSC_C.ete";
-        wxTextFile file11(wxT("MERMS-GSC_C.ete"));
-        if (file11.Exists())
-        {wxRemoveFile(file);
-        }
+    wxTextFile file11(wxT("MERMS-GSC_C.ete"));
+    if (file11.Exists())
+    {
+      wxRemoveFile(file);
+    }
   }
   if ((Choice1->GetString(Choice1->GetSelection()))== "Glonass"s)
   {
     File1 = "/MCC/PRODUCTS/LATEST/MERMS-RSC_C.ete";
     file = "MERMS-RSC_C.ete";
-        wxTextFile file11(wxT("MERMS-RSC_C.ete"));
-        if (file11.Exists())
-        {wxRemoveFile(file);
-        }
+    wxTextFile file11(wxT("MERMS-RSC_C.ete"));
+    if (file11.Exists())
+    {
+      wxRemoveFile(file);
+    }
   }
   if ((Choice1->GetString(Choice1->GetSelection()))== "Galileo"s)
   {
     File1 = "/MCC/PRODUCTS/LATEST/MERMS-ESC_C.ete";
     file = "MERMS-ESC_C.ete";
-        wxTextFile file11(wxT("MERMS-ESC_C.ete"));
-        if (file11.Exists())
-        {wxRemoveFile(file);
-        }
+    wxTextFile file11(wxT("MERMS-ESC_C.ete"));
+    if (file11.Exists())
+    {
+      wxRemoveFile(file);
+    }
   }
   if ((Choice1->GetString(Choice1->GetSelection()))== "Beidou"s)
   {
     File1 = "/MCC/PRODUCTS/LATEST/MERMS-CSC_C.ete";
     file = "MERMS-CSC_C.ete";
-        wxTextFile file11(wxT("MERMS-CSC_C.ete"));
-        if (file11.Exists())
-        {wxRemoveFile(file);
-        }
+    wxTextFile file11(wxT("MERMS-CSC_C.ete"));
+    if (file11.Exists())
+    {
+      wxRemoveFile(file);
+    }
 
   }
   if ((Choice1->GetString(Choice1->GetSelection()))== "QZSS"s)
   {
     File1 = "/MCC/PRODUCTS/LATEST/MERMS-JSC_C.ete";
     file = "MERMS-JSC_C.ete";
-        wxTextFile file11(wxT("MERMS-JSC_C.ete"));
-        if (file11.Exists())
-        {wxRemoveFile(file);
-        }
+    wxTextFile file11(wxT("MERMS-JSC_C.ete"));
+    if (file11.Exists())
+    {
+      wxRemoveFile(file);
+    }
   }
   bool down = download( "glonass-iac.ru", NULL, NULL, File1, file);
-if (!down)
-{
-  wxMessageBox(_("Error"), _("Error"));
-  return;
-}
-Gridd(file);
+  if (!down)
+  {
+    wxMessageBox(_("Error"), _("Error"));
+    return;
+  }
+  Gridd(file);
 }
 
 
 void dataDialog::Gridd(const char* file)
 {
-int k=0;
-int sizeY;
-if (Grid != NULL)
-{
-delete Grid;
-}
-memset(&SISerr,0, sizeof(SISerr));
-int max_sats = parse(file);
-sizeY=490;
-Grid = new wxGrid(SashWindow1, ID_GRID, wxPoint(33,60), wxSize(244,sizeY), 0, _T("ID_GRID"));
-wxString s;
-Grid->CreateGrid(max_sats,2);
-Grid->SetColLabelValue(0, _("SISRE, m"));
-Grid->SetColLabelValue(1, _("SISVE, mm/s"));
-Grid->SetDefaultCellFont( Grid->GetFont() );
-Grid->SetDefaultCellTextColour( Grid->GetForegroundColour() );
-for (k=0; k<max_sats; k++ )
+  int k=0;
+  int sizeY;
+  if (Grid != NULL)
+  {
+    delete Grid;
+  }
+  memset(&SISerr,0, sizeof(SISerr));
+  int max_sats = parse(file);
+  sizeY=490;
+  Grid = new wxGrid(SashWindow1, ID_GRID, wxPoint(33,60), wxSize(244,sizeY), 0, _T("ID_GRID"));
+  wxString s;
+  Grid->CreateGrid(max_sats,2);
+  Grid->SetColLabelValue(0, _("SISRE, m"));
+  Grid->SetColLabelValue(1, _("SISVE, mm/s"));
+  Grid->SetDefaultCellFont( Grid->GetFont() );
+  Grid->SetDefaultCellTextColour( Grid->GetForegroundColour() );
+  for (k=0; k<max_sats; k++ )
   {
     Grid->SetCellValue((k), 0,  wxString::Format("%.3f", SISerr[k].SISRE));
     Grid->SetCellValue((k), 1,  wxString::Format("%.3f", SISerr[k].SISVE));
@@ -317,405 +321,424 @@ void dataDialog::OnChoice1Select4(wxCommandEvent& event)
 }
 void dataDialog::OnButton1Click1(wxCommandEvent& event)
 {
-StaticText4 ->ClearBackground();
+  StaticText4 ->ClearBackground();
 // Вводим значения h,B,L
-double h;
-double Bgrad;
-double Lgrad;
-TextCtrlH->GetValue().ToDouble(&h);
-TextCtrlB->GetValue().ToDouble(&Bgrad);
-TextCtrlL->GetValue().ToDouble(&Lgrad);
-double PI = M_PI;
-double B; //Latitude
-double L; //Longitude
-B=Bgrad*PI/180;
-L=Lgrad*PI/180;
-double N;
-double e=0;
-double a=6378136; // радиус З
+  double h;
+  double Bgrad;
+  double Lgrad;
+  TextCtrlH->GetValue().ToDouble(&h);
+  TextCtrlB->GetValue().ToDouble(&Bgrad);
+  TextCtrlL->GetValue().ToDouble(&Lgrad);
+  double PI = M_PI;
+  double B; //Latitude
+  double L; //Longitude
+  B=Bgrad*PI/180;
+  L=Lgrad*PI/180;
+  double N;
+  double e=0;
+  double a=6378136; // радиус З
 
 // Получение координат потребителя
-N=a/sqrt(1-(e*e)*(sin(B))*(sin(B)));
+  N=a/sqrt(1-(e*e)*(sin(B))*(sin(B)));
 
 
-double Coord_x;
-double Coord_y;
-double Coord_z;
-Coord_x = (N+h)*cos(B)*cos(L);
-Coord_y = (N+h)*cos(B)*sin(L);
-Coord_z = ((1-e*e)*N+h)*sin(B);
-double Coord_user[3];
-Coord_user[0]=(N+h)*cos(B)*cos(L);
-Coord_user[1]= (N+h)*cos(B)*sin(L);
-Coord_user[2]= ((1-e*e)*N+h)*sin(B);
+  double Coord_x;
+  double Coord_y;
+  double Coord_z;
+  Coord_x = (N+h)*cos(B)*cos(L);
+  Coord_y = (N+h)*cos(B)*sin(L);
+  Coord_z = ((1-e*e)*N+h)*sin(B);
+  double Coord_user[3];
+  Coord_user[0]=(N+h)*cos(B)*cos(L);
+  Coord_user[1]= (N+h)*cos(B)*sin(L);
+  Coord_user[2]= ((1-e*e)*N+h)*sin(B);
 
-double Coord_sput[3];
-double alpha;
- //передаем в класс определения времени
+  double Coord_sput[3];
+  double alpha;
+//передаем в класс определения времени
 //Т.е получили время на которое необходимо предсказать
 //Далее "найдем" файл от которого будет высчитывать само предсказание
 //если от сегодн. дня, то день -1; тк файл загружается ~ в 18 00;
 
 // Считаем сегодняшн. дату
-int year_predsk;
-int month_predsk;
-int day_predsk;
-int hour_predsk;
-int min_predsk;
-int sec_predsk;
+  int year_predsk;
+  int month_predsk;
+  int day_predsk;
+  int hour_predsk;
+  int min_predsk;
+  int sec_predsk;
 //время от которого скачиваем
-int year_down;
-int month_down;
-int day_down;
+  int year_down;
+  int month_down;
+  int day_down;
 //int hour_down;
 //int min_down;
 //int sec_down ;
-wxDateTime T;
-T = DatePickerCtrl1->GetValue();
-day_predsk = T.GetDay(); //для скачивания файла
-month_predsk = T.GetMonth()+1; // тк 1 месяц равен 0;
-year_predsk = T.GetYear();
+  wxDateTime T;
+  T = DatePickerCtrl1->GetValue();
+  day_predsk = T.GetDay(); //для скачивания файла
+  month_predsk = T.GetMonth()+1; // тк 1 месяц равен 0;
+  year_predsk = T.GetYear();
 //получаем дату и время
 // Дата и время от которой предсказывать:
-TimePickerCtrl1->GetTime(&hour_predsk, &min_predsk, &sec_predsk);
+  TimePickerCtrl1->GetTime(&hour_predsk, &min_predsk, &sec_predsk);
 
 
-time_t nowsec = time(0);
-tm *ltm = localtime(&nowsec);
-int yeartoday = 1900+ltm->tm_year;
-int monthtoday = 1 + ltm->tm_mon;
-int daytoday = ltm->tm_mday;
-int hourrtoday = ltm->tm_hour;
-int mintoday = 1 + ltm->tm_min;
-int sectoday = 1 + ltm->tm_sec;
- // Если предсказание  в прошлом, то год ии месяц предсказания остется тот же, но день - прошлый
-day_down = day_predsk-1;
-year_down = year_predsk;
-month_down = month_predsk;
-ofstream f;
+  time_t nowsec = time(0);
+  tm *ltm = localtime(&nowsec);
+  int yeartoday = 1900+ltm->tm_year;
+  int monthtoday = 1 + ltm->tm_mon;
+  int daytoday = ltm->tm_mday;
+  int hourrtoday = ltm->tm_hour;
+  int mintoday = 1 + ltm->tm_min;
+  int sectoday = 1 + ltm->tm_sec;
+// Если предсказание  в прошлом, то год ии месяц предсказания остется тот же, но день - прошлый
+  day_down = day_predsk-1;
+  year_down = year_predsk;
+  month_down = month_predsk;
+  ofstream f;
   f.open("test/test2.txt");
-   f<< "year_predsk"<< year_predsk<<endl;
-    f<< "month_predsk"<< month_predsk<<endl;
-     f<< "day_predsk"<< day_predsk<<endl;
-       f<< "hour_predsk"<< hour_predsk<<endl;
-         f<< "min_predsk"<< min_predsk<<endl;
-           f<< "sec_predsk"<< sec_predsk<<endl;
+  f<< "year_predsk="<< year_predsk<<endl;
+  f<< "month_predsk="<< month_predsk<<endl;
+  f<< "day_predsk="<< day_predsk<<endl;
+  f<< "hour_predsk="<< hour_predsk<<endl;
+  f<< "min_predsk="<< min_predsk<<endl;
+  f<< "sec_predsk="<< sec_predsk<<endl;
 
 
 
 //если предсказание уже на будущее, то год,месяц остается сегодняшний, а день минус 1
 //если год = году сейчас, но день больше или равен, то день минус 1
 // по сути можно облегчить и сделать 1 цикл через "или"
-if (year_predsk>yeartoday)
-{
-  day_down = daytoday -1;
-  year_down = yeartoday;
-  month_down = monthtoday;
-}
-if (year_predsk == yeartoday)
-{
-  if ( day_predsk >= daytoday)
+  if (year_predsk>yeartoday)
   {
     day_down = daytoday -1;
     year_down = yeartoday;
     month_down = monthtoday;
   }
-}
-  f<< "day_down"<< day_down<<endl;
-  f<< "month_down"<< month_down<<endl;
-  f<< "year_down"<< year_down<<endl;
-timeCalc calc(day_predsk,month_predsk,year_predsk ,hour_predsk,min_predsk,sec_predsk,00);
+  if (year_predsk == yeartoday)
+  {
+    if ( day_predsk >= daytoday)
+    {
+      day_down = daytoday -1;
+      year_down = yeartoday;
+      month_down = monthtoday;
+    }
+  }
+  f<< "day_download="<< day_down<<endl;
+  f<< "month_download="<< month_down<<endl;
+  f<< "year_download="<< year_down<<endl;
+  timeCalc calc(day_predsk,month_predsk,year_predsk,hour_predsk,min_predsk,sec_predsk,00);
 
 //
-if ((Choice1->GetString(Choice1->GetSelection()))== "GPS")
-{
-  //преобразование в слово для скачивания
-  string textYear = to_string(year_down);
-  string text5 = "MCCJ_";
-  string text2 = to_string(year_down -2000);
-  string text3 ;
-  if (month_down<10)
-  {
-   text3 = "0"s + to_string(month_down);
-  }
-  else {
-  text3 = to_string(month_down);
-  }
+//преобразование в слово для скачивания
+    string textYear = to_string(year_down);
+    string text5 = "MCCJ_";
+    string text2 = to_string(year_down -2000);
+    string text3 ;
+    if (month_down<10)
+    {
+      text3 = "0"s + to_string(month_down);
+    }
+    else
+    {
+      text3 = to_string(month_down);
+    }
     string text4;
 
-  if (day_down<10)
+    if (day_down<10)
+    {
+      text4 = "0"s +to_string(day_down);
+    }
+    else
+    {
+      text4 = to_string(day_down);
+    }
+    string text1;
+    string text0
+  if ((Choice1->GetString(Choice1->GetSelection()))== "GPS")
   {
-    text4 = "0"s +to_string(day_down);
-  }
-  else {
-  text4 = to_string(day_down);
-  }
-  string text1 = text5+text2+text3+text4+".agp"s;
-  string text0 = "/MCC/ALMANAC/"+ textYear +"/"+text1;
+
+     text1 = text5+text2+text3+text4+".agp"s;
+text0 =  = "/MCC/ALMANAC/"+ textYear +"/"+text1;
     f<< " day_down="<< day_down<<endl;
-  f<< " text4="<< text4<<endl;
-  const char* File1 ;
-  const char* file ;
-  File1 = text0.c_str();//"/MCC/ALMANAC/2015/MCCJ_150307.agp"//перевод строки с строку Си
-  file = text1.c_str();
-  //! добавить если файла нет, искать ближайший!
-  f<< "const char* File1"<< File1<<endl;
-  f<< " file"<< file<<endl;
-   f.close();
-  bool down = download( "glonass-iac.ru", NULL, NULL, File1, file);
-  int max_sats = parseGPS(file);
+    f<< " text4="<< text4<<endl;
+    const char* File1 ;
+    const char* file ;
+    File1 = text0.c_str();//"/MCC/ALMANAC/2015/MCCJ_150307.agp"//перевод строки с строку Си
+    file = text1.c_str();
+    //! добавить если файла нет, искать ближайший!
+    f<< "const char* File1"<< File1<<endl;
+    f<< " file"<< file<<endl;
+    bool down = download( "glonass-iac.ru", NULL, NULL, File1, file);
+    int max_sats = parseGPS(file);
 
 // Расчет матрицы Dn, Hn, SKO
-int numberSput = 32;
-int vsb[numberSput] ;
-int sumvsb = 0;
-vector<int> Visibles; //вектор из кол-во элементов - visibles
-calc.timeGPS();
-double toe=calc.sec_since_week;
-for (int i=1; i<=numberSput; i++)
-{
+    int numberSput = 32;
+    int vsb[numberSput] ;
+    int sumvsb = 0;
+    vector<int> Visibles; //вектор из кол-во элементов - visibles
+    calc.timeGPS();
+    double toe=calc.sec_since_week;
+
+    f<< "GPS:"<<endl;
+    f<<"toe()calc.sec_since_week="<<toe<<endl;
+    f<<"week="<<calc.week<<endl;
+    Coordinates Coord_sp; // можно потом заменить в 482 строке и ниже.
+
+    for (int i=1; i<=numberSput; i++)
+    {
 // Получение коорд спутников
 //ephemerids(double toe,int t_almanax, double M0, double sqrtA, double E, double I, double Om0, double time_week ))
-Coordinates Coord_sp = ephemerids(toe,
-                                  almanax_GPS[i-1].t_almanax,
-                                  almanax_GPS[i-1].M0,
-                                  almanax_GPS[i-1].sqrtA,
-                                  almanax_GPS[i-1].E,
-                                  almanax_GPS[i-1].I,
-                                  almanax_GPS[i-1].Om0,
-                                  almanax_GPS[i-1].time_week);
+      Coord_sp = ephemerids(toe,
+                            almanax_GPS[i-1].t_almanax,
+                            almanax_GPS[i-1].M0,
+                            almanax_GPS[i-1].sqrtA,
+                            almanax_GPS[i-1].E,
+                            almanax_GPS[i-1].I,
+                            almanax_GPS[i-1].Om0,
+                            almanax_GPS[i-1].time_week);
 
-Coord_sput[0] = Coord_sp.X;
-Coord_sput[1] = Coord_sp.Y;
-Coord_sput[2] = Coord_sp.Z;
+      f <<"i-1 (номер спут)"<<i-1<<endl;
+
+      f<<"Coord_sp.X="<<Coord_sp.X<<endl;
+      f <<"Coord_sp.Y =" <<Coord_sp.Y<<endl;
+      f <<"Coord_sp.Z =" <<Coord_sp.Z<<endl;
+
+      Coord_sput[0] = Coord_sp.X;
+      Coord_sput[1] = Coord_sp.Y;
+      Coord_sput[2] = Coord_sp.Z;
 // Определение угла
-alpha = 90 - (angle(Coord_sput, Coord_user, B, L)*180/PI);
+      alpha = 90 - (angle(Coord_sput, Coord_user, B, L)*180/PI);
 // определение видимости спутника
-vsb[i]=0;
-if ((alpha) >5)
-  {
-    vsb[i]=1;
-    sumvsb++;
-    Visibles.push_back(i);  // добавление элемента в конец вектора
-  }
-}
+      vsb[i]=0;
+      if ((alpha) >5)
+      {
+        vsb[i]=1;
+        sumvsb++;
+        Visibles.push_back(i);  // добавление элемента в конец вектора
+      }
+    }
 
 // получение матрицы Dn
-int i = 0;
-  mat Dn;
-  Dn.zeros(sumvsb, sumvsb);
-  for (int k=1; k<=numberSput; k++)
-  {
-   if ((vsb[k]) == 1)
-     {
-      Dn(i,i) = SISerr[i].SISRE;
-      i++;
-     }
-  }
-  double max_val_Dn = Dn.max();
-for (int i= 0; i<sumvsb; i++)
-{
-  if ( Dn(i,i) == 0)
-  {
-    Dn(i,i) = max_val_Dn;
-  }
-}
+    int i = 0;
+    mat Dn;
+    Dn.zeros(sumvsb, sumvsb);
+    for (int k=1; k<=numberSput; k++)
+    {
+      if ((vsb[k]) == 1)
+      {
+        Dn(i,i) = SISerr[i].SISRE;
+        i++;
+      }
+    }
+    double max_val_Dn = Dn.max();
+    for (int i= 0; i<sumvsb; i++)
+    {
+      if ( Dn(i,i) == 0)
+      {
+        Dn(i,i) = max_val_Dn;
+      }
+    }
 
 // получение матрицы H
-double dx;
-double dy;
-double dz;
-double Ri;
+    double dx;
+    double dy;
+    double dz;
+    double Ri;
 
-mat H(sumvsb, 4);
-H.zeros();
+    mat H(sumvsb, 4);
+    H.zeros();
 
-int numsput = 0;
-for (int k=1; k<=numberSput; k++)
-{
-     if ((vsb[k]) == 1)
+    int numsput = 0;
+    for (int k=1; k<=numberSput; k++)
     {
+      if ((vsb[k]) == 1)
+      {
 
-Coordinates Coord_sp = ephemerids(toe,
-                                  almanax_GPS[k-1].t_almanax,
-                                  almanax_GPS[k-1].M0,
-                                  almanax_GPS[k-1].sqrtA,
-                                  almanax_GPS[k-1].E,
-                                  almanax_GPS[k-1].I,
-                                  almanax_GPS[k-1].Om0,
-                                  almanax_GPS[k-1].time_week);
-    dx=(Coord_sp.X-Coord_x);
-    dy=(Coord_sp.Y-Coord_y);
-    dz=(Coord_sp.Z- Coord_z);
- // Ri = sqrt (SQUARE(dx)+SQUARE(dy)+SQUARE(dz));
-    Ri = sqrt (pow(dx,2)+pow(dy,2)+pow(dz,2));
+        Coord_sp = ephemerids(toe,
+                              almanax_GPS[k-1].t_almanax,
+                              almanax_GPS[k-1].M0,
+                              almanax_GPS[k-1].sqrtA,
+                              almanax_GPS[k-1].E,
+                              almanax_GPS[k-1].I,
+                              almanax_GPS[k-1].Om0,
+                              almanax_GPS[k-1].time_week);
+        dx=(Coord_sp.X-Coord_x);
+        dy=(Coord_sp.Y-Coord_y);
+        dz=(Coord_sp.Z- Coord_z);
+// Ri = sqrt (SQUARE(dx)+SQUARE(dy)+SQUARE(dz));
+        Ri = sqrt (pow(dx,2)+pow(dy,2)+pow(dz,2));
 
-    H(numsput, 0 ) = dx/Ri;
-    H(numsput, 1) = dy/Ri;
-    H(numsput, 2) = dz/Ri;
-    H(numsput, 3) = 1;
-    numsput++ ;
+        H(numsput, 0 ) = dx/Ri;
+        H(numsput, 1) = dy/Ri;
+        H(numsput, 2) = dz/Ri;
+        H(numsput, 3) = 1;
+        numsput++ ;
+      }
     }
+    mat Htr = H.t();
+    mat sko = sqrt((inv(Htr*inv(Dn)*H)).t());
+    wxString s;
+    s.Printf("Значение СКО:\nСКО для x: %.3f м\nСКО для y: %.3f м\nСКО для z: %.3f м\nСКО для D: %.3f, м СКО: %.3f м",
+             sko(0,0), sko(1,1), sko(2,2), sko(3,3), sqrt (pow(sko(0,0),2)+pow(sko(1,1),2)+pow(sko(2,2),2) ));
+    StaticText4->SetLabel(s);
   }
-  mat Htr = H.t();
-  mat sko = sqrt((inv(Htr*inv(Dn)*H)).t());
-  wxString s;
-  s.Printf("Значение СКО:\nСКО для x: %.3f м\nСКО для y: %.3f м\nСКО для z: %.3f м\nСКО для D: %.3f, СКО: %.3f" ,
-         sko(0,0), sko(1,1), sko(2,2), sko(3,3), sqrt (pow(sko(0,0),2)+pow(sko(1,1),2)+pow(sko(2,2),2)+pow(sko(3,3),2) ));
-  StaticText4->SetLabel(s);
-  }
- else if ((Choice1->GetString(Choice1->GetSelection()))== "Glonass")
+  else if ((Choice1->GetString(Choice1->GetSelection()))== "Glonass")
   {
-     //преобразование в слово для скачивания
-  string textYear = to_string(year_down);
-  string text5 = "MCCJ_";
-  string text2 = to_string(year_down -2000);
-  string text3 ;
-  if (month_down<10)
-  {
-   text3 = "0"s + to_string(month_down);
-  }
-  else {
-  text3 = to_string(month_down);
-  }
-    string text4;
-
-  if (day_down<10)
-  {
-    text4 = "0"s +to_string(day_down);
-  }
-  else {
-  text4 = to_string(day_down);
-  }
-  string text1 = text5+text2+text3+text4+".agl"s;
-  string text0 = "/MCC/ALMANAC/"+ textYear +"/"+text1;
+  text1 = text5+text2+text3+text4+".agl"s;
+  text0 =  = "/MCC/ALMANAC/"+ textYear +"/"+text1;
     f<< " day_down="<< day_down<<endl;
-  f<< " text4="<< text4<<endl;
-  const char* File1 ;
-  const char* file ;
-  File1 = text0.c_str();//"/MCC/ALMANAC/2015/MCCJ_150307.agl"//перевод строки с строку Си
-  file = text1.c_str();
-  //! добавить если файла нет, искать ближайший!
-  f<< "const char* File1"<< File1<<endl;
-  f<< " file"<< file<<endl;
-   f.close();
-  bool down = download( "glonass-iac.ru", NULL, NULL, File1, file);
-  int max_sats = parseGLNS(file);
+    f<< " text4="<< text4<<endl;
+    const char* File1 ;
+    const char* file ;
+    File1 = text0.c_str();//"/MCC/ALMANAC/2015/MCCJ_150307.agl"//перевод строки с строку Си
+    file = text1.c_str();
+    //! добавить если файла нет, искать ближайший!
+    f<< "const char* File1"<< File1<<endl;
+    f<< " file"<< file<<endl;
 
-  int numberSput = 24;
-  int vsb[numberSput] ;
-  int sumvsb = 0;
-  vector<int> Visibles; //вектор из кол-во элементов - visibles
-  double toe=44271.777;//время
-  for (int i=1; i<=numberSput; i++)
-  {
+    bool down = download( "glonass-iac.ru", NULL, NULL, File1, file);
+    int max_sats = parseGLNS(file);
+
+
+    int numberSput = 24;
+    int vsb[numberSput] ;
+    int sumvsb = 0;
+    vector<int> Visibles; //вектор из кол-во элементов - visibles
+    //double toe=44271.777;//время
+    f<< "Glns:"<<endl;
+    f<<"calc.GLNS_numb_fouryear_period (N4)=" << calc.GLNS_numb_fouryear_period<<endl;;
+    f <<"calc.GLNS_sec_since_week=" <<calc.GLNS_sec_since_week<<endl;;
+    GlonassCoordinates Coord_sp;
+    for (int i=1; i<=numberSput; i++)
+    {
 // Получение коорд спутников
 //ephemerids(double toe,int t_almanax, double M0, double sqrtA, double E, double I, double Om0, double time_week ))
 
-    calc.timeGLL();
-    timeCalc GLNSephemTime( almanax_GLNS[i-1].date,almanax_GLNS[i-1].month, almanax_GLNS[i-1].year ,0,0,0,0);
-  GlonassCoordinates Coord_sp = ephemeridsGLNS(calc.GLNS_numb_fouryear_period, //N4
-                                               calc.GLNS_day_after_vis_year,
-                                               calc.GLNS_sec_since_week,
-                                               GLNSephemTime.GLNS_numb_fouryear_period, //Na берем из расчета даты альманаха
-                                               almanax_GLNS[i-1].tLA,
-                                               almanax_GLNS[i-1].dT,
-                                               almanax_GLNS[i-1].dT,
-                                               almanax_GLNS[i-1].dTT,
-                                               almanax_GLNS[i-1].E,
-                                               almanax_GLNS[i-1].w,
-                                               almanax_GLNS[i-1].Lam);
+      calc.timeGLNS();
+      timeCalc GLNSephemTime( almanax_GLNS[i-1].date,almanax_GLNS[i-1].month, almanax_GLNS[i-1].year,0,0,0,0);
+      Coord_sp = ephemeridsGLNS(calc.GLNS_numb_fouryear_period, //N4
+                                calc.GLNS_day_after_vis_year,
+                                calc.GLNS_sec_since_week,
+                                GLNSephemTime.GLNS_numb_fouryear_period, //Na берем из расчета даты альманаха
+                                almanax_GLNS[i-1].tLA,
+                                almanax_GLNS[i-1].dT,
+                                almanax_GLNS[i-1].dT,
+                                almanax_GLNS[i-1].dTT,
+                                almanax_GLNS[i-1].E,
+                                almanax_GLNS[i-1].w,
+                                almanax_GLNS[i-1].Lam);
 
-  Coord_sput[0] = Coord_sp.X;
-  Coord_sput[1] = Coord_sp.Y;
-  Coord_sput[2] = Coord_sp.Z;
+      f <<"i-1 (номер спутн) ="<<i-1<<endl;
+      f << "GLNS_numb_fouryear_period (Na)"<<  GLNSephemTime.GLNS_numb_fouryear_period<<endl;
+      f<<"Coord_sp.X="<<Coord_sp.X<<endl;
+      f <<"Coord_sp.Y =" <<Coord_sp.Y<<endl;
+      f <<"Coord_sp.Z =" <<Coord_sp.Z<<endl;
+
+      Coord_sput[0] = Coord_sp.X;
+      Coord_sput[1] = Coord_sp.Y;
+      Coord_sput[2] = Coord_sp.Z;
 // Определение угла
 
-  alpha = 90 - (angle(Coord_sput, Coord_user, B, L)*180/PI);
+      alpha = 90 - (angle(Coord_sput, Coord_user, B, L)*180/PI);
 // определение видимости спутника
-  vsb[i]=0;
-  if ((alpha) >5)
-  {
-    vsb[i]=1;
-    sumvsb++;
-    Visibles.push_back(i);  // добавление элемента в конец вектора
-  }
-  }
+      vsb[i]=0;
+      if ((alpha) >5)
+      {
+        vsb[i]=1;
+        sumvsb++;
+        Visibles.push_back(i);  // добавление элемента в конец вектора
+      }
+    }
 
 // получение матрицы Dn
-  int i = 0;
-  mat Dn;
-  Dn.zeros(sumvsb, sumvsb);
-  for (int k=1; k<=numberSput; k++)
-  {
-   if ((vsb[k]) == 1)
-     {
-      Dn(i,i) = SISerr[i].SISRE;
-      i++;
-     }
-  }
-  double max_val_Dn = Dn.max();
-  for (int i= 0; i<sumvsb; i++)
-  {
-  if ( Dn(i,i) == 0)
-  {
-    Dn(i,i) = max_val_Dn;
-  }
-  }
+    int i = 0;
+    mat Dn;
+    Dn.zeros(sumvsb, sumvsb);
+    for (int k=1; k<=numberSput; k++)
+    {
+      if ((vsb[k]) == 1)
+      {
+        Dn(i,i) = SISerr[i].SISRE;
+        i++;
+      }
+    }
+    double max_val_Dn = Dn.max();
+    for (int i= 0; i<sumvsb; i++)
+    {
+      if ( Dn(i,i) == 0)
+      {
+        Dn(i,i) = max_val_Dn;
+      }
+    }
 
 // получение матрицы H
-  double dx;
-  double dy;
-  double dz;
-  double Ri;
+    double dx;
+    double dy;
+    double dz;
+    double Ri;
 
-  mat H(sumvsb, 4);
-  H.zeros();
+    mat H(sumvsb, 4);
+    H.zeros();
 
-  int numsput = 0;
-  for (int k=1; k<=numberSput; k++)
-  {
-     if ((vsb[k]) == 1)
+    int numsput = 0;
+    for (int k=1; k<=numberSput; k++)
     {
-      timeCalc GLNSephemTime( almanax_GLNS[k-1].date,almanax_GLNS[k-1].month, almanax_GLNS[k-1].year ,0,0,0,0);
-      GlonassCoordinates Coord_sp = ephemeridsGLNS(calc.GLNS_numb_fouryear_period, //N4
-                                               calc.GLNS_day_after_vis_year,
-                                               calc.GLNS_sec_since_week,
-                                               GLNSephemTime.GLNS_numb_fouryear_period, //Na берем из расчета даты альманаха
-                                               almanax_GLNS[k-1].tLA,
-                                               almanax_GLNS[k-1].dT,
-                                               almanax_GLNS[k-1].dT,
-                                               almanax_GLNS[k-1].dTT,
-                                               almanax_GLNS[k-1].E,
-                                               almanax_GLNS[k-1].w,
-                                               almanax_GLNS[k-1].Lam);
-    dx=(Coord_sp.X-Coord_x);
-    dy=(Coord_sp.Y-Coord_y);
-    dz=(Coord_sp.Z- Coord_z);
- // Ri = sqrt (SQUARE(dx)+SQUARE(dy)+SQUARE(dz));
-    Ri = sqrt (pow(dx,2)+pow(dy,2)+pow(dz,2));
-    H(numsput, 0 ) = dx/Ri;
-    H(numsput, 1) = dy/Ri;
-    H(numsput, 2) = dz/Ri;
-    H(numsput, 3) = 1;
-    numsput++ ;
+      if ((vsb[k]) == 1)
+      {
+        timeCalc GLNSephemTime( almanax_GLNS[k-1].date,almanax_GLNS[k-1].month, almanax_GLNS[k-1].year,0,0,0,0);
+        Coord_sp = ephemeridsGLNS(calc.GLNS_numb_fouryear_period, //N4
+                                  calc.GLNS_day_after_vis_year,
+                                  calc.GLNS_sec_since_week,
+                                  GLNSephemTime.GLNS_numb_fouryear_period, //Na берем из расчета даты альманаха
+                                  almanax_GLNS[k-1].tLA,
+                                  almanax_GLNS[k-1].dT,
+                                  almanax_GLNS[k-1].dT,
+                                  almanax_GLNS[k-1].dTT,
+                                  almanax_GLNS[k-1].E,
+                                  almanax_GLNS[k-1].w,
+                                  almanax_GLNS[k-1].Lam);
+        dx=(Coord_sp.X-Coord_x);
+        dy=(Coord_sp.Y-Coord_y);
+        dz=(Coord_sp.Z- Coord_z);
+
+
+// Ri = sqrt (SQUARE(dx)+SQUARE(dy)+SQUARE(dz));
+        Ri = sqrt (pow(dx,2)+pow(dy,2)+pow(dz,2));
+        H(numsput, 0 ) = dx/Ri;
+        H(numsput, 1) = dy/Ri;
+        H(numsput, 2) = dz/Ri;
+        H(numsput, 3) = 1;
+        numsput++ ;
+      }
     }
-  }
-  mat Htr = H.t();
-  mat sko = sqrt((inv(Htr*inv(Dn)*H)).t());
-  double dt1, dt2;
-  //DatePickerCtrl1 -> GetValue(dt1);
-  // вывод значения в стат. текст
-  wxString s;
-  s.Printf("Значение СКО:\nСКО для x: %.3f м\nСКО для y: %.3f м\nСКО для z: %.3f м\nСКО для D: %.3f, СКО: %.3f" ,
-         sko(0,0), sko(1,1), sko(2,2), sko(3,3), sqrt (pow(sko(0,0),2)+pow(sko(1,1),2)+pow(sko(2,2),2)+pow(sko(3,3),2) ));
-  StaticText4->SetLabel(s);
+    //для ион
+    text1 = "BRDC1510.21n"s;
+
+    text_0 = "/MCC/BRDC/" +textYear +"/" + text_1";
+
+    const char* File11 ;
+    const char* file1 ;
+    File11 = text0.c_str();//""//перевод строки с строку Си
+    file1 = text1.c_str();
+    bool down = download( "glonass-iac.ru", NULL, NULL, File11, file1);
+    mat Htr = H.t();
+    mat sko = sqrt((inv(Htr*inv(Dn)*H)).t());
+    double dt1, dt2;
+    //DatePickerCtrl1 -> GetValue(dt1);
+    // вывод значения в стат. текст
+    wxString s;
+    s.Printf("Значение СКО:\nСКО для x: %.3f м\nСКО для y: %.3f м\nСКО для z: %.3f м\nСКО для D: %.3f, СКО: %.3f м",
+             sko(0,0), sko(1,1), sko(2,2), sko(3,3), sqrt (pow(sko(0,0),2)+pow(sko(1,1),2)+pow(sko(2,2),2) ));
+    StaticText4->SetLabel(s);
   }
   else
   {
     wxMessageBox(_("Выберите другую ГНСС"), _("Error"));
   }
-  }
+  f.close();
+}
 
 
 
@@ -725,32 +748,35 @@ void dataDialog::OnDatePickerCtrl1Changed(wxDateEvent& event)
 }
 
 void dataDialog::OnButton3Click1(wxCommandEvent& event)
-{ /*int *hour;
+{
+  /*int *hour;
   int *minn;
   int *sec;
 
-TimePickerCtrl1->GetTime(hour, minn, sec);
-wxString s;
-s.Printf("Значение max_sats: %f\nЗначение PRN: %f\nЗначение t_almanax: %f\nЗначение v0m0:", hour, minn,sec);
-StaticText5->SetLabel(s);
-*/}
+  TimePickerCtrl1->GetTime(hour, minn, sec);
+  wxString s;
+  s.Printf("Значение max_sats: %f\nЗначение PRN: %f\nЗначение t_almanax: %f\nЗначение v0m0:", hour, minn,sec);
+  StaticText5->SetLabel(s);
+  */
+}
 
 void dataDialog::OnButton3Click2(wxCommandEvent& event)
 {
-int hour;
-int minn;
-int sec;
-wxDateTime T;
-T = DatePickerCtrl1->GetValue();
-int D = T.GetDay();
-int Month = T.GetMonth()+1; // тк 1 месяц равен 0;
-int Year = T.GetYear();
-TimePickerCtrl1->GetTime(&hour, &minn, &sec);
+  /*
+  int hour;
+  int minn;
+  int sec;
+  wxDateTime T;
+  T = DatePickerCtrl1->GetValue();
+  int D = T.GetDay();
+  int Month = T.GetMonth()+1; // тк 1 месяц равен 0;
+  int Year = T.GetYear();
+  TimePickerCtrl1->GetTime(&hour, &minn, &sec);
   timeCalc calc(D ,Month,Year ,hour,minn,sec,00);
   calc.timeGPS();
   //отладочные данные/
   ofstream f;
-  f.open("test/test.txt");
+  f.open("test.txt");
   f<< "hour"<< hour<<endl;
   f<< "minn"<< minn<<endl;
   f<<"sec"<<sec<<endl;
@@ -777,16 +803,12 @@ TimePickerCtrl1->GetTime(&hour, &minn, &sec);
   f <<"numb_fouryear_period" <<calc.GLNS_numb_fouryear_period<<endl;
   f <<"GLNS_sec_since_week" <<calc.GLNS_sec_since_week<<endl;
 
-// Получение коорд спутников
-//ephemerids(double toe,int t_almanax, double M0, double sqrtA, double E, double I, double Om0, double time_week ))
+  // Получение коорд спутников
+  //ephemerids(double toe,int t_almanax, double M0, double sqrtA, double E, double I, double Om0, double time_week ))
 
-GlonassCoordinates Coord_sp = ephemeridsGLNS(5,789,54000,
-                                             788, 0.452390625e+4,-0.2656127e+4,0.6758690E-02,
-                                             0.1220703E-02,0.5750656E-03,  0.3695374E+00, 0.5243139E+00 );
-
-//my coord
-/*
-Coordinates Coord_sp = ephemerids(44271.777,
+  //my coord
+  /*
+  Coordinates Coord_sp = ephemerids(44271.777,
                                   61440,
                                   0.84951556,
                                   0.51536460*pow(10,4),
@@ -794,12 +816,12 @@ Coordinates Coord_sp = ephemerids(44271.777,
                                   0.30822450,
                                   -0.47967029,
                                   1835);
-*/
- f <<"-----------------\ncoord \n"<<"Coord_sp.X=" <<Coord_sp.X<<endl;
+
+  f <<"-----------------\ncoord \n"<<"Coord_sp.X=" <<Coord_sp.X<<endl;
   f <<"Coord_sp.Y" <<Coord_sp.Y<<endl;
     f <<"Coord_sp.Z" <<Coord_sp.Z<<endl;
   f.close();
-
+  */
 }
 
 
