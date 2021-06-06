@@ -2,7 +2,7 @@
 <wxsmith>
 	<object class="wxDialog" name="dataDialog">
 		<title>Data app</title>
-		<size>494,556</size>
+		<size>533,556</size>
 		<bg>wxSYS_COLOUR_INACTIVEBORDER</bg>
 		<minsize>-1,-1</minsize>
 		<maxsize>-1,-1</maxsize>
@@ -10,7 +10,7 @@
 		<handler function="OnInit" entry="EVT_INIT_DIALOG" />
 		<object class="wxSashWindow" name="ID_SASHWINDOW1" variable="SashWindow1" member="yes">
 			<pos>56,40</pos>
-			<size>440,504</size>
+			<size>480,504</size>
 			<fg>wxSYS_COLOUR_WINDOWTEXT</fg>
 			<bg>wxSYS_COLOUR_MENUBAR</bg>
 			<handler function="OnSashWindow1SashDragged" entry="EVT_SASH_DRAGGED" />
@@ -65,15 +65,15 @@
 				<size>127,-1</size>
 			</object>
 			<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
-				<label>Введите значение высоты:</label>
+				<label>Введите значение высоты в метрах:</label>
 				<pos>305,127</pos>
 			</object>
 			<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
-				<label>Введите значение B:</label>
+				<label>Введите значение B в градусах:</label>
 				<pos>305,172</pos>
 			</object>
 			<object class="wxStaticText" name="ID_STATICTEXT3" variable="StaticText3" member="yes">
-				<label>Введите значение L:</label>
+				<label>Введите значение L в градусах:</label>
 				<pos>305,217</pos>
 			</object>
 			<object class="wxStaticText" name="ID_STATICTEXT4" variable="StaticText4" member="yes">
@@ -83,6 +83,7 @@
 			<object class="wxTimePickerCtrl" name="ID_TIMEPICKERCTRL1" variable="TimePickerCtrl1" member="yes">
 				<pos>305,93</pos>
 				<size>85,21</size>
+				<handler function="OnTimePickerCtrl1Changed" entry="EVT_DATE_CHANGED" />
 			</object>
 			<object class="wxButton" name="ID_BUTTON4" variable="Button3" member="yes">
 				<label>для отладки/test</label>
@@ -90,7 +91,7 @@
 				<handler function="OnButton3Click2" entry="EVT_BUTTON" />
 			</object>
 			<object class="wxStaticText" name="ID_STATICTEXT5" variable="StaticText5" member="yes">
-				<label>Время прогнозирования</label>
+				<label>Время прогнозирования по UTC(+3)</label>
 				<pos>305,49</pos>
 			</object>
 		</object>

@@ -89,7 +89,6 @@
 		<Unit filename="ephemerids.h" />
 		<Unit filename="ephemeridsGLNS.cpp" />
 		<Unit filename="ephemeridsGLNS.h" />
-		<Unit filename="ionosph.cpp" />
 		<Unit filename="parser.c">
 			<Option compilerVar="CC" />
 		</Unit>

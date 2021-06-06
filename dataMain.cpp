@@ -126,11 +126,11 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
 {
   //(*Initialize(dataDialog)
   Create(parent, wxID_ANY, _("Data app"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
-  SetClientSize(wxSize(494,556));
+  SetClientSize(wxSize(533,556));
   SetMinSize(wxSize(-1,-1));
   SetMaxSize(wxSize(-1,-1));
   SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_INACTIVEBORDER));
-  SashWindow1 = new wxSashWindow(this, ID_SASHWINDOW1, wxPoint(56,40), wxSize(440,504), wxSW_3D|wxCLIP_CHILDREN, _T("ID_SASHWINDOW1"));
+  SashWindow1 = new wxSashWindow(this, ID_SASHWINDOW1, wxPoint(56,40), wxSize(480,504), wxSW_3D|wxCLIP_CHILDREN, _T("ID_SASHWINDOW1"));
   SashWindow1->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOWTEXT));
   SashWindow1->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_MENUBAR));
   DatePickerCtrl1 = new wxDatePickerCtrl(SashWindow1, ID_DATEPICKERCTRL1, wxDefaultDateTime, wxPoint(305,65), wxSize(85,21), wxDP_DEFAULT|wxDP_SHOWCENTURY, wxDefaultValidator, _T("ID_DATEPICKERCTRL1"));
@@ -148,13 +148,13 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
   TextCtrlH = new wxTextCtrl(SashWindow1, ID_TEXTCTRL1, _("0"), wxPoint(305,145), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
   TextCtrlB = new wxTextCtrl(SashWindow1, ID_TEXTCTRL2, _("0"), wxPoint(305,190), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
   TextCtrlL = new wxTextCtrl(SashWindow1, ID_TEXTCTRL3, _("0"), wxPoint(305,235), wxSize(127,-1), 0, wxDefaultValidator, _T("ID_TEXTCTRL3"));
-  StaticText1 = new wxStaticText(SashWindow1, ID_STATICTEXT1, _("Введите значение высоты:"), wxPoint(305,127), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
-  StaticText2 = new wxStaticText(SashWindow1, ID_STATICTEXT2, _("Введите значение B:"), wxPoint(305,172), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
-  StaticText3 = new wxStaticText(SashWindow1, ID_STATICTEXT3, _("Введите значение L:"), wxPoint(305,217), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
+  StaticText1 = new wxStaticText(SashWindow1, ID_STATICTEXT1, _("Введите значение высоты в метрах:"), wxPoint(305,127), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
+  StaticText2 = new wxStaticText(SashWindow1, ID_STATICTEXT2, _("Введите значение B в градусах:"), wxPoint(305,172), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
+  StaticText3 = new wxStaticText(SashWindow1, ID_STATICTEXT3, _("Введите значение L в градусах:"), wxPoint(305,217), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
   StaticText4 = new wxStaticText(SashWindow1, ID_STATICTEXT4, _("Значения СКО:"), wxPoint(306,294), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
   TimePickerCtrl1 = new wxTimePickerCtrl(SashWindow1, ID_TIMEPICKERCTRL1, wxDateTime::Now(), wxPoint(305,93), wxSize(85,21), 0, wxDefaultValidator, _T("ID_TIMEPICKERCTRL1"));
   Button3 = new wxButton(SashWindow1, ID_BUTTON4, _("для отладки/test"), wxPoint(303,463), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON4"));
-  StaticText5 = new wxStaticText(SashWindow1, ID_STATICTEXT5, _("Время прогнозирования"), wxPoint(305,49), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
+  StaticText5 = new wxStaticText(SashWindow1, ID_STATICTEXT5, _("Время прогнозирования по UTC(+3)"), wxPoint(305,49), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
   SashWindow1->SetSashVisible(wxSASH_TOP,    true);
   SashWindow1->SetSashVisible(wxSASH_BOTTOM, true);
   SashWindow1->SetSashVisible(wxSASH_LEFT,   true);
@@ -164,6 +164,7 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
   Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton2Click);
   Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton1Click1);
   Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&dataDialog::OnTextCtrl1Text1);
+  Connect(ID_TIMEPICKERCTRL1,wxEVT_DATE_CHANGED,(wxObjectEventFunction)&dataDialog::OnTimePickerCtrl1Changed);
   Connect(ID_BUTTON4,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton3Click2);
   Connect(ID_SASHWINDOW1,wxEVT_SASH_DRAGGED,(wxObjectEventFunction)&dataDialog::OnSashWindow1SashDragged);
   Connect(wxID_ANY,wxEVT_INIT_DIALOG,(wxObjectEventFunction)&dataDialog::OnInit);
@@ -455,12 +456,13 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
       text4 = to_string(day_down);
     }
     string text1;
-    string text0
+    string text0;
+    mat sko;
   if ((Choice1->GetString(Choice1->GetSelection()))== "GPS")
   {
 
      text1 = text5+text2+text3+text4+".agp"s;
-text0 =  = "/MCC/ALMANAC/"+ textYear +"/"+text1;
+    text0 =   "/MCC/ALMANAC/"+ textYear +"/"+text1;
     f<< " day_down="<< day_down<<endl;
     f<< " text4="<< text4<<endl;
     const char* File1 ;
@@ -578,16 +580,13 @@ text0 =  = "/MCC/ALMANAC/"+ textYear +"/"+text1;
       }
     }
     mat Htr = H.t();
-    mat sko = sqrt((inv(Htr*inv(Dn)*H)).t());
-    wxString s;
-    s.Printf("Значение СКО:\nСКО для x: %.3f м\nСКО для y: %.3f м\nСКО для z: %.3f м\nСКО для D: %.3f, м СКО: %.3f м",
-             sko(0,0), sko(1,1), sko(2,2), sko(3,3), sqrt (pow(sko(0,0),2)+pow(sko(1,1),2)+pow(sko(2,2),2) ));
-    StaticText4->SetLabel(s);
+    sko = sqrt((inv(Htr*inv(Dn)*H)).t());
+
   }
   else if ((Choice1->GetString(Choice1->GetSelection()))== "Glonass")
   {
   text1 = text5+text2+text3+text4+".agl"s;
-  text0 =  = "/MCC/ALMANAC/"+ textYear +"/"+text1;
+  text0 =   "/MCC/ALMANAC/"+ textYear +"/"+text1;
     f<< " day_down="<< day_down<<endl;
     f<< " text4="<< text4<<endl;
     const char* File1 ;
@@ -714,7 +713,7 @@ text0 =  = "/MCC/ALMANAC/"+ textYear +"/"+text1;
       }
     }
     //для ион
-    text1 = "BRDC1510.21n"s;
+ /*   text1 = "BRDC1510.21n"s;
 
     text_0 = "/MCC/BRDC/" +textYear +"/" + text_1";
 
@@ -723,21 +722,20 @@ text0 =  = "/MCC/ALMANAC/"+ textYear +"/"+text1;
     File11 = text0.c_str();//""//перевод строки с строку Си
     file1 = text1.c_str();
     bool down = download( "glonass-iac.ru", NULL, NULL, File11, file1);
+   */
     mat Htr = H.t();
-    mat sko = sqrt((inv(Htr*inv(Dn)*H)).t());
-    double dt1, dt2;
-    //DatePickerCtrl1 -> GetValue(dt1);
-    // вывод значения в стат. текст
-    wxString s;
-    s.Printf("Значение СКО:\nСКО для x: %.3f м\nСКО для y: %.3f м\nСКО для z: %.3f м\nСКО для D: %.3f, СКО: %.3f м",
-             sko(0,0), sko(1,1), sko(2,2), sko(3,3), sqrt (pow(sko(0,0),2)+pow(sko(1,1),2)+pow(sko(2,2),2) ));
-    StaticText4->SetLabel(s);
+    sko = sqrt((inv(Htr*inv(Dn)*H)).t());
   }
   else
   {
     wxMessageBox(_("Выберите другую ГНСС"), _("Error"));
   }
-  f.close();
+       wxString s;
+    s.Printf("Значение СКО:\nСКО для x: %.3f м\nСКО для y: %.3f м\nСКО для z: %.3f м\nСКО для D: %.3f, м СКО: %.3f м",
+    sko(0,0), sko(1,1), sko(2,2), sko(3,3), sqrt (pow(sko(0,0),2)+pow(sko(1,1),2)+pow(sko(2,2),2) ));
+    StaticText4->SetLabel(s);
+    f.close();
+
 }
 
 
@@ -746,7 +744,9 @@ text0 =  = "/MCC/ALMANAC/"+ textYear +"/"+text1;
 void dataDialog::OnDatePickerCtrl1Changed(wxDateEvent& event)
 {
 }
-
+void dataDialog::OnTimePickerCtrl1Changed(wxDateEvent& event)
+{
+}
 void dataDialog::OnButton3Click1(wxCommandEvent& event)
 {
   /*int *hour;

@@ -64,6 +64,7 @@ class dataDialog: public wxDialog
         void OnDatePickerCtrl1Changed(wxDateEvent& event);
         void OnButton3Click1(wxCommandEvent& event);
         void OnButton3Click2(wxCommandEvent& event);
+        void OnTimePickerCtrl1Changed(wxDateEvent& event);
         //*)
 
 
