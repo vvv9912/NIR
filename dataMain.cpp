@@ -210,13 +210,133 @@ void dataDialog::OnSashWindow1SashDragged(wxSashEvent& event)
 
 }
 
+/*
+int typeSys()
+{
+
+
+ // wxString s;
+  if ((Choice1->GetString(Choice1->GetSelection()))== "GPS"s)
+  {
+      return 0;
+  }
+  if ((Choice1->GetString(Choice1->GetSelection()))== "Glonass"s)
+  {
+     return  1;
+  }
+  if ((Choice1->GetString(Choice1->GetSelection()))== "Galileo"s)
+  {
+      return 2;
+  }
+  if ((Choice1->GetString(Choice1->GetSelection()))== "Beidou"s)
+  {
+      return 3;
+  }
+  if ((Choice1->GetString(Choice1->GetSelection()))== "QZSS"s)
+  {
+      return 4;
+  }
+
+}*/
+void parseDate(const char* File1, const char* file,
+                string text5,string text2,string text3,
+                string text4,string textYear )
+{ // Зависиомть от системы, на входе система - на выходе название файла с расширением.
+   string text1;
+    string text0;
+  //gps
+  switch (typeSys())
+  {
+  case 0:
+    text1 = text5+text2+text3+text4+".agp"s;
+    text0 =   "/MCC/ALMANAC/"+ textYear +"/"+text1;
+   // f<< " day_down="<< day_down<<endl;
+  //  f<< " text4="<< text4<<endl;
+  //  const char* File1 ;
+  //  const char* file ;
+    File1 = text0.c_str();//"/MCC/ALMANAC/2015/MCCJ_150307.agp"//перевод строки с строку Си
+    file = text1.c_str();
+    //! добавить если файла нет, искать ближайший!
+ //   f<< "const char* File1"<< File1<<endl;
+ //   f<< " file"<< file<<endl;
+    break;
+  case 1:
+     //glonass
+    text1 = text5+text2+text3+text4+".agl"s;
+    text0 =   "/MCC/ALMANAC/"+ textYear +"/"+text1;
+  //  f<< " day_down="<< day_down<<endl;
+  //  f<< " text4="<< text4<<endl;
+    //const char* File1 ;
+  //  const char* file ;
+    File1 = text0.c_str();//"/MCC/ALMANAC/2015/MCCJ_150307.agl"//перевод строки с строку Си
+    file = text1.c_str();
+  //  //! добавить если файла нет, искать ближайший!
+  //  f<< "const char* File1"<< File1<<endl;
+ //   f<< " file"<< file<<endl;
+  //  break;
+  }
+}
+
 void dataDialog::OnButton2Click(wxCommandEvent& event)
 {
 
   wxString s;
   const char* File1 ;
   const char* file ;
+  /*
+  switch (typeSys())
+  {
+  case 0:
+    File1 = "/MCC/PRODUCTS/LATEST/MERMS-GSC_C.ete";
+    file = "MERMS-GSC_C.ete";
+    wxTextFile file11(wxT("MERMS-GSC_C.ete"));
+    if (file11.Exists())
+    {
+      wxRemoveFile(file);
+    }
+    break;
+  case 1:
+    File1 = "/MCC/PRODUCTS/LATEST/MERMS-RSC_C.ete";
+    file = "MERMS-RSC_C.ete";
+    wxTextFile file11(wxT("MERMS-RSC_C.ete"));
+    if (file11.Exists())
+    {
+      wxRemoveFile(file);
+    }
+    break;
+    case 2:
+       File1 = "/MCC/PRODUCTS/LATEST/MERMS-ESC_C.ete";
+    file = "MERMS-ESC_C.ete";
+    wxTextFile file11(wxT("MERMS-ESC_C.ete"));
+    if (file11.Exists())
+    {
+      wxRemoveFile(file);
+    }
+    break;
+    case 3:
+       File1 = "/MCC/PRODUCTS/LATEST/MERMS-CSC_C.ete";
+    file = "MERMS-CSC_C.ete";
+    wxTextFile file11(wxT("MERMS-CSC_C.ete"));
+    if (file11.Exists())
+    {
+      wxRemoveFile(file);
+    }
+    break;
+    case 4:
+       File1 = "/MCC/PRODUCTS/LATEST/MERMS-JSC_C.ete";
+    file = "MERMS-JSC_C.ete";
+    wxTextFile file11(wxT("MERMS-JSC_C.ete"));
+    if (file11.Exists())
+    {
+      wxRemoveFile(file);
+    }
+    break;
+  }
+
+  }
+*/
   //wxMessageBox(Choice1->GetString(Choice1->GetSelection()), _(""));
+//  wxString s;
   if ((Choice1->GetString(Choice1->GetSelection()))== "GPS"s)
   {
     File1 = "/MCC/PRODUCTS/LATEST/MERMS-GSC_C.ete";
@@ -237,6 +357,7 @@ void dataDialog::OnButton2Click(wxCommandEvent& event)
       wxRemoveFile(file);
     }
   }
+
   if ((Choice1->GetString(Choice1->GetSelection()))== "Galileo"s)
   {
     File1 = "/MCC/PRODUCTS/LATEST/MERMS-ESC_C.ete";
@@ -258,6 +379,7 @@ void dataDialog::OnButton2Click(wxCommandEvent& event)
     }
 
   }
+
   if ((Choice1->GetString(Choice1->GetSelection()))== "QZSS"s)
   {
     File1 = "/MCC/PRODUCTS/LATEST/MERMS-JSC_C.ete";
@@ -268,6 +390,7 @@ void dataDialog::OnButton2Click(wxCommandEvent& event)
       wxRemoveFile(file);
     }
   }
+
   bool down = download( "glonass-iac.ru", NULL, NULL, File1, file);
   if (!down)
   {
@@ -276,7 +399,6 @@ void dataDialog::OnButton2Click(wxCommandEvent& event)
   }
   Gridd(file);
 }
-
 
 void dataDialog::Gridd(const char* file)
 {
@@ -398,7 +520,7 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
   year_down = year_predsk;
   month_down = month_predsk;
   ofstream f;
-  f.open("test/test2.txt");
+  f.open("test2.txt");
   f<< "year_predsk="<< year_predsk<<endl;
   f<< "month_predsk="<< month_predsk<<endl;
   f<< "day_predsk="<< day_predsk<<endl;
@@ -461,7 +583,7 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
   if ((Choice1->GetString(Choice1->GetSelection()))== "GPS")
   {
 
-     text1 = text5+text2+text3+text4+".agp"s;
+    text1 = text5+text2+text3+text4+".agp"s;
     text0 =   "/MCC/ALMANAC/"+ textYear +"/"+text1;
     f<< " day_down="<< day_down<<endl;
     f<< " text4="<< text4<<endl;
@@ -807,7 +929,7 @@ void dataDialog::OnButton3Click2(wxCommandEvent& event)
   //ephemerids(double toe,int t_almanax, double M0, double sqrtA, double E, double I, double Om0, double time_week ))
 
   //my coord
-  /*
+
   Coordinates Coord_sp = ephemerids(44271.777,
                                   61440,
                                   0.84951556,

@@ -18,9 +18,6 @@
 					<Add option="-D__WXDEBUG__" />
 				</Compiler>
 				<Linker>
-					<Add option="-static-libstdc++" />
-					<Add option="-static-libgcc" />
-					<Add option="-static" />
 					<Add library="libwxmsw30u.a" />
 					<Add library="libwxpng.a" />
 					<Add library="libwxjpeg.a" />

@@ -67,7 +67,7 @@ class dataDialog: public wxDialog
         void OnTimePickerCtrl1Changed(wxDateEvent& event);
         //*)
 
-
+        int typeSys();
         void Gridd(const char* file);
         //(*Identifiers(dataDialog)
         static const long ID_DATEPICKERCTRL1;
