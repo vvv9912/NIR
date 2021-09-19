@@ -15,6 +15,7 @@
 #include <wx/choice.h>
 #include <wx/datectrl.h>
 #include <wx/dateevt.h>
+
 #include <wx/dialog.h>
 #include <wx/notebook.h>
 #include <wx/sashwin.h>
@@ -26,11 +27,12 @@
 #include <wx/spinctrl.h>
 //#include <wx/gdicmn.h>
 
+
 class dataDialog: public wxDialog
 {
     public:
-
         dataDialog(wxWindow* parent,wxWindowID id = -1);
+         int type;
         virtual ~dataDialog();
 
     private:
@@ -65,9 +67,11 @@ class dataDialog: public wxDialog
         void OnButton3Click1(wxCommandEvent& event);
         void OnButton3Click2(wxCommandEvent& event);
         void OnTimePickerCtrl1Changed(wxDateEvent& event);
+        void OnChoice1Select5(wxCommandEvent& event);
         //*)
 
         int typeSys();
+
         void Gridd(const char* file);
         //(*Identifiers(dataDialog)
         static const long ID_DATEPICKERCTRL1;

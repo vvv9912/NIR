@@ -38,7 +38,7 @@
 
 using namespace std;
 using namespace arma;
-
+int type;
 //(*InternalHeaders(dataDialog)
 #include <wx/intl.h>
 #include <wx/settings.h>
@@ -161,6 +161,7 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
   SashWindow1->SetSashVisible(wxSASH_RIGHT,  true);
 
   Connect(ID_DATEPICKERCTRL1,wxEVT_DATE_CHANGED,(wxObjectEventFunction)&dataDialog::OnDatePickerCtrl1Changed);
+  Connect(ID_CHOICE1,wxEVT_COMMAND_CHOICE_SELECTED,(wxObjectEventFunction)&dataDialog::OnChoice1Select5);
   Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton2Click);
   Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton1Click1);
   Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&dataDialog::OnTextCtrl1Text1);
@@ -211,9 +212,8 @@ void dataDialog::OnSashWindow1SashDragged(wxSashEvent& event)
 }
 
 /*
-int typeSys()
+int dataDialog::typeSys()
 {
-
 
  // wxString s;
   if ((Choice1->GetString(Choice1->GetSelection()))== "GPS"s)
@@ -238,18 +238,22 @@ int typeSys()
   }
 
 }*/
+
 void parseDate(const char* File1, const char* file,
                 string text5,string text2,string text3,
-                string text4,string textYear )
+                string text4, string textYear)
 { // Зависиомть от системы, на входе система - на выходе название файла с расширением.
-   string text1;
-    string text0;
+  string text1;
+  string text0;
   //gps
-  switch (typeSys())
+  int z =type;
+  text1 = text5+text2+text3+text4;
+  text0 =   "/MCC/ALMANAC/"+ textYear +"/"+text1;
+  switch (z)
   {
   case 0:
-    text1 = text5+text2+text3+text4+".agp"s;
-    text0 =   "/MCC/ALMANAC/"+ textYear +"/"+text1;
+    text1 +=".agp"s;
+
    // f<< " day_down="<< day_down<<endl;
   //  f<< " text4="<< text4<<endl;
   //  const char* File1 ;
@@ -262,19 +266,19 @@ void parseDate(const char* File1, const char* file,
     break;
   case 1:
      //glonass
-    text1 = text5+text2+text3+text4+".agl"s;
-    text0 =   "/MCC/ALMANAC/"+ textYear +"/"+text1;
+    text1 += ".agl"s;
+
   //  f<< " day_down="<< day_down<<endl;
   //  f<< " text4="<< text4<<endl;
     //const char* File1 ;
   //  const char* file ;
     File1 = text0.c_str();//"/MCC/ALMANAC/2015/MCCJ_150307.agl"//перевод строки с строку Си
     file = text1.c_str();
-  //  //! добавить если файла нет, искать ближайший!
   //  f<< "const char* File1"<< File1<<endl;
  //   f<< " file"<< file<<endl;
   //  break;
   }
+   text0 =   "/MCC/ALMANAC/"+ textYear +"/"+text1;
 }
 
 void dataDialog::OnButton2Click(wxCommandEvent& event)
@@ -391,7 +395,7 @@ void dataDialog::OnButton2Click(wxCommandEvent& event)
     }
   }
 
-  bool down = download( "glonass-iac.ru", NULL, NULL, File1, file);
+  bool down = download( "ftp.glonass-iac.ru", NULL, NULL, File1, file);
   if (!down)
   {
     wxMessageBox(_("Error"), _("Error"));
@@ -719,7 +723,7 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
     f<< "const char* File1"<< File1<<endl;
     f<< " file"<< file<<endl;
 
-    bool down = download( "glonass-iac.ru", NULL, NULL, File1, file);
+    bool down = download( "ftp.glonass-iac.ru", NULL, NULL, File1, file);
     int max_sats = parseGLNS(file);
 
 
@@ -1042,3 +1046,28 @@ void dFiTableFrame::OnButton1Click(wxCommandEvent& event)
 
 
 
+
+void dataDialog::OnChoice1Select5(wxCommandEvent& event)
+{
+
+  if ((Choice1->GetString(Choice1->GetSelection()))== "GPS"s)
+  {
+      type = 0;
+  }
+  if ((Choice1->GetString(Choice1->GetSelection()))== "Glonass"s)
+  {
+     type = 1;
+  }
+  if ((Choice1->GetString(Choice1->GetSelection()))== "Galileo"s)
+  {
+      type = 2;
+  }
+  if ((Choice1->GetString(Choice1->GetSelection()))== "Beidou"s)
+  {
+      type = 3;
+  }
+  if ((Choice1->GetString(Choice1->GetSelection()))== "QZSS"s)
+  {
+      type = 4;
+  }
+}
