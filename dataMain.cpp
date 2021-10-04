@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include <armadillo>
 #include <fstream>
+#include <urlmon.h> //winApi htttp
 
 #include <wx/string.h>
 #include <wx/textfile.h>
@@ -120,8 +121,11 @@ bool download(LPCSTR server, LPCSTR login, LPCSTR pass, LPCSTR local_file, LPCST
   return status;
 }
 */
-
-
+//Функция скачивания;
+/*
+URLDownloadToFileA(NULL, "http://www.gsc-europa.eu/sites/default/files/sites/all/files/2021_09_28.xml",
+                     "b111.txt", 0,NULL);
+*/
 dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
 {
   //(*Initialize(dataDialog)

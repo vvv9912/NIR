@@ -18,6 +18,7 @@
 					<Add option="-D__WXDEBUG__" />
 				</Compiler>
 				<Linker>
+					<Add option="-lurlmon" />
 					<Add library="libwxmsw30u.a" />
 					<Add library="libwxpng.a" />
 					<Add library="libwxjpeg.a" />
@@ -98,6 +99,8 @@
 		<Unit filename="parserGPS.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="parserGalileo.cpp" />
+		<Unit filename="parserGalileo.h" />
 		<Unit filename="resource.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
