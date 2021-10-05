@@ -2,7 +2,7 @@
 #define PARSERGALILEO_H
 
 #include <urlmon.h>
-struct parseralmanaxGalileo
+/*struct parseralmanaxGalileo
 {
   char svid[100];
   char aSqroot[100];
@@ -17,8 +17,7 @@ struct parseralmanaxGalileo
   char iod[100];
   char t0a[100];
   char wna[100];
-
-};
+};*/
 struct almanaxGalileo
 {
   double svid;
@@ -34,17 +33,9 @@ struct almanaxGalileo
   double iod;
   double t0a;
   double wna;
-
 };
 int parserGalileo(const char* file1, almanaxGalileo *almanaxgalileo);
-
 void parserstruct(char a[100],
                   double *d);
-
-
-void Downloadhttp(const char* url, const char* file2);
-
-
-
-
+int Downloadhttp(const char* url, const char* file2);
 #endif

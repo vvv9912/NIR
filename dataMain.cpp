@@ -25,7 +25,8 @@
 #include <stdio.h>
 #include <armadillo>
 #include <fstream>
-#include <urlmon.h> //winApi htttp
+#include <urlmon.h> //winApi htttp#
+#include "parserGalileo.h"
 
 #include <wx/string.h>
 #include <wx/textfile.h>
@@ -244,9 +245,10 @@ int dataDialog::typeSys()
 }*/
 
 void parseDate(const char* File1, const char* file,
-                string text5,string text2,string text3,
-                string text4, string textYear)
-{ // Зависиомть от системы, на входе система - на выходе название файла с расширением.
+               string text5,string text2,string text3,
+               string text4, string textYear)
+{
+  // Зависиомть от системы, на входе система - на выходе название файла с расширением.
   string text1;
   string text0;
   //gps
@@ -258,31 +260,31 @@ void parseDate(const char* File1, const char* file,
   case 0:
     text1 +=".agp"s;
 
-   // f<< " day_down="<< day_down<<endl;
-  //  f<< " text4="<< text4<<endl;
-  //  const char* File1 ;
-  //  const char* file ;
+    // f<< " day_down="<< day_down<<endl;
+    //  f<< " text4="<< text4<<endl;
+    //  const char* File1 ;
+    //  const char* file ;
     File1 = text0.c_str();//"/MCC/ALMANAC/2015/MCCJ_150307.agp"//перевод строки с строку Си
     file = text1.c_str();
     //! добавить если файла нет, искать ближайший!
- //   f<< "const char* File1"<< File1<<endl;
- //   f<< " file"<< file<<endl;
+//   f<< "const char* File1"<< File1<<endl;
+//   f<< " file"<< file<<endl;
     break;
   case 1:
-     //glonass
+    //glonass
     text1 += ".agl"s;
 
-  //  f<< " day_down="<< day_down<<endl;
-  //  f<< " text4="<< text4<<endl;
+    //  f<< " day_down="<< day_down<<endl;
+    //  f<< " text4="<< text4<<endl;
     //const char* File1 ;
-  //  const char* file ;
+    //  const char* file ;
     File1 = text0.c_str();//"/MCC/ALMANAC/2015/MCCJ_150307.agl"//перевод строки с строку Си
     file = text1.c_str();
-  //  f<< "const char* File1"<< File1<<endl;
- //   f<< " file"<< file<<endl;
-  //  break;
+    //  f<< "const char* File1"<< File1<<endl;
+//   f<< " file"<< file<<endl;
+    //  break;
   }
-   text0 =   "/MCC/ALMANAC/"+ textYear +"/"+text1;
+  text0 =   "/MCC/ALMANAC/"+ textYear +"/"+text1;
 }
 
 void dataDialog::OnButton2Click(wxCommandEvent& event)
@@ -342,7 +344,7 @@ void dataDialog::OnButton2Click(wxCommandEvent& event)
   }
 
   }
-*/
+  */
   //wxMessageBox(Choice1->GetString(Choice1->GetSelection()), _(""));
 //  wxString s;
   if ((Choice1->GetString(Choice1->GetSelection()))== "GPS"s)
@@ -563,31 +565,34 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
 
 //
 //преобразование в слово для скачивания
-    string textYear = to_string(year_down);
-    string text5 = "MCCJ_";
-    string text2 = to_string(year_down -2000);
-    string text3 ;
-    if (month_down<10)
-    {
-      text3 = "0"s + to_string(month_down);
-    }
-    else
-    {
-      text3 = to_string(month_down);
-    }
-    string text4;
+  string textYear = to_string(year_down); //2021
+  string text5 = "MCCJ_";
+  string text2 = to_string(year_down -2000); //year itog текущий -1
+  string text3 ;
+  if (month_down<10)
+  {
+    text3 = "0"s + to_string(month_down); //month текущий -1
+  }
+  else
+  {
+    text3 = to_string(month_down);
+  }
+  string text4;
 
-    if (day_down<10)
-    {
-      text4 = "0"s +to_string(day_down);
-    }
-    else
-    {
-      text4 = to_string(day_down);
-    }
-    string text1;
-    string text0;
-    mat sko;
+  if (day_down<10)
+  {
+    text4 = "0"s +to_string(day_down); //day текущий -1
+  }
+  else
+  {
+    text4 = to_string(day_down);
+  }
+  string text1;
+  string text0;
+  f<< " text2="<< text2<<endl;
+  f<< " text3="<< text3<<endl;
+  f<< " text4="<< text4<<endl;
+  mat sko;
   if ((Choice1->GetString(Choice1->GetSelection()))== "GPS")
   {
 
@@ -602,7 +607,7 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
     //! добавить если файла нет, искать ближайший!
     f<< "const char* File1"<< File1<<endl;
     f<< " file"<< file<<endl;
-    bool down = download( "glonass-iac.ru", NULL, NULL, File1, file);
+    bool down = download( "ftp.glonass-iac.ru", NULL, NULL, File1, file);
     int max_sats = parseGPS(file);
 
 // Расчет матрицы Dn, Hn, SKO
@@ -630,7 +635,10 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
                             almanax_GPS[i-1].I,
                             almanax_GPS[i-1].Om0,
                             almanax_GPS[i-1].time_week);
-
+      f<< "I = "<<almanax_GPS[i-1].I<<endl;
+      f<< "toe = "<<toe<<endl;
+      f<< "almanax_GPS[i-1].t_almanax = "<<almanax_GPS[i-1].t_almanax<<endl;
+      f<< "almanax_GPS[i-1].time_week = "<<almanax_GPS[i-1].time_week<<endl;
       f <<"i-1 (номер спут)"<<i-1<<endl;
 
       f<<"Coord_sp.X="<<Coord_sp.X<<endl;
@@ -715,8 +723,8 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
   }
   else if ((Choice1->GetString(Choice1->GetSelection()))== "Glonass")
   {
-  text1 = text5+text2+text3+text4+".agl"s;
-  text0 =   "/MCC/ALMANAC/"+ textYear +"/"+text1;
+    text1 = text5+text2+text3+text4+".agl"s;
+    text0 =   "/MCC/ALMANAC/"+ textYear +"/"+text1;
     f<< " day_down="<< day_down<<endl;
     f<< " text4="<< text4<<endl;
     const char* File1 ;
@@ -843,28 +851,209 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
       }
     }
     //для ион
- /*   text1 = "BRDC1510.21n"s;
+    /*   text1 = "BRDC1510.21n"s;
 
-    text_0 = "/MCC/BRDC/" +textYear +"/" + text_1";
+       text_0 = "/MCC/BRDC/" +textYear +"/" + text_1";
 
-    const char* File11 ;
-    const char* file1 ;
-    File11 = text0.c_str();//""//перевод строки с строку Си
-    file1 = text1.c_str();
-    bool down = download( "glonass-iac.ru", NULL, NULL, File11, file1);
-   */
+       const char* File11 ;
+       const char* file1 ;
+       File11 = text0.c_str();//""//перевод строки с строку Си
+       file1 = text1.c_str();
+       bool down = download( "glonass-iac.ru", NULL, NULL, File11, file1);
+      */
     mat Htr = H.t();
     sko = sqrt((inv(Htr*inv(Dn)*H)).t());
   }
+  else if ((Choice1->GetString(Choice1->GetSelection()))== "Galileo"s)
+  {
+    text2 = to_string(year_down);
+//2021-06-08
+    const char* File1 ;
+    const char* file ;
+    text1 = text2 + "-"s + text3 + "-"s + text4 + ".xml"s;
+    text0 = "http://www.gsc-europa.eu/sites/default/files/sites/all/files/"s+text1;
+    f<< " text1="<< text1<<endl;
+
+    file = text1.c_str(); //ссылка на файл
+    File1 = text0.c_str();
+    f<< " file"<< file<<endl;
+    int ok = Downloadhttp(File1,file);
+    if (ok == 0)
+    {
+      text1 = text2 + "_"s + text3 + "_"s + text4 + ".xml"s;
+      text0 = "http://www.gsc-europa.eu/sites/default/files/sites/all/files/"s+text1;
+      file = text1.c_str(); //ссылка на файл
+      File1 = text0.c_str();
+      ok = Downloadhttp(File1,file);
+      f<< "ok = "<<ok <<endl;
+      f<< " file"<< file<<endl;
+      f<< "file1 = "<< File1 <<endl;
+
+
+    }
+    while (ok == 0)
+    {
+      day_down = day_down - 1;
+      if (day_down<10)
+      {
+        text4 = "0"s +to_string(day_down); //day текущий -1
+      }
+      else
+      {
+        text4 = to_string(day_down);
+      }
+      text1 = text2 + "_"s + text3 + "_"s + text4 + ".xml"s;
+      text0 = "http://www.gsc-europa.eu/sites/default/files/sites/all/files/"s+text1;
+      file = text1.c_str(); //ссылка на файл
+      File1 = text0.c_str();
+      ok = Downloadhttp(File1,file);
+      f<< "ok = "<<ok <<endl;
+      f<< " file"<< file<<endl;
+      f<< "file1 = "<< File1 <<endl;
+      if (ok == 0)
+      {
+        text1 = text2 + "-"s + text3 + "-"s + text4 + ".xml"s;
+        text0 = "http://www.gsc-europa.eu/sites/default/files/sites/all/files/"s+text1;
+        file = text1.c_str(); //ссылка на файл
+        File1 = text0.c_str();
+        ok = Downloadhttp(File1,file);
+        f<< "ok = "<<ok <<endl;
+        f<< " file = "<< file<<endl;
+        f<< "file1 = "<< File1 <<endl;
+
+      }
+
+      /*  if (day_down <= 0)
+        {
+          wxMessageBox(_("Альманах не удалось скачать !"), _("Error"));
+          break;
+        }*/
+    }
+    f<< " file = "<< file<<endl;
+    f<< "file1 = "<< File1 <<endl;
+    //файл с альманахом скачен
+    almanaxGalileo almm[26];
+    int max_sats = parserGalileo(file, almm);
+    //расчет матрицы Dn
+    int numberSput = 22;
+    int vsb[numberSput];
+    int sumvsb = 0;
+    calc.timeGLL();
+    double toe = calc.sec_since_week;
+    f<< "Galileo:"<<endl;
+    f<<"toe()calc.sec_since_week="<<toe<<endl;
+    f<<"week="<<calc.week<<endl;
+    Coordinates Coord_sp;
+    for (int i=1; i<=numberSput; i++)
+    {
+      Coord_sp = ephemerids(toe,
+                            almm[i-1].t0a,
+                            almm[i-1].m0,
+                            almm[i-1].aSqroot, //проверить
+                            almm[i-1].ecc, // проверить
+                            almm[i-1].iod/M_PI,
+                            almm[i-1].omega0,
+                            almm[i-1].wna); //Термин WNa представляет
+      // собой двоичное представление по модулю
+      //4 номера недели времени системы Galileo.
+      f <<"i-1 (номер спут)"<<i-1<<endl;
+      f<< "numb sp = "<<almm[i-1].svid<<endl;
+      f<<"Coord_sp.X="<<Coord_sp.X<<endl;
+      f <<"Coord_sp.Y =" <<Coord_sp.Y<<endl;
+      f <<"Coord_sp.Z =" <<Coord_sp.Z<<endl;
+
+      Coord_sput[0] = Coord_sp.X;
+      Coord_sput[1] = Coord_sp.Y;
+      Coord_sput[2] = Coord_sp.Z;
+// Определение угла
+      alpha = 90 - (angle(Coord_sput, Coord_user, B, L)*180/PI);
+// определение видимости спутника
+      vsb[i]=0;
+      if ((alpha) >5)
+      {
+        vsb[i]=1;
+        sumvsb++;
+//        Visibles.push_back(i);  // добавление элемента в конец вектора
+      }
+    }
+    f <<"sumvsb =" <<sumvsb<<endl;
+    // получение матрицы Dn
+    int i = 0;
+    mat Dn;
+    Dn.zeros(sumvsb, sumvsb);
+    for (int k=1; k<=numberSput; k++)
+    {
+      if ((vsb[k]) == 1)
+      {
+        Dn(i,i) = SISerr[i].SISRE;
+        i++;
+      }
+    }
+    double max_val_Dn = Dn.max();
+    for (int i= 0; i<sumvsb; i++)
+    {
+      if ( Dn(i,i) == 0)
+      {
+        Dn(i,i) = max_val_Dn;
+      }
+    }
+
+// получение матрицы H
+    double dx;
+    double dy;
+    double dz;
+    double Ri;
+
+    mat H(sumvsb, 4);
+    H.zeros();
+
+    int numsput = 0;
+    for (int k=1; k<=numberSput; k++)
+    {
+      if ((vsb[k]) == 1)
+      {
+
+        Coord_sp = ephemerids(toe,
+                              almm[i-1].t0a,
+                              almm[i-1].m0,
+                              almm[i-1].aSqroot, //проверить
+                              almm[i-1].ecc, // проверить
+                              almm[i-1].iod/M_PI,
+                              almm[i-1].omega0,
+                              almm[i-1].wna); //Термин WNa представляет
+        // собой двоичное представление по модулю
+        //4 номера недели времени системы Galileo.
+        dx=(Coord_sp.X-Coord_x);
+        dy=(Coord_sp.Y-Coord_y);
+        dz=(Coord_sp.Z- Coord_z);
+// Ri = sqrt (SQUARE(dx)+SQUARE(dy)+SQUARE(dz));
+        Ri = sqrt (pow(dx,2)+pow(dy,2)+pow(dz,2));
+
+        H(numsput, 0 ) = dx/Ri;
+        H(numsput, 1) = dy/Ri;
+        H(numsput, 2) = dz/Ri;
+        H(numsput, 3) = 1;
+        numsput++ ;
+      }
+    }
+    mat Htr = H.t();
+    sko = sqrt((inv(Htr*inv(Dn)*H)).t());
+  }
+
+
+  //int k =   Downloadhttp("http://www.gsc-europa.eu/sites/default/files/sites/all/files/2021-09-24.xml",
+  //"file1.txt"); //_ _ _
+
+
   else
   {
     wxMessageBox(_("Выберите другую ГНСС"), _("Error"));
   }
-       wxString s;
-    s.Printf("Значение СКО:\nСКО для x: %.3f м\nСКО для y: %.3f м\nСКО для z: %.3f м\nСКО для D: %.3f, м СКО: %.3f м",
-    sko(0,0), sko(1,1), sko(2,2), sko(3,3), sqrt (pow(sko(0,0),2)+pow(sko(1,1),2)+pow(sko(2,2),2) ));
-    StaticText4->SetLabel(s);
-    f.close();
+  wxString s;
+  s.Printf("Значение СКО:\nСКО для x: %.3f м\nСКО для y: %.3f м\nСКО для z: %.3f м\nСКО для D: %.3f, м СКО: %.3f м",
+           sko(0,0), sko(1,1), sko(2,2), sko(3,3), sqrt (pow(sko(0,0),2)+pow(sko(1,1),2)+pow(sko(2,2),2) ));
+  StaticText4->SetLabel(s);
+  f.close();
 
 }
 
@@ -1056,22 +1245,22 @@ void dataDialog::OnChoice1Select5(wxCommandEvent& event)
 
   if ((Choice1->GetString(Choice1->GetSelection()))== "GPS"s)
   {
-      type = 0;
+    type = 0;
   }
   if ((Choice1->GetString(Choice1->GetSelection()))== "Glonass"s)
   {
-     type = 1;
+    type = 1;
   }
   if ((Choice1->GetString(Choice1->GetSelection()))== "Galileo"s)
   {
-      type = 2;
+    type = 2;
   }
   if ((Choice1->GetString(Choice1->GetSelection()))== "Beidou"s)
   {
-      type = 3;
+    type = 3;
   }
   if ((Choice1->GetString(Choice1->GetSelection()))== "QZSS"s)
   {
-      type = 4;
+    type = 4;
   }
 }
