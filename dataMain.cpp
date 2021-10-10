@@ -709,7 +709,7 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
         dz=(Coord_sp.Z- Coord_z);
 // Ri = sqrt (SQUARE(dx)+SQUARE(dy)+SQUARE(dz));
         Ri = sqrt (pow(dx,2)+pow(dy,2)+pow(dz,2));
-
+ f<< "Ri"<< Ri<<endl;
         H(numsput, 0 ) = dx/Ri;
         H(numsput, 1) = dy/Ri;
         H(numsput, 2) = dz/Ri;
@@ -717,9 +717,13 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
         numsput++ ;
       }
     }
-    mat Htr = H.t();
-    sko = sqrt((inv(Htr*inv(Dn)*H)).t());
 
+    mat Htr = H.t();
+    Htr.save("Htr.txt", raw_ascii);
+        Dn.save("Dn.txt", raw_ascii);
+            H.save("H.txt", raw_ascii);
+    sko = sqrt((inv(Htr*inv(Dn)*H)).t());
+    sko.save("sko.txt", raw_ascii);
   }
   else if ((Choice1->GetString(Choice1->GetSelection()))== "Glonass")
   {
@@ -922,7 +926,13 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
         f<< "file1 = "<< File1 <<endl;
 
       }
-
+    timeCalc calcGalileo(day_down, month_down, year_down, 0,0,0,0);
+    calcGalileo.timeGLL();
+    f<<"day_down ="<<day_down<<endl;
+    f<<" month_down ="<<month_down<<endl;
+    f<<" year_down="<<year_down<<endl;
+    f<< "week = " <<calcGalileo.week<<endl;
+    int weekGalileo = calcGalileo.week % 4;
       /*  if (day_down <= 0)
         {
           wxMessageBox(_("јльманах не удалось скачать !"), _("Error"));
@@ -935,7 +945,7 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
     almanaxGalileo almm[26];
     int max_sats = parserGalileo(file, almm);
     //расчет матрицы Dn
-    int numberSput = 22;
+    int numberSput = 24;
     int vsb[numberSput];
     int sumvsb = 0;
     calc.timeGLL();
@@ -943,17 +953,20 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
     f<< "Galileo:"<<endl;
     f<<"toe()calc.sec_since_week="<<toe<<endl;
     f<<"week="<<calc.week<<endl;
-    Coordinates Coord_sp;
+//    aSqroot = sqrt(A)-sqrt(Anom)
+    double Anom = 29600000; //м
+    //sqrt(A) = aSqroot + sqrt(Anom);
+   Coordinates Coord_sp;
     for (int i=1; i<=numberSput; i++)
     {
       Coord_sp = ephemerids(toe,
                             almm[i-1].t0a,
                             almm[i-1].m0,
-                            almm[i-1].aSqroot, //проверить
+                            (almm[i-1].aSqroot)+sqrt(Anom), //проверить
                             almm[i-1].ecc, // проверить
                             almm[i-1].iod/M_PI,
                             almm[i-1].omega0,
-                            almm[i-1].wna); //“ермин WNa представл€ет
+                            calc.week); //“ермин WNa представл€ет
       // собой двоичное представление по модулю
       //4 номера недели времени системы Galileo.
       f <<"i-1 (номер спут)"<<i-1<<endl;
@@ -1014,21 +1027,25 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
       {
 
         Coord_sp = ephemerids(toe,
-                              almm[i-1].t0a,
-                              almm[i-1].m0,
-                              almm[i-1].aSqroot, //проверить
-                              almm[i-1].ecc, // проверить
-                              almm[i-1].iod/M_PI,
-                              almm[i-1].omega0,
-                              almm[i-1].wna); //“ермин WNa представл€ет
+                              almm[k-1].t0a,
+                              almm[k-1].m0,
+                              (almm[k-1].aSqroot)+sqrt(Anom), //проверить
+                              almm[k-1].ecc, // проверить
+                              almm[k-1].iod/M_PI,
+                              almm[k-1].omega0,
+                              calc.week); //“ермин WNa представл€ет
         // собой двоичное представление по модулю
         //4 номера недели времени системы Galileo.
         dx=(Coord_sp.X-Coord_x);
         dy=(Coord_sp.Y-Coord_y);
         dz=(Coord_sp.Z- Coord_z);
+        f<<"Coord_sp.X = "<<Coord_sp.X<<endl;
+        f<<"Coord_sp.Y = "<<Coord_sp.Y<<endl;
+        f<<"Coord_sp.Z = "<<Coord_sp.Z<<endl;
+
 // Ri = sqrt (SQUARE(dx)+SQUARE(dy)+SQUARE(dz));
         Ri = sqrt (pow(dx,2)+pow(dy,2)+pow(dz,2));
-
+        f<< "Ri"<< Ri<<endl;
         H(numsput, 0 ) = dx/Ri;
         H(numsput, 1) = dy/Ri;
         H(numsput, 2) = dz/Ri;
@@ -1036,8 +1053,16 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
         numsput++ ;
       }
     }
+    //f <<  mat Htr <<endl;
     mat Htr = H.t();
+    Htr.save("Htr.txt", raw_ascii);
+     Dn.save("Dn.txt", raw_ascii);
+            H.save("H.txt", raw_ascii);
     sko = sqrt((inv(Htr*inv(Dn)*H)).t());
+      sko.save("sko.txt", raw_ascii);
+    //f << Htr.print();
+  //  f<< Htr.print() << endl;
+   // f<< "— ќ \n"<<Htr.print() << endl;
   }
 
 
