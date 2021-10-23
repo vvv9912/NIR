@@ -34,3 +34,8 @@ bin/Debug/MCCJ_150307.agl
 *.o
 *.xml
 *.o
+*.o
+*.o
+obj/Debug/ephemeridsGLNS.o
+*.out
+*.out
