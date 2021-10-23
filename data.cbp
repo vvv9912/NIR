@@ -76,6 +76,8 @@
 		</Linker>
 		<Unit filename="FTPdownl.cpp" />
 		<Unit filename="FTPdownl.h" />
+		<Unit filename="GridDialog.cpp" />
+		<Unit filename="GridDialog.h" />
 		<Unit filename="angle.cpp" />
 		<Unit filename="angle.h" />
 		<Unit filename="data.cbp" />
@@ -106,6 +108,7 @@
 		</Unit>
 		<Unit filename="timeCalc.cpp" />
 		<Unit filename="timeCalc.h" />
+		<Unit filename="wxsmith/GridDialog.wxs" />
 		<Unit filename="wxsmith/datadialog.wxs" />
 		<Unit filename="xyz2enu.cpp" />
 		<Unit filename="xyz2enu.h" />
@@ -118,6 +121,7 @@
 				<gui name="wxWidgets" src="dataApp.cpp" main="dataDialog" init_handlers="necessary" language="CPP" />
 				<resources>
 					<wxDialog wxs="wxsmith/datadialog.wxs" src="dataMain.cpp" hdr="dataMain.h" fwddecl="0" i18n="1" name="dataDialog" language="CPP" />
+					<wxDialog wxs="wxsmith/GridDialog.wxs" src="GridDialog.cpp" hdr="GridDialog.h" fwddecl="0" i18n="1" name="GridDialog" language="CPP" />
 				</resources>
 			</wxsmith>
 		</Extensions>

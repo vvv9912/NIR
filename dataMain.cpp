@@ -28,6 +28,9 @@
 #include <urlmon.h> //winApi htttp#
 #include "parserGalileo.h"
 
+#include "GridDialog.h"
+
+#include <wx/window.h>
 #include <wx/string.h>
 #include <wx/textfile.h>
 #include <wx/dialog.h>
@@ -35,6 +38,8 @@
 #include <wx/spinctrl.h>
 #include <wx/intl.h>
 #include <wx/settings.h>
+#include <wx/wx.h>
+
 
 #define SQUARE(val) val * val
 
@@ -91,6 +96,7 @@ const long dataDialog::ID_STATICTEXT4 = wxNewId();
 const long dataDialog::ID_TIMEPICKERCTRL1 = wxNewId();
 const long dataDialog::ID_BUTTON4 = wxNewId();
 const long dataDialog::ID_STATICTEXT5 = wxNewId();
+const long dataDialog::ID_BUTTON3 = wxNewId();
 const long dataDialog::ID_SASHWINDOW1 = wxNewId();
 //*)
 
@@ -131,7 +137,7 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
 {
   //(*Initialize(dataDialog)
   Create(parent, wxID_ANY, _("Data app"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
-  SetClientSize(wxSize(533,556));
+  SetClientSize(wxSize(596,556));
   SetMinSize(wxSize(-1,-1));
   SetMaxSize(wxSize(-1,-1));
   SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_INACTIVEBORDER));
@@ -160,18 +166,19 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
   TimePickerCtrl1 = new wxTimePickerCtrl(SashWindow1, ID_TIMEPICKERCTRL1, wxDateTime::Now(), wxPoint(305,93), wxSize(85,21), 0, wxDefaultValidator, _T("ID_TIMEPICKERCTRL1"));
   Button3 = new wxButton(SashWindow1, ID_BUTTON4, _("для отладки/test"), wxPoint(303,463), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON4"));
   StaticText5 = new wxStaticText(SashWindow1, ID_STATICTEXT5, _("Время прогнозирования по UTC(+3)"), wxPoint(305,49), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
+  Button1 = new wxButton(SashWindow1, ID_BUTTON3, _("grid"), wxPoint(312,436), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON3"));
   SashWindow1->SetSashVisible(wxSASH_TOP,    true);
   SashWindow1->SetSashVisible(wxSASH_BOTTOM, true);
   SashWindow1->SetSashVisible(wxSASH_LEFT,   true);
   SashWindow1->SetSashVisible(wxSASH_RIGHT,  true);
 
   Connect(ID_DATEPICKERCTRL1,wxEVT_DATE_CHANGED,(wxObjectEventFunction)&dataDialog::OnDatePickerCtrl1Changed);
-  Connect(ID_CHOICE1,wxEVT_COMMAND_CHOICE_SELECTED,(wxObjectEventFunction)&dataDialog::OnChoice1Select5);
   Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton2Click);
   Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton1Click1);
   Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&dataDialog::OnTextCtrl1Text1);
   Connect(ID_TIMEPICKERCTRL1,wxEVT_DATE_CHANGED,(wxObjectEventFunction)&dataDialog::OnTimePickerCtrl1Changed);
   Connect(ID_BUTTON4,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton3Click2);
+  Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton1Click3);
   Connect(ID_SASHWINDOW1,wxEVT_SASH_DRAGGED,(wxObjectEventFunction)&dataDialog::OnSashWindow1SashDragged);
   Connect(wxID_ANY,wxEVT_INIT_DIALOG,(wxObjectEventFunction)&dataDialog::OnInit);
   //*)
@@ -185,6 +192,28 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
   Grid->SetDefaultCellTextColour( Grid->GetForegroundColour() );
 }
 
+void dataDialog::OnButton1Click3(wxCommandEvent& event)
+{
+  //g.Create(parent, wxID_ANY, _("Grid"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
+/*	Create(parent, wxID_ANY, _("Grid"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
+	SetClientSize(wxSize(679,551));
+	SetMinSize(wxSize(-1,-1));
+	SetMaxSize(wxSize(-1,-1));
+	SashWindow1 = new wxSashWindow(this, ID_SASHWINDOW1, wxPoint(80,112), wxSize(288,328), wxSW_3D|wxCLIP_CHILDREN, _T("ID_SASHWINDOW1"));
+	Button1 = new wxButton(SashWindow1, ID_BUTTON1, _("Label"), wxPoint(197,47), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	SashWindow1->SetSashVisible(wxSASH_TOP,    true);
+	SashWindow1->SetSashVisible(wxSASH_BOTTOM, true);
+	SashWindow1->SetSashVisible(wxSASH_LEFT,   true);
+	SashWindow1->SetSashVisible(wxSASH_RIGHT,  true);
+	Center();
+
+	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&GridDialog::OnButton1Click);
+	//*)*/
+GridDialog *g;
+g = new GridDialog(this, wxID_ANY, wxDefaultPosition,wxDefaultSize);
+g->Show(true);
+
+}
 
 dataDialog::~dataDialog()
 {
@@ -1259,12 +1288,6 @@ void dFiTableFrame::OnButton1Click(wxCommandEvent& event)
 */
 
 
-
-
-
-
-
-
 void dataDialog::OnChoice1Select5(wxCommandEvent& event)
 {
 
@@ -1289,3 +1312,4 @@ void dataDialog::OnChoice1Select5(wxCommandEvent& event)
     type = 4;
   }
 }
+

@@ -2,7 +2,7 @@
 <wxsmith>
 	<object class="wxDialog" name="dataDialog">
 		<title>Data app</title>
-		<size>533,556</size>
+		<size>596,556</size>
 		<bg>wxSYS_COLOUR_INACTIVEBORDER</bg>
 		<minsize>-1,-1</minsize>
 		<maxsize>-1,-1</maxsize>
@@ -93,6 +93,11 @@
 			<object class="wxStaticText" name="ID_STATICTEXT5" variable="StaticText5" member="yes">
 				<label>Время прогнозирования по UTC(+3)</label>
 				<pos>305,49</pos>
+			</object>
+			<object class="wxButton" name="ID_BUTTON3" variable="Button1" member="yes">
+				<label>grid</label>
+				<pos>312,436</pos>
+				<handler function="OnButton1Click3" entry="EVT_BUTTON" />
 			</object>
 		</object>
 	</object>

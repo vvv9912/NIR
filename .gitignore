@@ -32,3 +32,5 @@ bin/Debug/MCCJ_150307.agl
 *.o
 *.o
 *.o
+*.xml
+*.o
