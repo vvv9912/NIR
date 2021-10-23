@@ -39,19 +39,14 @@ class dataDialog: public wxDialog
         //(*Handlers(dataDialog)
         void OnQuit(wxCommandEvent& event);
         void OnAbout(wxCommandEvent& event);
-        void OnChoice1Select(wxCommandEvent& event);
         void OnSashWindow1SashDragged(wxSashEvent& event);
-        void OnChoice1Select12(wxCommandEvent& event);
-        void OnChoice1Select2(wxCommandEvent& event);
         void OnButton1Click(wxCommandEvent& event);
         void OnButton2Click(wxCommandEvent& event);
         void OnComboBox1Selected(wxCommandEvent& event);
         void OnButton3Click(wxCommandEvent& event);
-        void OnChoice1Select1(wxCommandEvent& event);
         void OnTextCtrl1Text(wxCommandEvent& event);
         void OnInit(wxInitDialogEvent& event);
         void OnGrid1CellLeftClick(wxGridEvent& event);
-        void OnChoice1Select3(wxCommandEvent& event);
         void OnTextCtrl1Text1(wxCommandEvent& event);
         void OnButton1Click1(wxCommandEvent& event);
         void OnRichTextCtrl1Text(wxCommandEvent& event);
@@ -59,15 +54,16 @@ class dataDialog: public wxDialog
         void OnCustom1Paint(wxPaintEvent& event);
         void OnTextCtrlLText(wxCommandEvent& event);
         void OnTextCtrlTEST1Text(wxCommandEvent& event);
-        void OnChoice1Select4(wxCommandEvent& event);
         void OnTextCtrlZText(wxCommandEvent& event);
         void OnButton1Click2(wxCommandEvent& event);
         void OnDatePickerCtrl1Changed(wxDateEvent& event);
         void OnButton3Click1(wxCommandEvent& event);
         void OnButton3Click2(wxCommandEvent& event);
         void OnTimePickerCtrl1Changed(wxDateEvent& event);
-        void OnChoice1Select5(wxCommandEvent& event);
         void OnButton1Click3(wxCommandEvent& event);
+        void OnChoice1Select6(wxCommandEvent& event);
+        void OnTextCtrlBText(wxCommandEvent& event);
+        void OnTextCtrlLText1(wxCommandEvent& event);
         //*)
 
         int typeSys();

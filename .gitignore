@@ -39,3 +39,5 @@ bin/Debug/MCCJ_150307.agl
 obj/Debug/ephemeridsGLNS.o
 *.out
 *.out
+*.out
+*.o

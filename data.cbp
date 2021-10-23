@@ -80,6 +80,8 @@
 		<Unit filename="GridDialog.h" />
 		<Unit filename="angle.cpp" />
 		<Unit filename="angle.h" />
+		<Unit filename="calcGPS.cpp" />
+		<Unit filename="calcGPS.h" />
 		<Unit filename="data.cbp" />
 		<Unit filename="dataApp.cpp" />
 		<Unit filename="dataApp.h" />

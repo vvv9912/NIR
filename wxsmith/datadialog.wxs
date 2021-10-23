@@ -32,6 +32,7 @@
 				<selection>0</selection>
 				<pos>33,16</pos>
 				<size>244,21</size>
+				<handler function="OnChoice1Select6" entry="EVT_CHOICE" />
 			</object>
 			<object class="wxButton" name="ID_BUTTON2" variable="Button2" member="yes">
 				<label>Загрузить</label>
@@ -58,11 +59,13 @@
 				<value>0</value>
 				<pos>305,190</pos>
 				<size>127,-1</size>
+				<handler function="OnTextCtrlBText" entry="EVT_TEXT" />
 			</object>
 			<object class="wxTextCtrl" name="ID_TEXTCTRL3" variable="TextCtrlL" member="yes">
 				<value>0</value>
 				<pos>305,235</pos>
 				<size>127,-1</size>
+				<handler function="OnTextCtrlLText1" entry="EVT_TEXT" />
 			</object>
 			<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
 				<label>Введите значение высоты в метрах:</label>

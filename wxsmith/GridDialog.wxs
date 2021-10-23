@@ -51,6 +51,11 @@
 				<size>98,63</size>
 				<handler function="OnCheckListBox1Toggled1" entry="EVT_CHECKLISTBOX" />
 			</object>
+			<object class="wxButton" name="ID_BUTTON1" variable="Button1" member="yes">
+				<label>Label</label>
+				<pos>211,252</pos>
+				<handler function="OnButton1Click2" entry="EVT_BUTTON" />
+			</object>
 		</object>
 	</object>
 </wxsmith>

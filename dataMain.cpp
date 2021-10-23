@@ -44,6 +44,8 @@
 #include <wx/intl.h>
 #include <wx/settings.h>
 #include <wx/wx.h>
+#include <wx/choice.h>
+#include <wx/timectrl.h>
 //
 
 #define SQUARE(val) val * val
@@ -51,6 +53,7 @@
 using namespace std;
 using namespace arma;
 int type;
+GlobalData gData;
 //(*InternalHeaders(dataDialog)
 #include <wx/intl.h>
 #include <wx/settings.h>
@@ -178,16 +181,25 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
   SashWindow1->SetSashVisible(wxSASH_RIGHT,  true);
 
   Connect(ID_DATEPICKERCTRL1,wxEVT_DATE_CHANGED,(wxObjectEventFunction)&dataDialog::OnDatePickerCtrl1Changed);
+  Connect(ID_CHOICE1,wxEVT_COMMAND_CHOICE_SELECTED,(wxObjectEventFunction)&dataDialog::OnChoice1Select6);
   Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton2Click);
   Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton1Click1);
   Connect(ID_TEXTCTRL1,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&dataDialog::OnTextCtrl1Text1);
+  Connect(ID_TEXTCTRL2,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&dataDialog::OnTextCtrlBText);
+  Connect(ID_TEXTCTRL3,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&dataDialog::OnTextCtrlLText1);
   Connect(ID_TIMEPICKERCTRL1,wxEVT_DATE_CHANGED,(wxObjectEventFunction)&dataDialog::OnTimePickerCtrl1Changed);
   Connect(ID_BUTTON4,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton3Click2);
   Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton1Click3);
   Connect(ID_SASHWINDOW1,wxEVT_SASH_DRAGGED,(wxObjectEventFunction)&dataDialog::OnSashWindow1SashDragged);
   Connect(wxID_ANY,wxEVT_INIT_DIALOG,(wxObjectEventFunction)&dataDialog::OnInit);
   //*)
-
+  gData.typeGnss = Choice1->GetSelection();
+  wxDateTime T;
+  T = DatePickerCtrl1->GetValue();
+  gData.day = T.GetDay(); //дл€ скачивани€ файла
+  gData.month = T.GetMonth()+1; // тк 1 мес€ц равен 0;
+  gData.year = T.GetYear();
+  TimePickerCtrl1->GetTime(&gData.hour, &gData.minutes, &gData.sec);
   Grid = new wxGrid(SashWindow1, ID_GRID, wxPoint(33,60), wxSize(244,490), 0, _T("ID_GRID"));
 
   Grid->CreateGrid(24,2);
@@ -198,7 +210,25 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
 }
 
 void dataDialog::OnButton1Click3(wxCommandEvent& event)
-{
+{TimePickerCtrl1->GetTime(&gData.hour, &gData.minutes, &gData.sec);
+ /*   int hour_predsk;
+  int min_predsk;
+  int sec_predsk;
+  TimePickerCtrl1->GetTime(&hour_predsk, &min_predsk, &sec_predsk);
+  gData.hour = hour_predsk;
+  gData.minutes= min_predsk;
+  gData.sec = sec_predsk;/*int year_predsk;
+  int month_predsk;
+  int day_predsk;
+  wxDateTime T;
+  T = DatePickerCtrl1->GetValue();
+  day_predsk = T.GetDay(); //дл€ скачивани€ файла
+  month_predsk = T.GetMonth()+1; // тк 1 мес€ц равен 0;
+  year_predsk = T.GetYear();
+
+  aa.day= day_predsk;
+  aa.month = month_predsk;
+  aa.year = year_predsk;*/
   //g.Create(parent, wxID_ANY, _("Grid"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
 /*	Create(parent, wxID_ANY, _("Grid"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
 	SetClientSize(wxSize(679,551));
@@ -239,45 +269,12 @@ void dataDialog::OnAbout(wxCommandEvent& event)
   wxMessageBox(msg, _("Welcome to..."));
 }
 
-void dataDialog::OnChoice1Select(wxCommandEvent& event)
-{
-
-}
-
-
 void dataDialog::OnSashWindow1SashDragged(wxSashEvent& event)
 {
 
 }
 
 /*
-int dataDialog::typeSys()
-{
-
- // wxString s;
-  if ((Choice1->GetString(Choice1->GetSelection()))== "GPS"s)
-  {
-      return 0;
-  }
-  if ((Choice1->GetString(Choice1->GetSelection()))== "Glonass"s)
-  {
-     return  1;
-  }
-  if ((Choice1->GetString(Choice1->GetSelection()))== "Galileo"s)
-  {
-      return 2;
-  }
-  if ((Choice1->GetString(Choice1->GetSelection()))== "Beidou"s)
-  {
-      return 3;
-  }
-  if ((Choice1->GetString(Choice1->GetSelection()))== "QZSS"s)
-  {
-      return 4;
-  }
-
-}*/
-
 void parseDate(const char* File1, const char* file,
                string text5,string text2,string text3,
                string text4, string textYear)
@@ -320,7 +317,7 @@ void parseDate(const char* File1, const char* file,
   }
   text0 =   "/MCC/ALMANAC/"+ textYear +"/"+text1;
 }
-
+*/
 void dataDialog::OnButton2Click(wxCommandEvent& event)
 {
 
@@ -470,25 +467,29 @@ void dataDialog::Gridd(const char* file)
 }
 
 
-void dataDialog::OnChoice1Select3(wxCommandEvent& event)
-{
-}
 
 void dataDialog::OnTextCtrl1Text1(wxCommandEvent& event)
-{
+{TextCtrlH->GetValue().ToDouble(&gData.H);
 }
 
 void dataDialog::OnSpinCtrl1Change(wxSpinEvent& event)
 {
 
 }
-void dataDialog::OnChoice1Select4(wxCommandEvent& event)
-{
 
-}
+
 void dataDialog::OnButton1Click1(wxCommandEvent& event)
 {
-  StaticText4 ->ClearBackground();
+  //доп прорвекра
+ /* int index;
+  gData.typeGnss = Choice1->GetSelection();
+  wxDateTime T;
+  T = DatePickerCtrl1->GetValue();
+  gData.day = T.GetDay(); //дл€ скачивани€ файла
+  gData.month = T.GetMonth()+1; // тк 1 мес€ц равен 0;
+  gData.year = T.GetYear();
+  TimePickerCtrl1->GetTime(&gData.hour, &gData.minutes, &gData.sec);
+ */ StaticText4 ->ClearBackground();
 // ¬водим значени€ h,B,L
   double h;
   double Bgrad;
@@ -499,8 +500,8 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
   double PI = M_PI;
   double B; //Latitude
   double L; //Longitude
-  B=Bgrad*PI/180;
-  L=Lgrad*PI/180;
+  B=Bgrad*M_PI/180.0;
+  L=Lgrad*M_PI/180.0;
   double N;
   double e=0;
   double a=6378136; // радиус «
@@ -528,9 +529,9 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
 //если от сегодн. дн€, то день -1; тк файл загружаетс€ ~ в 18 00;
 
 // —читаем сегодн€шн. дату
-  int year_predsk;
-  int month_predsk;
-  int day_predsk;
+  int year_predsk = gData.year;
+  int month_predsk = gData.month;
+  int day_predsk = gData.day;
   int hour_predsk;
   int min_predsk;
   int sec_predsk;
@@ -541,16 +542,17 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
 //int hour_down;
 //int min_down;
 //int sec_down ;
-  wxDateTime T;
+ /*  wxDateTime T;
   T = DatePickerCtrl1->GetValue();
-  day_predsk = T.GetDay(); //дл€ скачивани€ файла
+ day_predsk = T.GetDay(); //дл€ скачивани€ файла
   month_predsk = T.GetMonth()+1; // тк 1 мес€ц равен 0;
-  year_predsk = T.GetYear();
+  year_predsk = T.GetYear();*/
+
 //получаем дату и врем€
 // ƒата и врем€ от которой предсказывать:
   TimePickerCtrl1->GetTime(&hour_predsk, &min_predsk, &sec_predsk);
 
-
+ // mydata aa;
   time_t nowsec = time(0);
   tm *ltm = localtime(&nowsec);
   int yeartoday = 1900+ltm->tm_year;
@@ -1013,10 +1015,16 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
 
 
 void dataDialog::OnDatePickerCtrl1Changed(wxDateEvent& event)
-{
+{ wxDateTime T;
+  T = DatePickerCtrl1->GetValue();
+   gData.day = T.GetDay(); //дл€ скачивани€ файла
+   gData.month = T.GetMonth()+1; // тк 1 мес€ц равен 0;
+   gData.year = T.GetYear();
+
 }
 void dataDialog::OnTimePickerCtrl1Changed(wxDateEvent& event)
 {
+  TimePickerCtrl1->GetTime(&gData.hour, &gData.minutes, &gData.sec);
 }
 void dataDialog::OnButton3Click1(wxCommandEvent& event)
 {
@@ -1033,6 +1041,7 @@ void dataDialog::OnButton3Click1(wxCommandEvent& event)
 
 void dataDialog::OnButton3Click2(wxCommandEvent& event)
 {
+   TimePickerCtrl1->GetTime(&gData.hour, &gData.minutes, &gData.sec);
   /*
   int hour;
   int minn;
@@ -1186,28 +1195,15 @@ void dFiTableFrame::OnButton1Click(wxCommandEvent& event)
 */
 
 
-void dataDialog::OnChoice1Select5(wxCommandEvent& event)
+void dataDialog::OnChoice1Select6(wxCommandEvent& event)
 {
-
-  if ((Choice1->GetString(Choice1->GetSelection()))== "GPS"s)
-  {
-    type = 0;
-  }
-  if ((Choice1->GetString(Choice1->GetSelection()))== "Glonass"s)
-  {
-    type = 1;
-  }
-  if ((Choice1->GetString(Choice1->GetSelection()))== "Galileo"s)
-  {
-    type = 2;
-  }
-  if ((Choice1->GetString(Choice1->GetSelection()))== "Beidou"s)
-  {
-    type = 3;
-  }
-  if ((Choice1->GetString(Choice1->GetSelection()))== "QZSS"s)
-  {
-    type = 4;
-  }
+gData.typeGnss = Choice1->GetSelection();
 }
 
+void dataDialog::OnTextCtrlBText(wxCommandEvent& event)
+{  TextCtrlB->GetValue().ToDouble(&gData.B);
+}
+
+void dataDialog::OnTextCtrlLText1(wxCommandEvent& event)
+{TextCtrlL->GetValue().ToDouble(&gData.L);
+}

@@ -10,7 +10,19 @@
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
 //*)
-
+extern struct GlobalData{
+  int year;
+  int month;
+  int day;
+  int hour;
+  int minutes;
+  int sec;
+  int typeGnss; //0 - Glonass;
+  double B;//**PI/180
+  double L;
+  double H;
+} gData;
+//extern mydata aa;
 class GridDialog: public wxDialog
 {
 	public:
@@ -53,7 +65,7 @@ class GridDialog: public wxDialog
 		void OnCheckListBox1Toggled(wxCommandEvent& event);
 		void OnCheckListBox1Toggled1(wxCommandEvent& event);
 		void OnSashWindow1SashDragged(wxSashEvent& event);
-		void OnButton1Click1(wxCommandEvent& event);
+		void OnButton1Click2(wxCommandEvent& event);
 		//*)
 
 		DECLARE_EVENT_TABLE()
