@@ -85,54 +85,9 @@ void GridDialog::OnRadioButton1Select(wxCommandEvent& event)
 void GridDialog::OnRadioBox1Select(wxCommandEvent& event)
 {
 }
-
-
-/*
-void GridDialog::OnButton1Click1(wxCommandEvent& event)
-{
-  ofstream f;
-  f.open("testRadioBox1.txt");
- int k;
-// aa.year = 228;
-  int year_down = gData.year ;
-  int month_down = gData.month;
-  int day_down = gData.day ;
-  int hour_predsk;
-  int min_predsk;
-  int sec_predsk;
-  //  wxDateTime T;
-//  T = DatePickerCtrl1->GetValue();
-//  day_predsk = T.GetDay(); //для скачивания файла
- // month_predsk = T.GetMonth()+1; // тк 1 месяц равен 0;
- // year_predsk = T.GetYear();
-//получаем дату и время
-// Дата и время от которой предсказывать:
-  //dataDialog *a;
- // a->TimePickerCtrl1->GetTime(&hour_predsk, &min_predsk, &sec_predsk);
-//wxPoint(int k);
- k = RadioBox1->GetSelection(); // получение высоты/широты/долготы
-//RadioBox1->GetItemFromPoint(k);
-//int k = static_cast<int>(kk);
- f<<"choise ="<<k;
- double grid;
- TextCtrl1->GetValue().ToDouble(&grid);
-
-  f<<"grid = "<<grid;
-  int number = CheckListBox1->IsChecked(0); //Выбран ли элемент.
-// CheckListBox1->GetItem(number);
-//   f<<"\nCheckListBox10 ="<<number<<"\n";
-    f<<"CheckListBox11 ="<<number<<"\n";
-     f<<"day_down ="<<day_down<<"\n";
-     f<<"month_down ="<<month_down<<"\n";
-     f<<"year_down ="<<year_down<<"\n";
-     f<<"t ="<<gData.typeGnss<<"\n";
- f.close();
-}
-*/
-
 void GridDialog::OnButton1Click2(wxCommandEvent& event)
 {  ofstream f;
-  f.open("testRadioBox1.txt");
+  f.open("test\\testRadioBox1.txt");
   int k;
 // aa.year = 228;
   int year_down = gData.year ;
@@ -143,19 +98,19 @@ void GridDialog::OnButton1Click2(wxCommandEvent& event)
   int sec_predsk;
   double grid;
   double endd;
- TextCtrl1->GetValue().ToDouble(&grid);
+  TextCtrl1->GetValue().ToDouble(&grid);
   TextCtrl7->GetValue().ToDouble(&endd);
   timeCalc calc(gData.day,gData.month,gData.year ,gData.hour ,gData.minutes ,gData.sec ,00);
-int zz = 2021;
+  int zz = 2021;
   string text1="MCCJ_211023.agp";
   string text0 = "/MCC/ALMANAC/"+ to_string(zz) +"/"+text1; //путь к файлу
   ofstream f2;
-  f2.open("testCickle.txt");
+  f2.open("test\\testCickle.txt");
   double sko1[5];
   for (int i=0; i<=(endd-gData.H); i+=grid)
   {
-    calccGPS(0, sko1, text1,text0,calc,(gData.B*M_PI/180.0),(gData.L*M_PI/180.0),gData.H+i);
-    f2<<gData.H+i<<"\t"<< sko1[0]<<"\t"<<sko1[1]<<"\t"<<sko1[2]<<"\t"<<sko1[3]<<"\t"<<sko1[4]<<"\n";
+    calccGPS(0, sko1, text1,text0,calc,(gData.B*M_PI/180.0),(gData.L*M_PI/180.0),gData.H);
+    f2<<gData.H<<"\t"<< sko1[0]<<"\t"<<sko1[1]<<"\t"<<sko1[2]<<"\t"<<sko1[3]<<"\t"<<sko1[4]<<"\n";
   }
   f2.close();
   //  wxDateTime T;

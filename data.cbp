@@ -82,11 +82,17 @@
 		<Unit filename="angle.h" />
 		<Unit filename="calcGPS.cpp" />
 		<Unit filename="calcGPS.h" />
+		<Unit filename="calcGalileo.cpp" />
+		<Unit filename="calcGalileo.h" />
+		<Unit filename="calcGlonass.cpp" />
+		<Unit filename="calcGlonass.h" />
 		<Unit filename="data.cbp" />
 		<Unit filename="dataApp.cpp" />
 		<Unit filename="dataApp.h" />
 		<Unit filename="dataMain.cpp" />
 		<Unit filename="dataMain.h" />
+		<Unit filename="downlGalileo.cpp" />
+		<Unit filename="downlGalileo.h" />
 		<Unit filename="ephemerids.cpp" />
 		<Unit filename="ephemerids.h" />
 		<Unit filename="ephemeridsGLNS.cpp" />

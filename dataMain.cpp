@@ -27,6 +27,9 @@
 #include "GridDialog.h"
 
 #include "calcGPS.h"
+#include <calcGlonass.h>
+#include <downlGalileo.h>
+#include <calcGalileo.h>
 //
 #include <iostream>
 #include <string>
@@ -566,7 +569,7 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
   year_down = year_predsk;
   month_down = month_predsk;
   ofstream f;
-  f.open("test2.txt");
+  f.open("test\\test2.txt");
   f<< "year_predsk="<< year_predsk<<endl;
   f<< "month_predsk="<< month_predsk<<endl;
   f<< "day_predsk="<< day_predsk<<endl;
@@ -648,136 +651,13 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
   {
     text1 = text5+text2+text3+text4+".agl"s;
     text0 =   "/MCC/ALMANAC/"+ textYear +"/"+text1;
-    f<< " day_down="<< day_down<<endl;
-    f<< " text4="<< text4<<endl;
-    const char* File1 ;
-    const char* file ;
-    File1 = text0.c_str();//"/MCC/ALMANAC/2015/MCCJ_150307.agl"//перевод строки с строку Си
-    file = text1.c_str();
-    //! добавить если файла нет, искать ближайший!
-    f<< "const char* File1"<< File1<<endl;
-    f<< " file"<< file<<endl;
-
-    bool down = download( "ftp.glonass-iac.ru", NULL, NULL, File1, file);
-    int max_sats = parseGLNS(file);
-
-
-    int numberSput = 24;
-    int vsb[numberSput] ;
-    int sumvsb = 0;
-    vector<int> Visibles; //вектор из кол-во элементов - visibles
-    //double toe=44271.777;//время
-    f<< "Glns:"<<endl;
-    f<<"calc.GLNS_numb_fouryear_period (N4)=" << calc.GLNS_numb_fouryear_period<<endl;;
-    f <<"calc.GLNS_sec_since_week=" <<calc.GLNS_sec_since_week<<endl;;
-    GlonassCoordinates Coord_sp;
-    for (int i=1; i<=numberSput; i++)
-    {
-// Получение коорд спутников
-//ephemerids(double toe,int t_almanax, double M0, double sqrtA, double E, double I, double Om0, double time_week ))
-
-      calc.timeGLNS();
-      timeCalc GLNSephemTime( almanax_GLNS[i-1].date,almanax_GLNS[i-1].month, almanax_GLNS[i-1].year,0,0,0,0);
-      Coord_sp = ephemeridsGLNS(calc.GLNS_numb_fouryear_period, //N4
-                                calc.GLNS_day_after_vis_year,
-                                calc.GLNS_sec_since_week,
-                                GLNSephemTime.GLNS_numb_fouryear_period, //Na берем из расчета даты альманаха
-                                almanax_GLNS[i-1].tLA,
-                                almanax_GLNS[i-1].dT,
-                                almanax_GLNS[i-1].dT,
-                                almanax_GLNS[i-1].dTT,
-                                almanax_GLNS[i-1].E,
-                                almanax_GLNS[i-1].w,
-                                almanax_GLNS[i-1].Lam);
-
-      f <<"i-1 (номер спутн) ="<<i-1<<endl;
-      f << "GLNS_numb_fouryear_period (Na)"<<  GLNSephemTime.GLNS_numb_fouryear_period<<endl;
-      f<<"Coord_sp.X="<<Coord_sp.X<<endl;
-      f <<"Coord_sp.Y =" <<Coord_sp.Y<<endl;
-      f <<"Coord_sp.Z =" <<Coord_sp.Z<<endl;
-
-      Coord_sput[0] = Coord_sp.X;
-      Coord_sput[1] = Coord_sp.Y;
-      Coord_sput[2] = Coord_sp.Z;
-// Определение угла
-
-      alpha = 90 - (angle(Coord_sput, Coord_user, B, L)*180/PI);
-// определение видимости спутника
-      vsb[i]=0;
-      if ((alpha) >5)
-      {
-        vsb[i]=1;
-        sumvsb++;
-        Visibles.push_back(i);  // добавление элемента в конец вектора
-      }
-    }
-
-// получение матрицы Dn
-    int i = 0;
-    mat Dn;
-    Dn.zeros(sumvsb, sumvsb);
-    for (int k=1; k<=numberSput; k++)
-    {
-      if ((vsb[k]) == 1)
-      {
-        Dn(i,i) = SISerr[i].SISRE;
-        i++;
-      }
-    }
-    double max_val_Dn = Dn.max();
-    for (int i= 0; i<sumvsb; i++)
-    {
-      if ( Dn(i,i) == 0)
-      {
-        Dn(i,i) = max_val_Dn;
-      }
-    }
-
-// получение матрицы H
-    double dx;
-    double dy;
-    double dz;
-    double Ri;
-
-    mat H(sumvsb, 4);
-    H.zeros();
-
-    int numsput = 0;
-    for (int k=1; k<=numberSput; k++)
-    {
-      if ((vsb[k]) == 1)
-      {
-        timeCalc GLNSephemTime( almanax_GLNS[k-1].date,almanax_GLNS[k-1].month, almanax_GLNS[k-1].year,0,0,0,0);
-        Coord_sp = ephemeridsGLNS(calc.GLNS_numb_fouryear_period, //N4
-                                  calc.GLNS_day_after_vis_year,
-                                  calc.GLNS_sec_since_week,
-                                  GLNSephemTime.GLNS_numb_fouryear_period, //Na берем из расчета даты альманаха
-                                  almanax_GLNS[k-1].tLA,
-                                  almanax_GLNS[k-1].dT,
-                                  almanax_GLNS[k-1].dT,
-                                  almanax_GLNS[k-1].dTT,
-                                  almanax_GLNS[k-1].E,
-                                  almanax_GLNS[k-1].w,
-                                  almanax_GLNS[k-1].Lam);
-        dx=(Coord_sp.X-Coord_x);
-        dy=(Coord_sp.Y-Coord_y);
-        dz=(Coord_sp.Z- Coord_z);
-
-
-// Ri = sqrt (SQUARE(dx)+SQUARE(dy)+SQUARE(dz));
-        Ri = sqrt (pow(dx,2)+pow(dy,2)+pow(dz,2));
-        H(numsput, 0 ) = dx/Ri;
-        H(numsput, 1) = dy/Ri;
-        H(numsput, 2) = dz/Ri;
-        H(numsput, 3) = 1;
-        numsput++ ;
-      }
-    }
-     mat Htr = H.t();
-    sko = sqrt((inv(Htr*inv(Dn)*H)).t());
-    H.save("H.txt", raw_ascii);
-    mat sko = sqrt((inv(Htr*inv(Dn)*H)).t());
-    sko.save("sko.txt", raw_ascii);
+    timeCalc calc(day_predsk,month_predsk,year_predsk,hour_predsk,min_predsk,sec_predsk,00);
+    calccGlonass(1,
+          skoo,
+          text1,
+          text0,
+          calc,
+          B,L,h);
     //для ион
     /*   text1 = "BRDC1510.21n"s;
 
@@ -794,7 +674,7 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
   }
   else if ((Choice1->GetString(Choice1->GetSelection()))== "Galileo"s)
   {
-    text2 = to_string(year_down);
+ /*text2 = to_string(year_down);
 //2021-06-08
     const char* File1 ;
     const char* file ;
@@ -850,144 +730,29 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
         f<< "file1 = "<< File1 <<endl;
 
       }
-    timeCalc calcGalileo(day_down, month_down, year_down, 0,0,0,0);
-    calcGalileo.timeGLL();
-    f<<"day_down ="<<day_down<<endl;
-    f<<" month_down ="<<month_down<<endl;
-    f<<" year_down="<<year_down<<endl;
-    f<< "week = " <<calcGalileo.week<<endl;
-    int weekGalileo = calcGalileo.week % 4;
+    }*/
+
+     // const char* File1;
+      timeCalc calcGalileo(day_down, month_down, year_down, 0,0,0,0);
+      const char* file; // для файла с алм
+    downGalileo( year_down, &day_down, &text0,
+       &text1,
+       text2,
+        text3,
+        text4);
+      file = (text1).c_str(); //ссылка на файл
+      //File1 = (text0).c_str();
       /*  if (day_down <= 0)
         {
           wxMessageBox(_("Альманах не удалось скачать !"), _("Error"));
           break;
         }*/
-    }
-    f<< " file = "<< file<<endl;
-    f<< "file1 = "<< File1 <<endl;
-    //файл с альманахом скачен
-    almanaxGalileo almm[26];
-    int max_sats = parserGalileo(file, almm);
-    //расчет матрицы Dn
-    int numberSput = 24;
-    int vsb[numberSput];
-    int sumvsb = 0;
-    calc.timeGLL();
-    double toe = calc.sec_since_week;
-    f<< "Galileo:"<<endl;
-    f<<"toe()calc.sec_since_week="<<toe<<endl;
-    f<<"week="<<calc.week<<endl;
-//    aSqroot = sqrt(A)-sqrt(Anom)
-    double Anom = 29600000; //м
-    //sqrt(A) = aSqroot + sqrt(Anom);
-   Coordinates Coord_sp;
-    for (int i=1; i<=numberSput; i++)
-    {
-      Coord_sp = ephemerids(toe,
-                            almm[i-1].t0a,
-                            almm[i-1].m0,
-                            (almm[i-1].aSqroot)+sqrt(Anom), //проверить
-                            almm[i-1].ecc, // проверить
-                            almm[i-1].iod/M_PI,
-                            almm[i-1].omega0,
-                            calc.week); //Термин WNa представляет
-      // собой двоичное представление по модулю
-      //4 номера недели времени системы Galileo.
-      f <<"i-1 (номер спут)"<<i-1<<endl;
-      f<< "numb sp = "<<almm[i-1].svid<<endl;
-      f<<"Coord_sp.X="<<Coord_sp.X<<endl;
-      f <<"Coord_sp.Y =" <<Coord_sp.Y<<endl;
-      f <<"Coord_sp.Z =" <<Coord_sp.Z<<endl;
+    calccGalileo(file,
+                  skoo,
+                  calc,
+                  calcGalileo,
+                   B, L,  h );
 
-      Coord_sput[0] = Coord_sp.X;
-      Coord_sput[1] = Coord_sp.Y;
-      Coord_sput[2] = Coord_sp.Z;
-// Определение угла
-      alpha = 90 - (angle(Coord_sput, Coord_user, B, L)*180/PI);
-// определение видимости спутника
-      vsb[i]=0;
-      if ((alpha) >5)
-      {
-        vsb[i]=1;
-        sumvsb++;
-//        Visibles.push_back(i);  // добавление элемента в конец вектора
-      }
-    }
-    f <<"sumvsb =" <<sumvsb<<endl;
-    // получение матрицы Dn
-    int i = 0;
-    mat Dn;
-    Dn.zeros(sumvsb, sumvsb);
-    for (int k=1; k<=numberSput; k++)
-    {
-      if ((vsb[k]) == 1)
-      {
-        Dn(i,i) = SISerr[i].SISRE;
-        i++;
-      }
-    }
-    double max_val_Dn = Dn.max();
-    for (int i= 0; i<sumvsb; i++)
-    {
-      if ( Dn(i,i) == 0)
-      {
-        Dn(i,i) = max_val_Dn;
-      }
-    }
-
-// получение матрицы H
-    double dx;
-    double dy;
-    double dz;
-    double Ri;
-
-    mat H(sumvsb, 4);
-    H.zeros();
-
-    int numsput = 0;
-    for (int k=1; k<=numberSput; k++)
-    {
-      if ((vsb[k]) == 1)
-      {
-
-        Coord_sp = ephemerids(toe,
-                              almm[k-1].t0a,
-                              almm[k-1].m0,
-                              (almm[k-1].aSqroot)+sqrt(Anom), //проверить
-                              almm[k-1].ecc, // проверить
-                              almm[k-1].iod/M_PI,
-                              almm[k-1].omega0,
-                              calc.week); //Термин WNa представляет
-        // собой двоичное представление по модулю
-        //4 номера недели времени системы Galileo.
-        dx=(Coord_sp.X-Coord_x);
-        dy=(Coord_sp.Y-Coord_y);
-        dz=(Coord_sp.Z- Coord_z);
-        f<<"Coord_sp.X = "<<Coord_sp.X<<endl;
-        f<<"Coord_sp.Y = "<<Coord_sp.Y<<endl;
-        f<<"Coord_sp.Z = "<<Coord_sp.Z<<endl;
-
-// Ri = sqrt (SQUARE(dx)+SQUARE(dy)+SQUARE(dz));
-        Ri = sqrt (pow(dx,2)+pow(dy,2)+pow(dz,2));
-        f<< "Ri"<< Ri<<endl;
-        H(numsput, 0 ) = dx/Ri;
-      //  double k =  H(numsput, 0 );
-        H(numsput, 1) = dy/Ri;
-        H(numsput, 2) = dz/Ri;
-        H(numsput, 3) = 1;
-        numsput++ ;
-      }
-    }
-    //f <<  mat Htr <<endl;
-    mat Htr = H.t();
-    Htr.save("Htr.txt", raw_ascii);
-     Dn.save("Dn.txt", raw_ascii);
-            H.save("H.txt", raw_ascii);
-    sko = sqrt((inv(Htr*inv(Dn)*H)).t());
-      sko.save("sko.txt", raw_ascii);
-    //f << Htr.print();
-  //  f<< Htr.print() << endl;
-   // f<< "СКО \n"<<Htr.print() << endl;
   }
 
 
@@ -1001,14 +766,14 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
   }
   //double sss = sko(0,0);
   wxString s;
- /* s.Printf("Значение СКО:\nСКО для x: %.3f м\nСКО для y: %.3f м\nСКО для z: %.3f м\nСКО для D: %.3f, м СКО: %.3f м",
+/* s.Printf("Значение СКО:\nСКО для x: %.3f м\nСКО для y: %.3f м\nСКО для z: %.3f м\nСКО для D: %.3f, м СКО: %.3f м",
            sko(0,0), sko(1,1), sko(2,2), sko(3,3), sqrt (pow(sko(0,0),2)+pow(sko(1,1),2)+pow(sko(2,2),2) ));
 
 */s.Printf("Значение СКО:\nСКО для x: %.3f м\nСКО для y: %.3f м\nСКО для z: %.3f м\nСКО для D: %.3f, м СКО: %.3f м",
   skoo[0], skoo[1], skoo[2], skoo[3], skoo[4]);
   StaticText4->SetLabel(s);
   f.close();
-
+// delete[] calc;
 }
 
 
