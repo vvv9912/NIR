@@ -94,8 +94,8 @@ time_t time22 = mktime(&tmm);
 time_t timebaseGlonass = mktime(&tmGlonass);
 double timeGlonass = time22 - timebaseGlonass;
 glonass.numb_fouryear_period = (static_cast<double>(tmm.tm_year) - static_cast<double>(tmGlonass.tm_year))/4;
-int deltayear = tmm.tm_year%4;
-
+//int deltayear = tmm.tm_year%4;
+int deltayear = fmod(tmm.tm_year,4);
 GlonassVis.tm_year = tmm.tm_year - deltayear;
 GlonassVis.tm_mon = 0; // мес€ц года (€нварь = 0) [0,11]
 GlonassVis.tm_mday = 1;// день мес€ца [1,31]

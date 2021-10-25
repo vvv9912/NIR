@@ -608,7 +608,7 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
   f<< "month_download="<< month_down<<endl;
   f<< "year_download="<< year_down<<endl;
   timeCalc calc(day_predsk,month_predsk,year_predsk,hour_predsk,min_predsk,sec_predsk,00);
-
+//!Ó×ÈÒÛÂÀÞ ËÈ ×ÒÎ ÂÐÅÌß ÇÀÄÀÍÎ ÏÎ ÌÑÊ, ÍÎ  Â ÃËÍÑ ÅÙÅ ÏÐÈÁÀÂËßÅÒÑß -3 ÷?
 //
 //ïðåîáðàçîâàíèå â ñëîâî äëÿ ñêà÷èâàíèÿ
   string textYear = to_string(year_down); //2021

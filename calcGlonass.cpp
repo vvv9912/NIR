@@ -61,13 +61,14 @@ void calccGlonass(const char* file,
    // f<<"calc.GLNS_numb_fouryear_period (N4)=" << calc.GLNS_numb_fouryear_period<<endl;;
    // f <<"calc.GLNS_sec_since_week=" <<calc.GLNS_sec_since_week<<endl;;
     GlonassCoordinates Coord_sp;
+    calc.timeGLNS();
     for (int i=1; i<=numberSput; i++)
     {
 // ѕолучение коорд спутников
 //ephemerids(double toe,int t_almanax, double M0, double sqrtA, double E, double I, double Om0, double time_week ))
 
-      calc.timeGLNS();
       timeCalc GLNSephemTime( almanax_GLNS[i-1].date,almanax_GLNS[i-1].month, almanax_GLNS[i-1].year,0,0,0,0);
+      GLNSephemTime.timeGLNS();
       Coord_sp = ephemeridsGLNS(calc.GLNS_numb_fouryear_period, //N4
                                 calc.GLNS_day_after_vis_year,
                                 calc.GLNS_sec_since_week,
@@ -98,7 +99,7 @@ void calccGlonass(const char* file,
       {
         vsb[i]=1;
         sumvsb++;
-        Visibles.push_back(i);  // добавление элемента в конец вектора
+      //  Visibles.push_back(i);  // добавление элемента в конец вектора
       }
     }
 
