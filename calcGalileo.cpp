@@ -3,7 +3,8 @@
 
 //
 #include "FTPdownl.h"
-#include "parser.h"
+//#include "parser.h"
+#include <parserEphGAL.h>
 #include "parserGalileo.h"
 #include "angle.h"
 #include "ephemerids.h"
@@ -109,7 +110,8 @@ void calccGalileo(const char* file,
     {
       if ((vsb[k]) == 1)
       {
-        Dn(i,i) = SISerr[i].SISRE;
+
+        Dn(i,i) = SISerr_Gal[i].SISRE;
         i++;
       }
     }

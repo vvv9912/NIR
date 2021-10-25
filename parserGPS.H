@@ -25,11 +25,11 @@ typedef struct
   double sqrtA;
   double M0;
   int mass;
-} data_almanax;
+} data_almanax_GPS;
 
 
 
-extern data_almanax almanax_GPS[75];
+extern data_almanax_GPS almanax_GPS[75];
 int parseGPS(const char* file);
 
 

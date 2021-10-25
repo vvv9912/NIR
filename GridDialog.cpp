@@ -8,6 +8,10 @@
 #include <dataMain.h>
 #include "timeCalc.h"
 #include "calcGPS.h"
+#include <calcGlonass.h>
+#include <downlGalileo.h>
+#include <calcGalileo.h>
+
 using namespace std;
 //(*InternalHeaders(GridDialog)
 #include <wx/intl.h>
@@ -101,18 +105,42 @@ void GridDialog::OnButton1Click2(wxCommandEvent& event)
   TextCtrl1->GetValue().ToDouble(&grid);
   TextCtrl7->GetValue().ToDouble(&endd);
   timeCalc calc(gData.day,gData.month,gData.year ,gData.hour ,gData.minutes ,gData.sec ,00);
+  timeCalc calcGln(gData.day,gData.month,gData.year ,gData.hour ,gData.minutes ,gData.sec ,00);
   int zz = 2021;
-  string text1="MCCJ_211023.agp";
-  string text0 = "/MCC/ALMANAC/"+ to_string(zz) +"/"+text1; //путь к файлу
-  ofstream f2;
-  f2.open("test\\testCickle.txt");
-  double sko1[5];
+  string text1="MCCJ_211024.agp";//gps
+  const char* file; // для файла с алм
+  file = (text1).c_str();
+  timeCalc calcGalileo(gData.day, gData.month, gData.year, 0,0,0,0);
+  string text2 = "MCCJ_211024.agl";//gl
+  const char* file2; // для файла с алм
+  file2 = (text2).c_str();
+  const char* file3;
+  string text3 = "2021-10-22.xml";//gal
+  file3 = (text3).c_str();
+  ofstream fgps;
+  fgps.open("test\\testCickleGps.txt");
+  ofstream fgl;
+  fgl.open("test\\testCickleGlonass.txt");
+  ofstream fgal;
+  fgal.open("test\\testCickleGalileo.txt");
+  double sko[5];
   for (int i=0; i<=(endd-gData.H); i+=grid)
   {
-    calccGPS(0, sko1, text1,text0,calc,(gData.B*M_PI/180.0),(gData.L*M_PI/180.0),gData.H);
-    f2<<gData.H<<"\t"<< sko1[0]<<"\t"<<sko1[1]<<"\t"<<sko1[2]<<"\t"<<sko1[3]<<"\t"<<sko1[4]<<"\n";
+  calccGPS( file, sko, calc,
+           (gData.B*M_PI/180.0),(gData.L*M_PI/180.0),gData.H);
+  fgps<<gData.H<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\n";
+  calccGlonass( file2, sko, calcGln,(gData.B*M_PI/180.0),(gData.L*M_PI/180.0),gData.H);
+  fgl<<gData.H<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\n";
+  calccGalileo(file3,
+                  sko,
+                  calc,
+                  calcGalileo,
+                  (gData.B*M_PI/180.0),(gData.L*M_PI/180.0),gData.H);
+ fgal<<gData.H<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\n";
   }
-  f2.close();
+  fgps.close();
+  fgl.close();
+  fgal.close();
   //  wxDateTime T;
 //  T = DatePickerCtrl1->GetValue();
 //  day_predsk = T.GetDay(); //для скачивания файла

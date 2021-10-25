@@ -12,5 +12,6 @@ void downGalileo(int year_down,int *day_down, string *text0,
        string text2,
        string text3,
        string text4);
+
 #endif //
 

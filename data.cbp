@@ -101,6 +101,18 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="parser.h" />
+		<Unit filename="parserEphGAL.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="parserEphGAL.h" />
+		<Unit filename="parserEphGLNS.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="parserEphGLNS.h" />
+		<Unit filename="parserEphGPS.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="parserEphGPS.h" />
 		<Unit filename="parserGLNS.H" />
 		<Unit filename="parserGLNS.c">
 			<Option compilerVar="CC" />

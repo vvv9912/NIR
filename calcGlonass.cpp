@@ -3,7 +3,8 @@
 
 //
 #include "FTPdownl.h"
-#include "parser.h"
+//#include "parser.h"
+#include <parserEphGLNS.h>
 #include "angle.h"
 #include "xyz2enu.h"
 #include "parserGLNS.H"
@@ -18,10 +19,8 @@ using namespace std;
 using namespace arma;
 
 
-void calccGlonass(int flag, //нужно ли скачивать файл
+void calccGlonass(const char* file,
               double (&skoo)[5],
-              string text1,
-              string text0,
               timeCalc calc,
               double B,double L, double h)
 {
@@ -47,18 +46,9 @@ void calccGlonass(int flag, //нужно ли скачивать файл
   double alpha;
   //  f<< " day_down="<< day_down<<endl;
   //  f<< " text4="<< text4<<endl;
-    const char* File1 ;
-    const char* file ;
-    File1 = text0.c_str();//"/MCC/ALMANAC/2015/MCCJ_150307.agl"//перевод строки с строку Си
-    file = text1.c_str();
   //  //! добавить если файла нет, искать ближайший!
    // f<< "const char* File1"<< File1<<endl;
   //  f<< " file"<< file<<endl;
-  if (flag == 1)
-  {
-         bool down = download( "ftp.glonass-iac.ru", NULL, NULL, File1, file);
-  }
-
     int max_sats = parseGLNS(file);
 
 
@@ -120,7 +110,7 @@ void calccGlonass(int flag, //нужно ли скачивать файл
     {
       if ((vsb[k]) == 1)
       {
-        Dn(i,i) = SISerr[i].SISRE;
+        Dn(i,i) = SISerr_GLNS[i].SISRE;
         i++;
       }
     }
@@ -182,3 +172,24 @@ void calccGlonass(int flag, //нужно ли скачивать файл
     skoo[3]= sko(3,3);
     skoo[4] = sqrt (pow(sko(0,0),2)+pow(sko(1,1),2)+pow(sko(2,2),2) );
     }
+
+void downlGlonass(   string *text1, //file alm
+                      string text2,
+                      string text3,
+                      string text4,
+                      string text5,
+                      string textYear)
+  {
+
+    *text1 = text5+text2+text3+text4+".agl"s;
+    string text0 =   "/MCC/ALMANAC/"+ textYear +"/"+(*text1);
+    const char* File1 ;
+    const char* file ;
+    File1 = text0.c_str();//"/MCC/ALMANAC/2015/MCCJ_150307.agl"//перевод строки с строку Си
+    file = (*text1).c_str();
+  //  //! добавить если файла нет, искать ближайший!
+   // f<< "const char* File1"<< File1<<endl;
+  //  f<< " file"<< file<<endl;
+    bool down = download( "ftp.glonass-iac.ru", NULL, NULL, File1, file);
+
+  }

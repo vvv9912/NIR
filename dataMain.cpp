@@ -30,6 +30,9 @@
 #include <calcGlonass.h>
 #include <downlGalileo.h>
 #include <calcGalileo.h>
+#include <parserEphGAL.h>
+#include <parserEphGPS.h>
+#include <parserEphGLNS.h>
 //
 #include <iostream>
 #include <string>
@@ -386,6 +389,7 @@ void dataDialog::OnButton2Click(wxCommandEvent& event)
     File1 = "/MCC/PRODUCTS/LATEST/MERMS-GSC_C.ete";
     file = "MERMS-GSC_C.ete";
     wxTextFile file11(wxT("MERMS-GSC_C.ete"));
+     parseEph_GPS(file);
     if (file11.Exists())
     {
       wxRemoveFile(file);
@@ -396,6 +400,7 @@ void dataDialog::OnButton2Click(wxCommandEvent& event)
     File1 = "/MCC/PRODUCTS/LATEST/MERMS-RSC_C.ete";
     file = "MERMS-RSC_C.ete";
     wxTextFile file11(wxT("MERMS-RSC_C.ete"));
+     parseEph_GLNS(file);
     if (file11.Exists())
     {
       wxRemoveFile(file);
@@ -407,6 +412,7 @@ void dataDialog::OnButton2Click(wxCommandEvent& event)
     File1 = "/MCC/PRODUCTS/LATEST/MERMS-ESC_C.ete";
     file = "MERMS-ESC_C.ete";
     wxTextFile file11(wxT("MERMS-ESC_C.ete"));
+    parseEph_Gal(file);
     if (file11.Exists())
     {
       wxRemoveFile(file);
@@ -417,6 +423,7 @@ void dataDialog::OnButton2Click(wxCommandEvent& event)
     File1 = "/MCC/PRODUCTS/LATEST/MERMS-CSC_C.ete";
     file = "MERMS-CSC_C.ete";
     wxTextFile file11(wxT("MERMS-CSC_C.ete"));
+    // parse(file);
     if (file11.Exists())
     {
       wxRemoveFile(file);
@@ -636,27 +643,37 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
   double skoo[5];
   if ((Choice1->GetString(Choice1->GetSelection()))== "GPS")
   {
-  string text1 = text5+text2+text3+text4+".agp"s; //назв файла
-  string text0 =   "/MCC/ALMANAC/"+ textYear +"/"+text1; //путь к файлу
+    downlGPS(&text1, //file alm
+                       text2,
+                       text3,
+                       text4,
+                       text5,
+                       textYear);
   timeCalc calc(day_predsk,month_predsk,year_predsk,hour_predsk,min_predsk,sec_predsk,00);
- calccGPS(1,
+  const char* file; // для файла с алм
+  file = (text1).c_str();
+  calccGPS(file,
           skoo,
-          text1,
-          text0,
           calc,
           B,L,h);
 
   }
   else if ((Choice1->GetString(Choice1->GetSelection()))== "Glonass")
   {
-    text1 = text5+text2+text3+text4+".agl"s;
-    text0 =   "/MCC/ALMANAC/"+ textYear +"/"+text1;
-    timeCalc calc(day_predsk,month_predsk,year_predsk,hour_predsk,min_predsk,sec_predsk,00);
-    calccGlonass(1,
+
+    downlGlonass(&text1, //file alm
+                       text2,
+                       text3,
+                       text4,
+                       text5,
+                       textYear);
+     timeCalc calcGln(gData.day,gData.month,gData.year ,gData.hour ,gData.minutes ,gData.sec ,00);
+
+     const char* file; // для файла с алм
+     file = (text1).c_str();
+    calccGlonass(file,
           skoo,
-          text1,
-          text0,
-          calc,
+          calcGln,
           B,L,h);
     //для ион
     /*   text1 = "BRDC1510.21n"s;
@@ -674,65 +691,6 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
   }
   else if ((Choice1->GetString(Choice1->GetSelection()))== "Galileo"s)
   {
- /*text2 = to_string(year_down);
-//2021-06-08
-    const char* File1 ;
-    const char* file ;
-    text1 = text2 + "-"s + text3 + "-"s + text4 + ".xml"s;
-    text0 = "http://www.gsc-europa.eu/sites/default/files/sites/all/files/"s+text1;
-    f<< " text1="<< text1<<endl;
-
-    file = text1.c_str(); //ссылка на файл
-    File1 = text0.c_str();
-    f<< " file"<< file<<endl;
-    int ok = Downloadhttp(File1,file);
-    if (ok == 0)
-    {
-      text1 = text2 + "_"s + text3 + "_"s + text4 + ".xml"s;
-      text0 = "http://www.gsc-europa.eu/sites/default/files/sites/all/files/"s+text1;
-      file = text1.c_str(); //ссылка на файл
-      File1 = text0.c_str();
-      ok = Downloadhttp(File1,file);
-      f<< "ok = "<<ok <<endl;
-      f<< " file"<< file<<endl;
-      f<< "file1 = "<< File1 <<endl;
-
-
-    }
-    while (ok == 0)
-    {
-      day_down = day_down - 1;
-      if (day_down<10)
-      {
-        text4 = "0"s +to_string(day_down); //day текущий -1
-      }
-      else
-      {
-        text4 = to_string(day_down);
-      }
-      text1 = text2 + "_"s + text3 + "_"s + text4 + ".xml"s;
-      text0 = "http://www.gsc-europa.eu/sites/default/files/sites/all/files/"s+text1;
-      file = text1.c_str(); //ссылка на файл
-      File1 = text0.c_str();
-      ok = Downloadhttp(File1,file);
-      f<< "ok = "<<ok <<endl;
-      f<< " file"<< file<<endl;
-      f<< "file1 = "<< File1 <<endl;
-      if (ok == 0)
-      {
-        text1 = text2 + "-"s + text3 + "-"s + text4 + ".xml"s;
-        text0 = "http://www.gsc-europa.eu/sites/default/files/sites/all/files/"s+text1;
-        file = text1.c_str(); //ссылка на файл
-        File1 = text0.c_str();
-        ok = Downloadhttp(File1,file);
-        f<< "ok = "<<ok <<endl;
-        f<< " file = "<< file<<endl;
-        f<< "file1 = "<< File1 <<endl;
-
-      }
-    }*/
-
-     // const char* File1;
       timeCalc calcGalileo(day_down, month_down, year_down, 0,0,0,0);
       const char* file; // для файла с алм
     downGalileo( year_down, &day_down, &text0,
@@ -741,7 +699,6 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
         text3,
         text4);
       file = (text1).c_str(); //ссылка на файл
-      //File1 = (text0).c_str();
       /*  if (day_down <= 0)
         {
           wxMessageBox(_("Альманах не удалось скачать !"), _("Error"));

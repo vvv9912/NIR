@@ -7,11 +7,16 @@
 
 using namespace std;
 
-void calccGlonass(int flag,//нужно ли скачивать файл
-              double (&skoo)[5],
-              string text1,
-              string text0, //если файл уже скачен оставить нулевой
-              timeCalc calc,
-              double B,double L, double h);
+void calccGlonass(const char* file,
+                  double (&skoo)[5],
+                  timeCalc calc,
+                   double B,double L, double h);
+
+void downlGlonass(   string *text1, //file alm
+                      string text2,
+                      string text3,
+                      string text4,
+                      string text5,
+                      string textYear);
 #endif //
 
