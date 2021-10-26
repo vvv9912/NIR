@@ -126,6 +126,7 @@ void GridDialog::OnButton1Click2(wxCommandEvent& event)
   double sko[5];
   for (int i=0; i<=(endd-gData.H); i+=grid)
   {
+
   calccGPS( file, sko, calc,
            (gData.B*M_PI/180.0),(gData.L*M_PI/180.0),gData.H);
   fgps<<gData.H<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\n";
@@ -137,6 +138,7 @@ void GridDialog::OnButton1Click2(wxCommandEvent& event)
                   calcGalileo,
                   (gData.B*M_PI/180.0),(gData.L*M_PI/180.0),gData.H);
  fgal<<gData.H<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\n";
+  gData.H +=grid;
   }
   fgps.close();
   fgl.close();
