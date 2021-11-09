@@ -27,6 +27,7 @@ const long GridDialog::ID_RADIOBOX1 = wxNewId();
 const long GridDialog::ID_STATICTEXT2 = wxNewId();
 const long GridDialog::ID_CHECKLISTBOX1 = wxNewId();
 const long GridDialog::ID_BUTTON1 = wxNewId();
+const long GridDialog::ID_STATICTEXT4 = wxNewId();
 const long GridDialog::ID_SASHWINDOW1 = wxNewId();
 //*)
 
@@ -39,14 +40,14 @@ GridDialog::GridDialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,const w
 {
 	//(*Initialize(GridDialog)
 	Create(parent, wxID_ANY, _("Grid"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
-	SetClientSize(wxSize(679,551));
+	SetClientSize(wxSize(306,325));
 	SetMinSize(wxSize(-1,-1));
 	SetMaxSize(wxSize(-1,-1));
-	SashWindow1 = new wxSashWindow(this, ID_SASHWINDOW1, wxPoint(80,112), wxSize(304,328), wxSW_3D|wxCLIP_CHILDREN, _T("ID_SASHWINDOW1"));
-	TextCtrl1 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL1, wxEmptyString, wxPoint(36,171), wxSize(74,21), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
+	SashWindow1 = new wxSashWindow(this, ID_SASHWINDOW1, wxPoint(0,0), wxSize(304,328), wxSW_3D|wxCLIP_CHILDREN, _T("ID_SASHWINDOW1"));
+	TextCtrl1 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL1, wxEmptyString, wxPoint(144,121), wxSize(97,21), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
 	StaticText3 = new wxStaticText(SashWindow1, ID_STATICTEXT3, wxEmptyString, wxPoint(176,188), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
-	TextCtrl7 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL7, wxEmptyString, wxPoint(163,89), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL7"));
-	StaticText1 = new wxStaticText(SashWindow1, ID_STATICTEXT1, _("Конечное значение"), wxPoint(163,71), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
+	TextCtrl7 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL7, wxEmptyString, wxPoint(141,71), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL7"));
+	StaticText1 = new wxStaticText(SashWindow1, ID_STATICTEXT1, _("Конечное значение"), wxPoint(142,47), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
 	wxString __wxRadioBoxChoices_1[3] =
 	{
 		_("Высоте"),
@@ -54,11 +55,12 @@ GridDialog::GridDialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,const w
 		_("Долготе")
 	};
 	RadioBox1 = new wxRadioBox(SashWindow1, ID_RADIOBOX1, _("Шаг"), wxPoint(36,51), wxSize(79,86), 3, __wxRadioBoxChoices_1, 1, 0, wxDefaultValidator, _T("ID_RADIOBOX1"));
-	StaticText2 = new wxStaticText(SashWindow1, ID_STATICTEXT2, _("Значение сетки"), wxPoint(33,155), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
+	StaticText2 = new wxStaticText(SashWindow1, ID_STATICTEXT2, _("Значение сетки"), wxPoint(141,100), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
 	CheckListBox1 = new wxCheckListBox(SashWindow1, ID_CHECKLISTBOX1, wxPoint(34,235), wxSize(98,63), 0, 0, 0, wxDefaultValidator, _T("ID_CHECKLISTBOX1"));
 	CheckListBox1->Append(_("GDOP"));
 	CheckListBox1->Append(_("HDOP"));
-	Button1 = new wxButton(SashWindow1, ID_BUTTON1, _("Label"), wxPoint(211,252), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	Button1 = new wxButton(SashWindow1, ID_BUTTON1, _("обработка зн"), wxPoint(152,162), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	StaticText4 = new wxStaticText(SashWindow1, ID_STATICTEXT4, _("Вывод значений (\?)"), wxPoint(27,217), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
 	SashWindow1->SetSashVisible(wxSASH_TOP,    true);
 	SashWindow1->SetSashVisible(wxSASH_BOTTOM, true);
 	SashWindow1->SetSashVisible(wxSASH_LEFT,   true);
@@ -111,36 +113,16 @@ void GridDialog::OnButton1Click2(wxCommandEvent& event)
   const char* file; // для файла с алм
   file = (text1).c_str();
   timeCalc calcGalileo(gData.day, gData.month, gData.year, 0,0,0,0);
-  string text2 = "MCCJ_211024.agl";//gl
+  string text2 = "MCCJ_211108.agl";//gl
   const char* file2; // для файла с алм
   file2 = (text2).c_str();
   const char* file3;
   string text3 = "2021-10-22.xml";//gal
   file3 = (text3).c_str();
-  ofstream fgps;
-  fgps.open("test\\testCickleGps.txt");
-  ofstream fgl;
-  fgl.open("test\\testCickleGlonass.txt");
-  ofstream fgal;
-  fgal.open("test\\testCickleGalileo.txt");
+
   double sko[5];
-  for (int i=0; i<=(endd-gData.H); i+=grid)
-  {
-  calccGPS( file, sko, calc,
-           (gData.B*M_PI/180.0),(gData.L*M_PI/180.0),gData.H);
-  fgps<<gData.H<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\n";
-  calccGlonass( file2, sko, calcGln,(gData.B*M_PI/180.0),(gData.L*M_PI/180.0),gData.H);
-  fgl<<gData.H<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\n";
-  calccGalileo(file3,
-                  sko,
-                  calc,
-                  calcGalileo,
-                  (gData.B*M_PI/180.0),(gData.L*M_PI/180.0),gData.H);
- fgal<<gData.H<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\n";
-  }
-  fgps.close();
-  fgl.close();
-  fgal.close();
+
+
   //  wxDateTime T;
 //  T = DatePickerCtrl1->GetValue();
 //  day_predsk = T.GetDay(); //для скачивания файла
@@ -152,6 +134,92 @@ void GridDialog::OnButton1Click2(wxCommandEvent& event)
  // a->TimePickerCtrl1->GetTime(&hour_predsk, &min_predsk, &sec_predsk);
 //wxPoint(int k);
  k = RadioBox1->GetSelection(); // получение высоты/широты/долготы
+ double h = gData.H;
+ double b = gData.B;
+ double l = gData.L;
+ if (k == 0) // высота
+ {
+  ofstream fgps;
+  fgps.open("test\\Gps_H.txt");
+  ofstream fgl;
+  fgl.open("test\\Glonass_H.txt");
+  ofstream fgal;
+  fgal.open("test\\Galileo_H.txt");
+   for (int i=0; i<=(endd-gData.H); i+=grid)
+  {
+  calccGPS( file, sko, calc,
+           (gData.B*M_PI/180.0),(gData.L*M_PI/180.0),h);
+  fgps<<h<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\n";
+  calccGlonass( file2, sko, calcGln,(gData.B*M_PI/180.0),(gData.L*M_PI/180.0),h);
+  fgl<<h<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\n";
+  calccGalileo(file3,
+                  sko,
+                  calc,
+                  calcGalileo,
+                  (gData.B*M_PI/180.0),(gData.L*M_PI/180.0),h);
+ fgal<<h<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\n";
+ h +=grid;
+  }
+   fgps.close();
+  fgl.close();
+  fgal.close();
+ }
+  if (k == 1) //широта B
+ {
+  ofstream fgps;
+  fgps.open("test\\Gps_B.txt");
+  ofstream fgl;
+  fgl.open("test\\Glonass_B.txt");
+  ofstream fgal;
+  fgal.open("test\\Galileo_B.txt");
+   for (int i=0; i<=(endd-gData.B); i+=grid)
+  {
+  calccGPS( file, sko, calc,
+           (b*M_PI/180.0),(gData.L*M_PI/180.0),gData.H);
+  fgps<<b<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\n";
+  calccGlonass( file2, sko, calcGln,(b*M_PI/180.0),(gData.L*M_PI/180.0),gData.H);
+  fgl<<b<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\n";
+  calccGalileo(file3,
+                  sko,
+                  calc,
+                  calcGalileo,
+                  (b*M_PI/180.0),(gData.L*M_PI/180.0),gData.H);
+ fgal<<b<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\n";
+   b +=grid;
+  }
+   fgps.close();
+  fgl.close();
+  fgal.close();
+ }
+ if (k == 2)
+ {
+  ofstream fgps;
+  fgps.open("test\\Gps_L.txt");
+  ofstream fgl;
+  fgl.open("test\\Glonass_L.txt");
+  ofstream fgal;
+  fgal.open("test\\Galileo_L.txt");
+for (int i=0; i<=(endd-gData.L); i+=grid)
+  {
+  calccGPS( file, sko, calc,
+           (gData.B*M_PI/180.0),(l*M_PI/180.0),gData.H);
+  fgps<<l<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\n";
+  calccGlonass( file2, sko, calcGln,(gData.B*M_PI/180.0),(l*M_PI/180.0),gData.H);
+  fgl<<l<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\n";
+  calccGalileo(file3,
+                  sko,
+                  calc,
+                  calcGalileo,
+                  (gData.B*M_PI/180.0),(l*M_PI/180.0),gData.H);
+ fgal<<l<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\n";
+ l += grid;
+  }
+   fgps.close();
+  fgl.close();
+  fgal.close();
+ }
+
+
 //RadioBox1->GetItemFromPoint(k);
 //int k = static_cast<int>(kk);
  f<<"choise ="<<k;

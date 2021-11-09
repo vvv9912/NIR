@@ -38,6 +38,7 @@ class GridDialog: public wxDialog
 		wxStaticText* StaticText1;
 		wxStaticText* StaticText2;
 		wxStaticText* StaticText3;
+		wxStaticText* StaticText4;
 		wxTextCtrl* TextCtrl1;
 		wxTextCtrl* TextCtrl7;
 		//*)
@@ -53,6 +54,7 @@ class GridDialog: public wxDialog
 		static const long ID_STATICTEXT2;
 		static const long ID_CHECKLISTBOX1;
 		static const long ID_BUTTON1;
+		static const long ID_STATICTEXT4;
 		static const long ID_SASHWINDOW1;
 		//*)
 

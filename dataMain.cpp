@@ -58,7 +58,7 @@
 
 using namespace std;
 using namespace arma;
-int type;
+//int type;
 GlobalData gData;
 //(*InternalHeaders(dataDialog)
 #include <wx/intl.h>
