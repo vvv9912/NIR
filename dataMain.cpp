@@ -389,22 +389,36 @@ void dataDialog::OnButton2Click(wxCommandEvent& event)
     File1 = "/MCC/PRODUCTS/LATEST/MERMS-GSC_C.ete";
     file = "MERMS-GSC_C.ete";
     wxTextFile file11(wxT("MERMS-GSC_C.ete"));
-     parseEph_GPS(file);
+
     if (file11.Exists())
     {
       wxRemoveFile(file);
     }
+     bool down = download( "ftp.glonass-iac.ru", NULL, NULL, File1, file);
+       if (!down)
+  {
+    wxMessageBox(_("Error"), _("Error"));
+    return;
+  }
+      parseEph_GPS(file);
   }
   if ((Choice1->GetString(Choice1->GetSelection()))== "Glonass"s)
   {
     File1 = "/MCC/PRODUCTS/LATEST/MERMS-RSC_C.ete";
     file = "MERMS-RSC_C.ete";
     wxTextFile file11(wxT("MERMS-RSC_C.ete"));
-     parseEph_GLNS(file);
+
     if (file11.Exists())
     {
       wxRemoveFile(file);
     }
+    bool down = download( "ftp.glonass-iac.ru", NULL, NULL, File1, file);
+      if (!down)
+  {
+    wxMessageBox(_("Error"), _("Error"));
+    return;
+  }
+    parseEph_GLNS(file);
   }
 
   if ((Choice1->GetString(Choice1->GetSelection()))== "Galileo"s)
@@ -412,11 +426,20 @@ void dataDialog::OnButton2Click(wxCommandEvent& event)
     File1 = "/MCC/PRODUCTS/LATEST/MERMS-ESC_C.ete";
     file = "MERMS-ESC_C.ete";
     wxTextFile file11(wxT("MERMS-ESC_C.ete"));
-    parseEph_Gal(file);
+
+
     if (file11.Exists())
     {
       wxRemoveFile(file);
     }
+     bool down = download( "ftp.glonass-iac.ru", NULL, NULL, File1, file);
+       if (!down)
+  {
+    wxMessageBox(_("Error"), _("Error"));
+    return;
+  }
+      parseEph_Gal(file);
+
   }
   if ((Choice1->GetString(Choice1->GetSelection()))== "Beidou"s)
   {
@@ -429,6 +452,13 @@ void dataDialog::OnButton2Click(wxCommandEvent& event)
       wxRemoveFile(file);
     }
 
+     bool down = download( "ftp.glonass-iac.ru", NULL, NULL, File1, file);
+       if (!down)
+  {
+    wxMessageBox(_("Error"), _("Error"));
+    return;
+  }
+
   }
 
   if ((Choice1->GetString(Choice1->GetSelection()))== "QZSS"s)
@@ -440,13 +470,6 @@ void dataDialog::OnButton2Click(wxCommandEvent& event)
     {
       wxRemoveFile(file);
     }
-  }
-
-  bool down = download( "ftp.glonass-iac.ru", NULL, NULL, File1, file);
-  if (!down)
-  {
-    wxMessageBox(_("Error"), _("Error"));
-    return;
   }
   Gridd(file);
 }
