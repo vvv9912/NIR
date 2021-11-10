@@ -27,7 +27,7 @@ const long GridDialog::ID_RADIOBOX1 = wxNewId();
 const long GridDialog::ID_STATICTEXT2 = wxNewId();
 const long GridDialog::ID_CHECKLISTBOX1 = wxNewId();
 const long GridDialog::ID_BUTTON1 = wxNewId();
-const long GridDialog::ID_STATICTEXT4 = wxNewId();
+const long GridDialog::ID_GAUGE1 = wxNewId();
 const long GridDialog::ID_SASHWINDOW1 = wxNewId();
 //*)
 
@@ -39,15 +39,18 @@ END_EVENT_TABLE()
 GridDialog::GridDialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size)
 {
 	//(*Initialize(GridDialog)
+	wxSashWindow* SashWindow1;
+	wxStaticText* StaticText4;
+
 	Create(parent, wxID_ANY, _("Grid"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
-	SetClientSize(wxSize(306,325));
+	SetClientSize(wxSize(288,325));
 	SetMinSize(wxSize(-1,-1));
 	SetMaxSize(wxSize(-1,-1));
-	SashWindow1 = new wxSashWindow(this, ID_SASHWINDOW1, wxPoint(0,0), wxSize(304,328), wxSW_3D|wxCLIP_CHILDREN, _T("ID_SASHWINDOW1"));
-	TextCtrl1 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL1, wxEmptyString, wxPoint(144,121), wxSize(97,21), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
+	SashWindow1 = new wxSashWindow(this, ID_SASHWINDOW1, wxPoint(0,0), wxSize(280,328), wxSW_3D|wxCLIP_CHILDREN, _T("ID_SASHWINDOW1"));
+	TextCtrl1 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL1, wxEmptyString, wxPoint(144,121), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
 	StaticText3 = new wxStaticText(SashWindow1, ID_STATICTEXT3, wxEmptyString, wxPoint(176,188), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
-	TextCtrl7 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL7, wxEmptyString, wxPoint(141,71), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL7"));
-	StaticText1 = new wxStaticText(SashWindow1, ID_STATICTEXT1, _("Конечное значение"), wxPoint(142,47), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
+	TextCtrl7 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL7, wxEmptyString, wxPoint(144,71), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL7"));
+	StaticText1 = new wxStaticText(SashWindow1, ID_STATICTEXT1, _("Конечное значение"), wxPoint(144,51), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
 	wxString __wxRadioBoxChoices_1[3] =
 	{
 		_("Высоте"),
@@ -55,12 +58,13 @@ GridDialog::GridDialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,const w
 		_("Долготе")
 	};
 	RadioBox1 = new wxRadioBox(SashWindow1, ID_RADIOBOX1, _("Шаг"), wxPoint(36,51), wxSize(79,86), 3, __wxRadioBoxChoices_1, 1, 0, wxDefaultValidator, _T("ID_RADIOBOX1"));
-	StaticText2 = new wxStaticText(SashWindow1, ID_STATICTEXT2, _("Значение сетки"), wxPoint(141,100), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
-	CheckListBox1 = new wxCheckListBox(SashWindow1, ID_CHECKLISTBOX1, wxPoint(34,235), wxSize(98,63), 0, 0, 0, wxDefaultValidator, _T("ID_CHECKLISTBOX1"));
+	StaticText2 = new wxStaticText(SashWindow1, ID_STATICTEXT2, _("Значение сетки"), wxPoint(144,101), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
+	CheckListBox1 = new wxCheckListBox(SashWindow1, ID_CHECKLISTBOX1, wxPoint(69,212), wxSize(98,63), 0, 0, 0, wxDefaultValidator, _T("ID_CHECKLISTBOX1"));
 	CheckListBox1->Append(_("GDOP"));
 	CheckListBox1->Append(_("HDOP"));
-	Button1 = new wxButton(SashWindow1, ID_BUTTON1, _("обработка зн"), wxPoint(152,162), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
-	StaticText4 = new wxStaticText(SashWindow1, ID_STATICTEXT4, _("Вывод значений (\?)"), wxPoint(27,217), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
+	Button1 = new wxButton(SashWindow1, ID_BUTTON1, _("обработка зн"), wxPoint(144,162), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	StaticText4 = new wxStaticText(SashWindow1, wxID_ANY, _("Вывод значений (\?)"), wxPoint(68,196), wxDefaultSize, 0, _T("wxID_ANY"));
+	Gauge1 = new wxGauge(SashWindow1, ID_GAUGE1, 100, wxPoint(29,299), wxSize(-1,-1), 0, wxDefaultValidator, _T("ID_GAUGE1"));
 	SashWindow1->SetSashVisible(wxSASH_TOP,    true);
 	SashWindow1->SetSashVisible(wxSASH_BOTTOM, true);
 	SashWindow1->SetSashVisible(wxSASH_LEFT,   true);
@@ -71,6 +75,7 @@ GridDialog::GridDialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,const w
 	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&GridDialog::OnButton1Click2);
 
 	//*)
+
 }
 
 GridDialog::~GridDialog()
@@ -119,6 +124,8 @@ void GridDialog::OnButton1Click2(wxCommandEvent& event)
   const char* file3;
   string text3 = "2021-10-22.xml";//gal
   file3 = (text3).c_str();
+  int pos = 50;
+
 
   double sko[5];
 
@@ -137,8 +144,11 @@ void GridDialog::OnButton1Click2(wxCommandEvent& event)
  double h = gData.H;
  double b = gData.B;
  double l = gData.L;
+ int range=0;
  if (k == 0) // высота
  {
+   range = endd-gData.H;
+   Gauge1->SetRange(range);
   ofstream fgps;
   fgps.open("test\\Gps_H.txt");
   ofstream fgl;
@@ -147,6 +157,7 @@ void GridDialog::OnButton1Click2(wxCommandEvent& event)
   fgal.open("test\\Galileo_H.txt");
    for (int i=0; i<=(endd-gData.H); i+=grid)
   {
+  Gauge1->SetValue(i);
   calccGPS( file, sko, calc,
            (gData.B*M_PI/180.0),(gData.L*M_PI/180.0),h);
   fgps<<h<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\n";

@@ -5,7 +5,7 @@ data = importdata(file);
 
 sigmax = data(:,2);
 sigmay = data(:,3);
-sigma = sqrt(sigmax.^2+sigmay.^2)
+sigma = sqrt(sigmax.^2+sigmay.^2);
 x = -3*sigma:0.01:3*sigma; %должно быть n массивов по длине от -3 до 3
 M0 = data(:,1);
 % M0= 0; %от высоты зависимость

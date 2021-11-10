@@ -3,13 +3,13 @@
 	<object class="wxDialog" name="GridDialog">
 		<title>Grid</title>
 		<centered>1</centered>
-		<size>306,325</size>
+		<size>288,325</size>
 		<minsize>-1,-1</minsize>
 		<maxsize>-1,-1</maxsize>
 		<id_arg>0</id_arg>
-		<object class="wxSashWindow" name="ID_SASHWINDOW1" variable="SashWindow1" member="yes">
+		<object class="wxSashWindow" name="ID_SASHWINDOW1" variable="SashWindow1" member="no">
 			<pos>0,0</pos>
-			<size>304,328</size>
+			<size>280,328</size>
 			<handler function="OnSashWindow1SashDragged" entry="EVT_SASH_DRAGGED" />
 			<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="TextCtrl1" member="yes">
 				<pos>144,121</pos>
@@ -47,7 +47,7 @@
 					<item>GDOP</item>
 					<item>HDOP</item>
 				</content>
-				<pos>34,235</pos>
+				<pos>14,232</pos>
 				<size>98,63</size>
 				<handler function="OnCheckListBox1Toggled1" entry="EVT_CHECKLISTBOX" />
 			</object>
@@ -56,9 +56,12 @@
 				<pos>152,162</pos>
 				<handler function="OnButton1Click2" entry="EVT_BUTTON" />
 			</object>
-			<object class="wxStaticText" name="ID_STATICTEXT4" variable="StaticText4" member="yes">
+			<object class="wxStaticText" name="wxID_ANY" variable="StaticText4" member="no">
 				<label>Вывод значений (?)</label>
-				<pos>27,217</pos>
+				<pos>14,216</pos>
+			</object>
+			<object class="wxGauge" name="ID_GAUGE1" variable="Gauge1" member="yes">
+				<pos>29,299</pos>
 			</object>
 		</object>
 	</object>
