@@ -10,21 +10,21 @@
 		<object class="wxSashWindow" name="ID_SASHWINDOW1" variable="SashWindow1" member="no">
 			<pos>0,0</pos>
 			<size>280,328</size>
+			<style>wxSW_3D|wxSW_3DSASH|wxSW_3DBORDER|wxSW_BORDER|wxSIMPLE_BORDER|wxDOUBLE_BORDER|wxSUNKEN_BORDER|wxRAISED_BORDER|wxSTATIC_BORDER|wxNO_BORDER|wxTRANSPARENT_WINDOW|wxTAB_TRAVERSAL|wxWANTS_CHARS|wxNO_FULL_REPAINT_ON_RESIZE|wxCLIP_CHILDREN</style>
 			<handler function="OnSashWindow1SashDragged" entry="EVT_SASH_DRAGGED" />
 			<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="TextCtrl1" member="yes">
 				<pos>144,121</pos>
-				<size>97,21</size>
 			</object>
 			<object class="wxStaticText" name="ID_STATICTEXT3" variable="StaticText3" member="yes">
 				<label></label>
 				<pos>176,188</pos>
 			</object>
 			<object class="wxTextCtrl" name="ID_TEXTCTRL7" variable="TextCtrl7" member="yes">
-				<pos>141,71</pos>
+				<pos>144,71</pos>
 			</object>
 			<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
 				<label>Конечное значение</label>
-				<pos>142,47</pos>
+				<pos>144,51</pos>
 			</object>
 			<object class="wxRadioBox" name="ID_RADIOBOX1" variable="RadioBox1" member="yes">
 				<label>Шаг</label>
@@ -40,28 +40,29 @@
 			</object>
 			<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
 				<label>Значение сетки</label>
-				<pos>141,100</pos>
+				<pos>144,101</pos>
 			</object>
 			<object class="wxCheckListBox" name="ID_CHECKLISTBOX1" variable="CheckListBox1" member="yes">
 				<content>
 					<item>GDOP</item>
 					<item>HDOP</item>
 				</content>
-				<pos>14,232</pos>
+				<pos>69,212</pos>
 				<size>98,63</size>
 				<handler function="OnCheckListBox1Toggled1" entry="EVT_CHECKLISTBOX" />
 			</object>
 			<object class="wxButton" name="ID_BUTTON1" variable="Button1" member="yes">
 				<label>обработка зн</label>
-				<pos>152,162</pos>
+				<pos>144,162</pos>
 				<handler function="OnButton1Click2" entry="EVT_BUTTON" />
 			</object>
 			<object class="wxStaticText" name="wxID_ANY" variable="StaticText4" member="no">
 				<label>Вывод значений (?)</label>
-				<pos>14,216</pos>
+				<pos>68,196</pos>
 			</object>
 			<object class="wxGauge" name="ID_GAUGE1" variable="Gauge1" member="yes">
 				<pos>29,299</pos>
+				<size>-1,-1</size>
 			</object>
 		</object>
 	</object>

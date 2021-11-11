@@ -46,7 +46,7 @@ GridDialog::GridDialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,const w
 	SetClientSize(wxSize(288,325));
 	SetMinSize(wxSize(-1,-1));
 	SetMaxSize(wxSize(-1,-1));
-	SashWindow1 = new wxSashWindow(this, ID_SASHWINDOW1, wxPoint(0,0), wxSize(280,328), wxSW_3D|wxCLIP_CHILDREN, _T("ID_SASHWINDOW1"));
+	SashWindow1 = new wxSashWindow(this, ID_SASHWINDOW1, wxPoint(0,0), wxSize(280,328), wxSW_3D|wxSW_3DSASH|wxSW_3DBORDER|wxSW_BORDER|wxSIMPLE_BORDER|wxDOUBLE_BORDER|wxSUNKEN_BORDER|wxRAISED_BORDER|wxSTATIC_BORDER|wxNO_BORDER|wxTRANSPARENT_WINDOW|wxTAB_TRAVERSAL|wxWANTS_CHARS|wxNO_FULL_REPAINT_ON_RESIZE|wxCLIP_CHILDREN, _T("ID_SASHWINDOW1"));
 	TextCtrl1 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL1, wxEmptyString, wxPoint(144,121), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
 	StaticText3 = new wxStaticText(SashWindow1, ID_STATICTEXT3, wxEmptyString, wxPoint(176,188), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
 	TextCtrl7 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL7, wxEmptyString, wxPoint(144,71), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL7"));

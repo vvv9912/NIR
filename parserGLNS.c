@@ -65,7 +65,6 @@ int parseGLNS(const char* file)
 {
   int i;
   int  Numbb;
-  char systype;
   char dummy[50];
     FILE *fd;
    // string file = "MCCJ_150306.AGP";
