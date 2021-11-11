@@ -10,7 +10,7 @@
 		<object class="wxSashWindow" name="ID_SASHWINDOW1" variable="SashWindow1" member="no">
 			<pos>0,0</pos>
 			<size>280,328</size>
-			<style>wxSW_3D|wxSW_3DSASH|wxSW_3DBORDER|wxSW_BORDER|wxSIMPLE_BORDER|wxDOUBLE_BORDER|wxSUNKEN_BORDER|wxRAISED_BORDER|wxSTATIC_BORDER|wxNO_BORDER|wxTRANSPARENT_WINDOW|wxTAB_TRAVERSAL|wxWANTS_CHARS|wxNO_FULL_REPAINT_ON_RESIZE|wxCLIP_CHILDREN</style>
+			<style>wxSW_3D</style>
 			<handler function="OnSashWindow1SashDragged" entry="EVT_SASH_DRAGGED" />
 			<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="TextCtrl1" member="yes">
 				<pos>144,121</pos>
