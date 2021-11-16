@@ -1,7 +1,7 @@
 clear
-fileGa = "..\Galileo_rand.txt";
-fileGl = "..\Glonass_rand.txt";
-fileG = "..\GPS_rand.txt";
+fileGa = "..\Galileo_rand.log";
+fileGl = "..\Glonass_rand.log";
+fileG = "..\GPS_rand.log";
 dataGa = importdata(fileGa);
 dataGl = importdata(fileGl);
 dataG = importdata(fileG);

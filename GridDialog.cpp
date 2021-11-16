@@ -291,15 +291,15 @@ void GridDialog::OnButton2Click(wxCommandEvent& event)
 
   Gauge1->SetRange(iter);
   ofstream fgps;
-  fgps.open("test\\Gps_rand.txt");
+  fgps.open("test\\Gps_rand.log");
   ofstream fgl;
-  fgl.open("test\\Glonass_rand.txt");
+  fgl.open("test\\Glonass_rand.log");
   ofstream fgal;
-  fgal.open("test\\Galileo_rand.txt");
+  fgal.open("test\\Galileo_rand.log");
   ofstream ftimes;
-  ftimes.open("test\\times_rand.txt");
+  ftimes.open("test\\times_rand.log");
   ofstream fcoord;
-  fcoord.open("test\\coord_rand.txt");
+  fcoord.open("test\\coord_rand.log");
   double H,B,L;
   double sko[5];
   for (int i = 0; i<=iter; i++)
