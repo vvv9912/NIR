@@ -11,7 +11,6 @@
 			<pos>0,0</pos>
 			<size>280,328</size>
 			<style>wxSW_3D</style>
-			<handler function="OnSashWindow1SashDragged" entry="EVT_SASH_DRAGGED" />
 			<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="TextCtrl1" member="yes">
 				<pos>144,121</pos>
 			</object>
@@ -42,27 +41,27 @@
 				<label>Значение сетки</label>
 				<pos>144,101</pos>
 			</object>
-			<object class="wxCheckListBox" name="ID_CHECKLISTBOX1" variable="CheckListBox1" member="yes">
-				<content>
-					<item>GDOP</item>
-					<item>HDOP</item>
-				</content>
-				<pos>69,212</pos>
-				<size>98,63</size>
-				<handler function="OnCheckListBox1Toggled1" entry="EVT_CHECKLISTBOX" />
-			</object>
 			<object class="wxButton" name="ID_BUTTON1" variable="Button1" member="yes">
-				<label>обработка зн</label>
-				<pos>144,162</pos>
+				<label>Получения сетки&#x0A; зн-ий</label>
+				<pos>150,153</pos>
+				<size>94,33</size>
 				<handler function="OnButton1Click2" entry="EVT_BUTTON" />
-			</object>
-			<object class="wxStaticText" name="wxID_ANY" variable="StaticText4" member="no">
-				<label>Вывод значений (?)</label>
-				<pos>68,196</pos>
 			</object>
 			<object class="wxGauge" name="ID_GAUGE1" variable="Gauge1" member="yes">
 				<pos>29,299</pos>
 				<size>-1,-1</size>
+			</object>
+			<object class="wxTextCtrl" name="ID_TEXTCTRL2" variable="TextCtrl2" member="yes">
+				<pos>28,224</pos>
+				<handler function="OnTextCtrl2Text" entry="EVT_TEXT" />
+			</object>
+			<object class="wxStaticText" name="ID_STATICTEXT4" variable="StaticText4" member="yes">
+				<label>Кол-во итераций</label>
+				<pos>29,207</pos>
+			</object>
+			<object class="wxButton" name="ID_BUTTON2" variable="Button2" member="yes">
+				<label>Label</label>
+				<pos>31,251</pos>
 			</object>
 		</object>
 	</object>

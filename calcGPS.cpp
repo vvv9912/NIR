@@ -15,6 +15,11 @@
 #include <wininet.h>
 //
 #include <armadillo>
+//
+#include <iostream>
+#include <string>
+#include <stdio.h>
+#include <fstream>
 using namespace std;
 using namespace arma;
 
@@ -157,15 +162,36 @@ void calccGPS(const char* file,
       }
     }
     mat Htr = H.t();
-    mat sko = sqrt((inv(Htr*inv(Dn)*H)).t());
-    sko.save("test\\skoGPS.txt", raw_ascii);
-    skoo[0]= sko(0,0);
-    skoo[1]= sko(1,1);
-    skoo[2]= sko(2,2);
-    skoo[3]= sko(3,3);
-    skoo[4] = sqrt (pow(sko(0,0),2)+pow(sko(1,1),2)+pow(sko(2,2),2) );
-    //return skoo;
- }
+    Htr.save("test\\Htr_GPS.txt", raw_ascii);
+    Dn.save("test\\Dn.txt", raw_ascii);
+    mat u = Htr*inv(Dn)*H;
+    mat sko ;
+
+ /*   double z = det(u);
+     ofstream f;
+  f.open("test\\det.txt",ios::out | ios::app);
+  f<<z<<"\n";
+  f.close();*/
+   if (det(u) < 0.1)
+  {
+  skoo[0]= -1;
+  skoo[1]= -1;
+  skoo[2]= -1;
+  skoo[3]= -1;
+  skoo[4] = -1;
+  }
+  else
+  {
+  sko = sqrt((inv(u)).t());
+  skoo[0]= sko(0,0);
+  skoo[1]= sko(1,1);
+  skoo[2]= sko(2,2);
+  skoo[3]= sko(3,3);
+  skoo[4] = sqrt (pow(sko(0,0),2)+pow(sko(1,1),2)+pow(sko(2,2),2) );
+  }
+  sko.save("test\\skoGal.txt", raw_ascii);
+
+}
  void downlGPS(   string *text1, //file alm
                       string text2,
                       string text3,

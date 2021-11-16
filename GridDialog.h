@@ -3,7 +3,6 @@
 
 //(*Headers(GridDialog)
 #include <wx/button.h>
-#include <wx/checklst.h>
 #include <wx/dialog.h>
 #include <wx/gauge.h>
 #include <wx/radiobox.h>
@@ -33,13 +32,15 @@ class GridDialog: public wxDialog
 
 		//(*Declarations(GridDialog)
 		wxButton* Button1;
-		wxCheckListBox* CheckListBox1;
+		wxButton* Button2;
 		wxGauge* Gauge1;
 		wxRadioBox* RadioBox1;
 		wxStaticText* StaticText1;
 		wxStaticText* StaticText2;
 		wxStaticText* StaticText3;
+		wxStaticText* StaticText4;
 		wxTextCtrl* TextCtrl1;
+		wxTextCtrl* TextCtrl2;
 		wxTextCtrl* TextCtrl7;
 		//*)
 
@@ -52,9 +53,11 @@ class GridDialog: public wxDialog
 		static const long ID_STATICTEXT1;
 		static const long ID_RADIOBOX1;
 		static const long ID_STATICTEXT2;
-		static const long ID_CHECKLISTBOX1;
 		static const long ID_BUTTON1;
 		static const long ID_GAUGE1;
+		static const long ID_TEXTCTRL2;
+		static const long ID_STATICTEXT4;
+		static const long ID_BUTTON2;
 		static const long ID_SASHWINDOW1;
 		//*)
 
@@ -68,6 +71,8 @@ class GridDialog: public wxDialog
 		void OnCheckListBox1Toggled1(wxCommandEvent& event);
 		void OnSashWindow1SashDragged(wxSashEvent& event);
 		void OnButton1Click2(wxCommandEvent& event);
+		void OnTextCtrl2Text(wxCommandEvent& event);
+		void OnButton2Click(wxCommandEvent& event);
 		//*)
 
 		DECLARE_EVENT_TABLE()
