@@ -41,8 +41,8 @@ else
 end
 end
 M0 = data(:,1);
-L = data(:,3)
-B = data(:,2)
+L = data(:,3);
+B = data(:,2);
 % M0= 0; %от высоты зависимость
  
  figure (nfigure)

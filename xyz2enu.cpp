@@ -1,5 +1,5 @@
 #include <math.h>
-
+#include <math.h>
 void xyz2enu(const double lat, const double lon, double * xyz2enu)
 {
 	/*%*************************************************************************
