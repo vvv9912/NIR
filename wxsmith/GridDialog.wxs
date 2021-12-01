@@ -43,8 +43,8 @@
 			</object>
 			<object class="wxButton" name="ID_BUTTON1" variable="Button1" member="yes">
 				<label>Получения сетки&#x0A; зн-ий</label>
-				<pos>150,153</pos>
-				<size>94,33</size>
+				<pos>142,153</pos>
+				<size>112,36</size>
 				<handler function="OnButton1Click2" entry="EVT_BUTTON" />
 			</object>
 			<object class="wxGauge" name="ID_GAUGE1" variable="Gauge1" member="yes">
@@ -60,8 +60,9 @@
 				<pos>29,207</pos>
 			</object>
 			<object class="wxButton" name="ID_BUTTON2" variable="Button2" member="yes">
-				<label>Label</label>
+				<label>Получения зн-ий</label>
 				<pos>31,251</pos>
+				<handler function="OnButton2Click2" entry="EVT_BUTTON" />
 			</object>
 		</object>
 	</object>

@@ -97,6 +97,8 @@
 		<Unit filename="ephemerids.h" />
 		<Unit filename="ephemeridsGLNS.cpp" />
 		<Unit filename="ephemeridsGLNS.h" />
+		<Unit filename="geoc2geod.cpp" />
+		<Unit filename="geoc2geod.h" />
 		<Unit filename="parser.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -26,18 +26,21 @@ pars(dataG,3)
 %    plot(x(1,:),f(i,:))
 %    hold on;
 %    grid on;
-% end
+% endhistogram(dataG(:,4),500)
 % end
 function p = pars(data, nfigure)
 sigmax = data(:,4);
 sigmay = data(:,5);
 besk = -1;
+novsb = -10;
 for (i = 1:length(sigmax))
-if (sigmax(i) ~= besk)
-sigma(i) = sqrt(sigmax(i).^2+sigmay(i).^2);
-sigma(i) = 3*sigma(i);
-else
+if (sigmax(i) == (besk))
  sigma(i) = sigmax(i);
+elseif ((sigmax(i) == (novsb)))
+    sigma(i) = sigmax(i);
+else
+ sigma(i) = sqrt(sigmax(i).^2+sigmay(i).^2);
+sigma(i) = 3*sigma(i);
 end
 end
 M0 = data(:,1);
@@ -47,12 +50,12 @@ B = data(:,2);
  
  figure (nfigure)
 
-   plot(L,sigma,'o')
-      hold on;
-   grid on;
-    ylabel('3*\sigma');
-   xlabel('L, gr')
-   ylim([besk 70])
+%    plot(L,sigma,'o')
+%       hold on;
+%    grid on;
+%     ylabel('3*\sigma');
+%    xlabel('L, gr')
+%    ylim([novsb 70])
     if (mod(nfigure,1) == 0)
        title('Galileo')
     end
@@ -62,11 +65,18 @@ B = data(:,2);
      if (mod(nfigure,3) == 0)
         title('GPS')
     end
-   figure (nfigure+3)
-   plot(B,sigma,'o')
-  ylim([besk 70])
-   ylabel('3*\sigma');
-   xlabel('B, gr')
+%    figure (nfigure+3)
+%    plot(B,sigma,'o')
+   
+%    ylabel('3*\sigma');
+%    xlabel('B, gr')
+    histogram (sigma);
+  %       ylim([0 3500])
+      xlim([novsb 20])
+%     axis auto
+      set(gca, 'XTick',novsb:1:20)
+    xlabel('3*\sigma')
+    ylabel('кол-во экспериментов');
    hold on;
    grid on;
     if (mod(nfigure,1) == 0)

@@ -4,6 +4,7 @@
 #include <string>
 #include <stdio.h>
 #include <fstream>
+
 #include <wx/gdicmn.h>
 #include <dataMain.h>
 #include "timeCalc.h"
@@ -13,6 +14,8 @@
 #include <calcGalileo.h>
 
 #include "geoc2geod.h"
+
+#include "getENU.h"
 
 using namespace std;
 //(*InternalHeaders(GridDialog)
@@ -62,11 +65,11 @@ GridDialog::GridDialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,const w
   };
   RadioBox1 = new wxRadioBox(SashWindow1, ID_RADIOBOX1, _("Шаг"), wxPoint(36,51), wxSize(79,86), 3, __wxRadioBoxChoices_1, 1, 0, wxDefaultValidator, _T("ID_RADIOBOX1"));
   StaticText2 = new wxStaticText(SashWindow1, ID_STATICTEXT2, _("Значение сетки"), wxPoint(144,101), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
-  Button1 = new wxButton(SashWindow1, ID_BUTTON1, _("Получения сетки\n зн-ий"), wxPoint(150,153), wxSize(94,33), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+  Button1 = new wxButton(SashWindow1, ID_BUTTON1, _("Получения сетки\n зн-ий"), wxPoint(142,153), wxSize(112,36), 0, wxDefaultValidator, _T("ID_BUTTON1"));
   Gauge1 = new wxGauge(SashWindow1, ID_GAUGE1, 100, wxPoint(29,299), wxSize(-1,-1), 0, wxDefaultValidator, _T("ID_GAUGE1"));
   TextCtrl2 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL2, wxEmptyString, wxPoint(28,224), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
   StaticText4 = new wxStaticText(SashWindow1, ID_STATICTEXT4, _("Кол-во итераций"), wxPoint(29,207), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
-  Button2 = new wxButton(SashWindow1, ID_BUTTON2, _("Label"), wxPoint(31,251), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON2"));
+  Button2 = new wxButton(SashWindow1, ID_BUTTON2, _("Получения зн-ий"), wxPoint(31,251), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON2"));
   SashWindow1->SetSashVisible(wxSASH_TOP,    true);
   SashWindow1->SetSashVisible(wxSASH_BOTTOM, true);
   SashWindow1->SetSashVisible(wxSASH_LEFT,   true);
@@ -76,7 +79,7 @@ GridDialog::GridDialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,const w
   Connect(ID_RADIOBOX1,wxEVT_COMMAND_RADIOBOX_SELECTED,(wxObjectEventFunction)&GridDialog::OnRadioBox1Select);
   Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&GridDialog::OnButton1Click2);
   Connect(ID_TEXTCTRL2,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&GridDialog::OnTextCtrl2Text);
-  Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&GridDialog::OnButton2Click1);
+  Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&GridDialog::OnButton2Click2);
   //*)
 
 }
@@ -224,6 +227,7 @@ void GridDialog::OnButton1Click2(wxCommandEvent& event)
     fgl.open("test\\Glonass_L.txt");
     ofstream fgal;
     fgal.open("test\\Galileo_L.txt");
+
     for (int i=0; i<=(endd-gData.L); i+=grid)
     {
       Gauge1->SetValue(i);
@@ -231,6 +235,8 @@ void GridDialog::OnButton1Click2(wxCommandEvent& event)
                 (gData.B*M_PI/180.0),(l*M_PI/180.0),gData.H);
                 //geoc2geod(sko[0], sko[1], sko[2],Bg,Lg,Hg);
       fgps<<l<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<Bg<<"\t"<<Lg<<"\t"<<Hg<<"\n";
+
+
       calccGlonass( file2, sko, calcGln,(gData.B*M_PI/180.0),(l*M_PI/180.0),gData.H);
       fgl<<l<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\n";
       calccGalileo(file3,
@@ -273,8 +279,10 @@ void GridDialog::OnTextCtrl2Text(wxCommandEvent& event)
 {
 }
 
-void GridDialog::OnButton2Click1(wxCommandEvent& event)
+void GridDialog::OnButton2Click2(wxCommandEvent& event)
 {
+
+
 
   int iter;
   double iteration;
@@ -308,6 +316,17 @@ void GridDialog::OnButton2Click1(wxCommandEvent& event)
   ftimes.open("test\\times_rand.log");
   ofstream fcoord;
   fcoord.open("test\\coord_rand.log");
+  //
+  fstream clear_file("test\\sumvsb.txt", ios::out);
+  clear_file.close();
+  fstream clear_file2("test\\sumvsbGl.txt", ios::out);
+  clear_file2.close();
+
+  ofstream fTEST;
+    fTEST.open("test\\test.txt");
+    double COORDD[3];
+  //
+
   double H,B,L;
   double sko[5];
   for (int i = 0; i<=iter; i++)
@@ -335,6 +354,8 @@ void GridDialog::OnButton2Click1(wxCommandEvent& event)
     calccGPS( file, sko, calc,
               (B*M_PI/180.0),(L*M_PI/180.0),H);
     geoc2geod(sko[0], sko[1], sko[2],&Bg,&Lg,&Hg);
+    getENU(sko[0], sko[1], sko[2],Bg,Lg,COORDD);
+    fTEST << COORDD[0] <<"\t"<< COORDD[1] <<"\t"<<COORDD[2]<<"\n";
     fgps<<H<<"\t"<<L<<"\t"<<B<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\t"<<Bg<<"\t"<<Lg<<"\t"<<Hg<<"\n";
     calccGlonass( file2, sko, calcGln,(B*M_PI/180.0),(L*M_PI/180.0),H);
     geoc2geod(sko[0], sko[1], sko[2],&Bg,&Lg,&Hg);
@@ -347,6 +368,7 @@ void GridDialog::OnButton2Click1(wxCommandEvent& event)
    geoc2geod(sko[0], sko[1], sko[2],&Bg,&Lg,&Hg);
    fgal<<H<<"\t"<<L<<"\t"<<B<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\t"<<Bg<<"\t"<<Lg<<"\t"<<Hg<<"\n";
   }
+  fTEST.close();
   fgps.close();
   fgl.close();
   fgal.close();
