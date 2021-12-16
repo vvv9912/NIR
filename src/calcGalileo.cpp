@@ -50,7 +50,7 @@ void calccGalileo(const char* file,
   //  f<<" month_down ="<<month_down<<endl;
   //  f<<" year_down="<<year_down<<endl;
   //  f<< "week = " <<calcGalileo.week<<endl;
-    int weekGalileo = calcGalileo.week % 4;
+    //int weekGalileo = calcGalileo.week % 4;
 //    f<< " file = "<< file<<endl;
    // f<< "file1 = "<< File1 <<endl;
     //файл с альманахом скачен

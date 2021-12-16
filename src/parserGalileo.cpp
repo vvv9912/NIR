@@ -101,6 +101,7 @@ void parserstruct(char a[100], double *d)
 {
   char z[100] = {0} ;
   int ch= 0;
+  //for (int k = 0; k< (sizeof(&a)); k++)//зачем я умножал на 4
   for (int k = 0; k< (sizeof(a))*4; k++)
   {
     if ( a[k] == '>'  )

@@ -26,7 +26,7 @@ Coordinates ephemerids(double toe,
                               double E,
                               double I,
                               double Om0,
-                              double time_week )
+                              double time_week ) //неделя не нужна
 {//toe - время на которое нуэно расчитать;
  Coordinates Coordinates;
 
@@ -71,9 +71,9 @@ double ykk = rk*sin(uk);
 double OMEGA = OMEGA_REF;
 double OMEGAk = Omega0n+(OMEGA-OMEGA_e)*tk-OMEGA_e*t_sec_almanax;
 double ik = i0n;
-double xk = xkk*cos(OMEGAk)-ykk*cos(ik)*sin(OMEGAk);
-double yk = xkk*sin(OMEGAk)+ykk*cos(ik)*cos(OMEGAk);
-double zk = ykk*sin(ik);
+//double xk = xkk*cos(OMEGAk)-ykk*cos(ik)*sin(OMEGAk);
+//double yk = xkk*sin(OMEGAk)+ykk*cos(ik)*cos(OMEGAk);
+//double zk = ykk*sin(ik);
 
 Coordinates.X =  xkk*cos(OMEGAk)-ykk*cos(ik)*sin(OMEGAk);
 Coordinates.Y = xkk*sin(OMEGAk)+ykk*cos(ik)*cos(OMEGAk);

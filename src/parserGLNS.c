@@ -96,9 +96,9 @@ fscanf(fd, "%u", &(almanax_GLNS[i-1].date));//4 - число
 fscanf(fd, "%u", &(almanax_GLNS[i-1].month));//5 - месяц
 fscanf(fd, "%u", &(almanax_GLNS[i-1].year));//6 - год
 fscanf(fd, "%lf", &(almanax_GLNS[i-1].tLA));//7 - время прохождения первого узла, на которое все дано, с
-fscanf(fd, "%lf", (int *)dummy);//8 - поправка ГЛОНАСС-UTC, с
-fscanf(fd, "%lf", (int *)dummy);//9- поправка GPS-ГЛОНАСС, с
-fscanf(fd, "%lf", (int *)dummy);//10 - поправка времени КА ГЛОНАСС относительно системного времени, с
+fscanf(fd, "%lf", (double *)dummy);//8 - поправка ГЛОНАСС-UTC, с
+fscanf(fd, "%lf", (double *)dummy);//9- поправка GPS-ГЛОНАСС, с
+fscanf(fd, "%lf", (double *)dummy);//10 - поправка времени КА ГЛОНАСС относительно системного времени, с
 
 
 

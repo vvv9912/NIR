@@ -97,8 +97,8 @@ fscanf(fd, "%u", (int *)dummy);//5 - число
 fscanf(fd, "%u", (int *)dummy);//6 - месяц
 fscanf(fd, "%u", (int *)dummy);//7 - год
 fscanf(fd, "%lf", &( almanax_GPS[i-1].t_almanax));//8 - время альманаха, с
-fscanf(fd, "%lf", (int *)dummy);//9 - поправка времени КА GPS относительно системного времени, с
-fscanf(fd, "%lf", (int *)dummy);//10- скорость поправки времени КА GPS относительно системного времени, с/с
+fscanf(fd, "%lf", (double *)dummy);//9 - поправка времени КА GPS относительно системного времени, с
+fscanf(fd, "%lf", (double *)dummy);//10- скорость поправки времени КА GPS относительно системного времени, с/с
 fscanf(fd, "%lf", &( almanax_GPS[i-1].vOm0));//11- Om0 - скорость долготы узла, полуциклы/c
 
 //Строка 3

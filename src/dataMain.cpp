@@ -217,39 +217,6 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
 
 void dataDialog::OnButton1Click3(wxCommandEvent& event)
 {TimePickerCtrl1->GetTime(&gData.hour, &gData.minutes, &gData.sec);
- /*   int hour_predsk;
-  int min_predsk;
-  int sec_predsk;
-  TimePickerCtrl1->GetTime(&hour_predsk, &min_predsk, &sec_predsk);
-  gData.hour = hour_predsk;
-  gData.minutes= min_predsk;
-  gData.sec = sec_predsk;/*int year_predsk;
-  int month_predsk;
-  int day_predsk;
-  wxDateTime T;
-  T = DatePickerCtrl1->GetValue();
-  day_predsk = T.GetDay(); //дл€ скачивани€ файла
-  month_predsk = T.GetMonth()+1; // тк 1 мес€ц равен 0;
-  year_predsk = T.GetYear();
-
-  aa.day= day_predsk;
-  aa.month = month_predsk;
-  aa.year = year_predsk;*/
-  //g.Create(parent, wxID_ANY, _("Grid"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
-/*	Create(parent, wxID_ANY, _("Grid"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
-	SetClientSize(wxSize(679,551));
-	SetMinSize(wxSize(-1,-1));
-	SetMaxSize(wxSize(-1,-1));
-	SashWindow1 = new wxSashWindow(this, ID_SASHWINDOW1, wxPoint(80,112), wxSize(288,328), wxSW_3D|wxCLIP_CHILDREN, _T("ID_SASHWINDOW1"));
-	Button1 = new wxButton(SashWindow1, ID_BUTTON1, _("Label"), wxPoint(197,47), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
-	SashWindow1->SetSashVisible(wxSASH_TOP,    true);
-	SashWindow1->SetSashVisible(wxSASH_BOTTOM, true);
-	SashWindow1->SetSashVisible(wxSASH_LEFT,   true);
-	SashWindow1->SetSashVisible(wxSASH_RIGHT,  true);
-	Center();
-
-	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&GridDialog::OnButton1Click);
-	//*)*/
 GridDialog *g;
 g = new GridDialog(this, wxID_ANY, wxDefaultPosition,wxDefaultSize);
 g->Show(true);
@@ -486,7 +453,7 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
   TextCtrlH->GetValue().ToDouble(&h);
   TextCtrlB->GetValue().ToDouble(&Bgrad);
   TextCtrlL->GetValue().ToDouble(&Lgrad);
-  double PI = M_PI;
+//  double PI = M_PI;
   double B; //Latitude
   double L; //Longitude
   B=Bgrad*M_PI/180.0;
@@ -510,8 +477,8 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
   Coord_user[1]= (N+h)*cos(B)*sin(L);
   Coord_user[2]= ((1-e*e)*N+h)*sin(B);
 
-  double Coord_sput[3];
-  double alpha;
+//  double Coord_sput[3];
+//  double alpha;
 //передаем в класс определени€ времени
 //“.е получили врем€ на которое необходимо предсказать
 //ƒалее "найдем" файл от которого будет высчитывать само предсказание
@@ -547,9 +514,9 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
   int yeartoday = 1900+ltm->tm_year;
   int monthtoday = 1 + ltm->tm_mon;
   int daytoday = ltm->tm_mday;
-  int hourrtoday = ltm->tm_hour;
-  int mintoday = 1 + ltm->tm_min;
-  int sectoday = 1 + ltm->tm_sec;
+//  int hourrtoday = ltm->tm_hour;
+//  int mintoday = 1 + ltm->tm_min;
+//  int sectoday = 1 + ltm->tm_sec;
 // ≈сли предсказание  в прошлом, то год ии мес€ц предсказани€ остетс€ тот же, но день - прошлый
   day_down = day_predsk-1;
   year_down = year_predsk;

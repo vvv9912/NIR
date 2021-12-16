@@ -49,7 +49,7 @@ void calccGlonass(const char* file,
   //  //! добавить если файла нет, искать ближайший!
    // f<< "const char* File1"<< File1<<endl;
   //  f<< " file"<< file<<endl;
-    int max_sats = parseGLNS(file);
+    int max_sats = parseGLNS(file); //max_sats не нужен, только обрабочтик
 
 
     int numberSput = 24;
