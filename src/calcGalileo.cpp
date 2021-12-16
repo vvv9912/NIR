@@ -115,7 +115,7 @@ void calccGalileo(const char* file,
       if ((vsb[k]) == 1)
       {
 
-        Dn(i,i) = SISerr_Gal[k-1].SISRE+ (SISerr_Gal[k-1].M0_SRE/3.0;
+        Dn(i,i) = SISerr_Gal[k-1].SISRE+ (SISerr_Gal[k-1].M0_SRE/3.0);
         i++;
       }
     }

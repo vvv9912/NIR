@@ -280,57 +280,13 @@ void dataDialog::OnSashWindow1SashDragged(wxSashEvent& event)
 
 }
 
-/*
-void parseDate(const char* File1, const char* file,
-               string text5,string text2,string text3,
-               string text4, string textYear)
-{
-  // Зависиомть от системы, на входе система - на выходе название файла с расширением.
-  string text1;
-  string text0;
-  //gps
-  int z =type;
-  text1 = text5+text2+text3+text4;
-  text0 =   "/MCC/ALMANAC/"+ textYear +"/"+text1;
-  switch (z)
-  {
-  case 0:
-    text1 +=".agp"s;
-
-    // f<< " day_down="<< day_down<<endl;
-    //  f<< " text4="<< text4<<endl;
-    //  const char* File1 ;
-    //  const char* file ;
-    File1 = text0.c_str();//"/MCC/ALMANAC/2015/MCCJ_150307.agp"//перевод строки с строку Си
-    file = text1.c_str();
-    //! добавить если файла нет, искать ближайший!
-//   f<< "const char* File1"<< File1<<endl;
-//   f<< " file"<< file<<endl;
-    break;
-  case 1:
-    //glonass
-    text1 += ".agl"s;
-
-    //  f<< " day_down="<< day_down<<endl;
-    //  f<< " text4="<< text4<<endl;
-    //const char* File1 ;
-    //  const char* file ;
-    File1 = text0.c_str();//"/MCC/ALMANAC/2015/MCCJ_150307.agl"//перевод строки с строку Си
-    file = text1.c_str();
-    //  f<< "const char* File1"<< File1<<endl;
-//   f<< " file"<< file<<endl;
-    //  break;
-  }
-  text0 =   "/MCC/ALMANAC/"+ textYear +"/"+text1;
-}
-*/
 void dataDialog::OnButton2Click(wxCommandEvent& event)
 {
 
   wxString s;
   const char* File1 ;
   const char* file ;
-  /*
+  /* //алгоритм до введения функции 4 х обработчиков файлоВ для gridDialog
   switch (typeSys())
   {
   case 0:
