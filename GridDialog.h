@@ -76,6 +76,7 @@ class GridDialog: public wxDialog
 		void OnButton2Click(wxCommandEvent& event);
 		void OnButton2Click1(wxCommandEvent& event);
 		void OnButton2Click2(wxCommandEvent& event);
+		void OnButton2Click3(wxCommandEvent& event);
 		//*)
 
 		DECLARE_EVENT_TABLE()

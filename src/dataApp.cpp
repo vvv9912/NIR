@@ -10,7 +10,7 @@
 #include "include/dataApp.h"
 
 //(*AppHeaders
-#include "include/dataMain.h"
+#include "dataMain.h"
 #include <wx/image.h>
 //*)
 

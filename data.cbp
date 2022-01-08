@@ -78,6 +78,7 @@
 		<Unit filename="include/FTPdownl.h" />
 		<Unit filename="include/GridDialog.h" />
 		<Unit filename="include/angle.h" />
+		<Unit filename="include/calcBeidou.h" />
 		<Unit filename="include/calcGPS.h" />
 		<Unit filename="include/calcGalileo.h" />
 		<Unit filename="include/calcGlonass.h" />
@@ -90,6 +91,8 @@
 		<Unit filename="include/geoc2geod.h" />
 		<Unit filename="include/getENU.h" />
 		<Unit filename="include/parser.h" />
+		<Unit filename="include/parserBeidou.h" />
+		<Unit filename="include/parserEphB.h" />
 		<Unit filename="include/parserEphGAL.h" />
 		<Unit filename="include/parserEphGLNS.h" />
 		<Unit filename="include/parserEphGPS.h" />
@@ -105,6 +108,7 @@
 		<Unit filename="src/FTPdownl.cpp" />
 		<Unit filename="src/GridDialog.cpp" />
 		<Unit filename="src/angle.cpp" />
+		<Unit filename="src/calcBeidou.cpp" />
 		<Unit filename="src/calcGPS.cpp" />
 		<Unit filename="src/calcGalileo.cpp" />
 		<Unit filename="src/calcGlonass.cpp" />
@@ -117,6 +121,10 @@
 		<Unit filename="src/geoc2geod.cpp" />
 		<Unit filename="src/getENU.cpp" />
 		<Unit filename="src/parser.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/parserBeidou.cpp" />
+		<Unit filename="src/parserEphB.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/parserEphGAL.c">

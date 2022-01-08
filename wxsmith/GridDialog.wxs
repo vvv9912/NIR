@@ -12,18 +12,18 @@
 			<size>280,328</size>
 			<style>wxSW_3D</style>
 			<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="TextCtrl1" member="yes">
-				<pos>144,121</pos>
+				<pos>15,161</pos>
 			</object>
 			<object class="wxStaticText" name="ID_STATICTEXT3" variable="StaticText3" member="yes">
 				<label></label>
 				<pos>176,188</pos>
 			</object>
 			<object class="wxTextCtrl" name="ID_TEXTCTRL7" variable="TextCtrl7" member="yes">
-				<pos>144,71</pos>
+				<pos>14,120</pos>
 			</object>
 			<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
 				<label>Конечное значение</label>
-				<pos>144,51</pos>
+				<pos>19,104</pos>
 			</object>
 			<object class="wxRadioBox" name="ID_RADIOBOX1" variable="RadioBox1" member="yes">
 				<label>Шаг</label>
@@ -33,35 +33,32 @@
 					<item>Долготе</item>
 				</content>
 				<default>3</default>
-				<pos>36,51</pos>
+				<pos>14,10</pos>
 				<size>79,86</size>
-				<handler function="OnRadioBox1Select" entry="EVT_RADIOBOX" />
 			</object>
 			<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
 				<label>Значение сетки</label>
-				<pos>144,101</pos>
+				<pos>23,144</pos>
 			</object>
 			<object class="wxButton" name="ID_BUTTON1" variable="Button1" member="yes">
-				<label>Получения сетки&#x0A; зн-ий</label>
-				<pos>142,153</pos>
+				<label>Получения сетки&#x0A; значений</label>
+				<pos>15,192</pos>
 				<size>112,36</size>
-				<handler function="OnButton1Click2" entry="EVT_BUTTON" />
 			</object>
 			<object class="wxGauge" name="ID_GAUGE1" variable="Gauge1" member="yes">
 				<pos>29,299</pos>
-				<size>-1,-1</size>
+				<size>223,28</size>
 			</object>
 			<object class="wxTextCtrl" name="ID_TEXTCTRL2" variable="TextCtrl2" member="yes">
-				<pos>28,224</pos>
-				<handler function="OnTextCtrl2Text" entry="EVT_TEXT" />
+				<pos>167,168</pos>
 			</object>
 			<object class="wxStaticText" name="ID_STATICTEXT4" variable="StaticText4" member="yes">
 				<label>Кол-во итераций</label>
-				<pos>29,207</pos>
+				<pos>172,146</pos>
 			</object>
 			<object class="wxButton" name="ID_BUTTON2" variable="Button2" member="yes">
-				<label>Получения зн-ий</label>
-				<pos>31,251</pos>
+				<label>Получения сетки &#x0A; со случайными &#x0A; значениями</label>
+				<pos>165,194</pos>
 				<handler function="OnButton2Click2" entry="EVT_BUTTON" />
 			</object>
 		</object>

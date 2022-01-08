@@ -7,7 +7,7 @@
  * License:
  **************************************************************/
 
-#include "include/dataMain.h"
+#include "dataMain.h"
 #include "include/FTPdownl.h"
 #include "include/parser.h"
 #include "include/parserGPS.H"
@@ -17,6 +17,11 @@
 #include "include/parserGLNS.H"
 #include "include/ephemeridsGLNS.h"
 #include "include/timeCalc.h"
+
+#include "include/parserBeidou.h"
+#include "include/parserEphB.h"
+#include "include/calcBeidou.h"
+
 #include <wx/msgdlg.h>
 #include <windows.h>
 #include <wininet.h>
@@ -24,7 +29,7 @@
 #include <urlmon.h> //winApi htttp#
 #include "include/parserGalileo.h"
 
-#include "include/GridDialog.h"
+#include "GridDialog.h"
 
 #include "include/calcGPS.h"
 #include <include/calcGlonass.h>
@@ -381,7 +386,7 @@ void dataDialog::OnButton2Click(wxCommandEvent& event)
     wxMessageBox(_("Error"), _("Error"));
     return;
   }
-
+     parseEph_B(file);
   }
 
   if ((Choice1->GetString(Choice1->GetSelection()))== "QZSS"s)
@@ -558,7 +563,7 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
 //
 //преобразование в слово для скачивания
   string textYear = to_string(year_down); //2021
-  string text5 = "MCCJ_";
+  string text5 = "MCCT_";
   string text2 = to_string(year_down -2000); //year itog текущий -1
   string text3 ;
   if (month_down<10)
@@ -640,10 +645,10 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
       timeCalc calcGalileo(day_down, month_down, year_down, 0,0,0,0);
       const char* file; // для файла с алм
     downGalileo( year_down, &day_down, &text0,
-       &text1,
-       text2,
-        text3,
-        text4);
+        &text1,
+         text2,
+         text3,
+         text4);
       file = (text1).c_str(); //ссылка на файл
       /*  if (day_down <= 0)
         {
@@ -657,7 +662,14 @@ void dataDialog::OnButton1Click1(wxCommandEvent& event)
                    B, L,  h );
 
   }
-
+ else if ((Choice1->GetString(Choice1->GetSelection()))== "Beidou"s)
+  {
+  timeCalc calc(day_predsk,month_predsk,year_predsk,hour_predsk,min_predsk,sec_predsk,00);
+ string text4 = "alm_beidou.txt";//gal
+  const char* file4;
+  file4 = (text4).c_str();
+ calccBeidou(file4, skoo, calc,B, L,  h);
+  }
 
   //int k =   Downloadhttp("http://www.gsc-europa.eu/sites/default/files/sites/all/files/2021-09-24.xml",
   //"file1.txt"); //_ _ _

@@ -1,4 +1,4 @@
-#include "include/GridDialog.h"
+#include "GridDialog.h"
 #include <array>
 #include <iostream>
 #include <string>
@@ -6,17 +6,20 @@
 #include <fstream>
 
 #include <wx/gdicmn.h>
-#include <include/dataMain.h>
+#include <dataMain.h>
 #include "include/timeCalc.h"
 #include "include/calcGPS.h"
 #include <include/calcGlonass.h>
 #include <include/downlGalileo.h>
 #include <include/calcGalileo.h>
+#include <include/calcBeidou.h>
 
 #include "include/geoc2geod.h"
 
 #include "include/getENU.h"
 #include <thread>
+#include <wx/window.h>
+#include <mutex>
 //#include <string>
 //#include <iostream>
 //thread
@@ -57,32 +60,29 @@ GridDialog::GridDialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,const w
   SetMinSize(wxSize(-1,-1));
   SetMaxSize(wxSize(-1,-1));
   SashWindow1 = new wxSashWindow(this, ID_SASHWINDOW1, wxPoint(0,0), wxSize(280,328), wxSW_3D, _T("ID_SASHWINDOW1"));
-  TextCtrl1 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL1, wxEmptyString, wxPoint(144,121), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
+  TextCtrl1 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL1, wxEmptyString, wxPoint(15,161), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
   StaticText3 = new wxStaticText(SashWindow1, ID_STATICTEXT3, wxEmptyString, wxPoint(176,188), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
-  TextCtrl7 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL7, wxEmptyString, wxPoint(144,71), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL7"));
-  StaticText1 = new wxStaticText(SashWindow1, ID_STATICTEXT1, _("Конечное значение"), wxPoint(144,51), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
+  TextCtrl7 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL7, wxEmptyString, wxPoint(14,120), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL7"));
+  StaticText1 = new wxStaticText(SashWindow1, ID_STATICTEXT1, _("Конечное значение"), wxPoint(19,104), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
   wxString __wxRadioBoxChoices_1[3] =
   {
   	_("Высоте"),
   	_("Широте"),
   	_("Долготе")
   };
-  RadioBox1 = new wxRadioBox(SashWindow1, ID_RADIOBOX1, _("Шаг"), wxPoint(36,51), wxSize(79,86), 3, __wxRadioBoxChoices_1, 1, 0, wxDefaultValidator, _T("ID_RADIOBOX1"));
-  StaticText2 = new wxStaticText(SashWindow1, ID_STATICTEXT2, _("Значение сетки"), wxPoint(144,101), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
-  Button1 = new wxButton(SashWindow1, ID_BUTTON1, _("Получения сетки\n зн-ий"), wxPoint(142,153), wxSize(112,36), 0, wxDefaultValidator, _T("ID_BUTTON1"));
-  Gauge1 = new wxGauge(SashWindow1, ID_GAUGE1, 100, wxPoint(29,299), wxSize(-1,-1), 0, wxDefaultValidator, _T("ID_GAUGE1"));
-  TextCtrl2 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL2, wxEmptyString, wxPoint(28,224), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
-  StaticText4 = new wxStaticText(SashWindow1, ID_STATICTEXT4, _("Кол-во итераций"), wxPoint(29,207), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
-  Button2 = new wxButton(SashWindow1, ID_BUTTON2, _("Получения зн-ий"), wxPoint(31,251), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON2"));
+  RadioBox1 = new wxRadioBox(SashWindow1, ID_RADIOBOX1, _("Шаг"), wxPoint(14,10), wxSize(79,86), 3, __wxRadioBoxChoices_1, 1, 0, wxDefaultValidator, _T("ID_RADIOBOX1"));
+  StaticText2 = new wxStaticText(SashWindow1, ID_STATICTEXT2, _("Значение сетки"), wxPoint(23,144), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
+  Button1 = new wxButton(SashWindow1, ID_BUTTON1, _("Получения сетки\n значений"), wxPoint(15,192), wxSize(112,36), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+  Gauge1 = new wxGauge(SashWindow1, ID_GAUGE1, 100, wxPoint(29,299), wxSize(223,28), 0, wxDefaultValidator, _T("ID_GAUGE1"));
+  TextCtrl2 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL2, wxEmptyString, wxPoint(167,168), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
+  StaticText4 = new wxStaticText(SashWindow1, ID_STATICTEXT4, _("Кол-во итераций"), wxPoint(172,146), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
+  Button2 = new wxButton(SashWindow1, ID_BUTTON2, _("Получения сетки \n со случайными \n значениями"), wxPoint(165,194), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON2"));
   SashWindow1->SetSashVisible(wxSASH_TOP,    true);
   SashWindow1->SetSashVisible(wxSASH_BOTTOM, true);
   SashWindow1->SetSashVisible(wxSASH_LEFT,   true);
   SashWindow1->SetSashVisible(wxSASH_RIGHT,  true);
   Center();
 
-  Connect(ID_RADIOBOX1,wxEVT_COMMAND_RADIOBOX_SELECTED,(wxObjectEventFunction)&GridDialog::OnRadioBox1Select);
-  Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&GridDialog::OnButton1Click2);
-  Connect(ID_TEXTCTRL2,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&GridDialog::OnTextCtrl2Text);
   Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&GridDialog::OnButton2Click2);
   //*)
 
@@ -106,6 +106,7 @@ void GridDialog::OnRadioButton1Select(wxCommandEvent& event)
 void GridDialog::OnRadioBox1Select(wxCommandEvent& event)
 {
 }
+
 void GridDialog::OnButton1Click2(wxCommandEvent& event)
 {
   ofstream f;
@@ -382,16 +383,19 @@ void testf(int iter, int* n_iter)
   int hour_predsk;
   int min_predsk;
   int sec_predsk;
-  string text1="MCCJ_211024.agp";//gps
+  string text1="MCCJ_211226.agp";//gps
   const char* file; // для файла с алм
   file = (text1).c_str();
   timeCalc calcGalileo(gData.day, gData.month, gData.year, 0,0,0,0);
-  string text2 = "MCCJ_211108.agl";//gl
+  string text2 = "MCCJ_211226.agl";//gl
   const char* file2; // для файла с алм
   file2 = (text2).c_str();
   const char* file3;
-  string text3 = "2021-10-22.xml";//gal
+  string text3 = "2021-12-24.xml";//gal
   file3 = (text3).c_str();
+  string text4 = "alm_beidou.txt";//gal
+  const char* file4;
+  file4 = (text4).c_str();
   double Bg,Lg,Hg;
 
  // Gauge1->SetRange(iter);
@@ -401,21 +405,23 @@ void testf(int iter, int* n_iter)
   fgl.open("test\\Glonass_rand.log");
   ofstream fgal;
   fgal.open("test\\Galileo_rand.log");
-  ofstream ftimes;
-  ftimes.open("test\\times_rand.log");
-  ofstream fcoord;
-  fcoord.open("test\\coord_rand.log");
+    ofstream fbeidou;
+  fbeidou.open("test\\Beidou_rand.log");
+ // ofstream ftimes;
+ // ftimes.open("test\\times_rand.log");
+  //ofstream fcoord;
+  //fcoord.open("test\\coord_rand.log");
   //
-  fstream clear_file("test\\sumvsb.txt", ios::out);
-  clear_file.close();
-  fstream clear_file2("test\\sumvsbGl.txt", ios::out);
-  clear_file2.close();
+ // fstream clear_file("test\\sumvsb.txt", ios::out);
+ // clear_file.close();
+ // fstream clear_file2("test\\sumvsbGl.txt", ios::out);
+ // clear_file2.close();
 
-  ofstream fTEST;
-    fTEST.open("test\\test.txt");
+ // ofstream fTEST;
+  //  fTEST.open("test\\test.txt");
     double COORDD[3];
   //
-   fTEST << "Xecef" <<"\t"<< "Yecef" <<"\t"<< "Zecef" <<"\t"<< "B" <<"\t"<< "L" <<"\t"<<"H" <<"\t"<<"Xecu" <<"\t"<< "Yecu" <<"\t"<< "Zecu" <<"\n";
+  // fTEST << "Xecef" <<"\t"<< "Yecef" <<"\t"<< "Zecef" <<"\t"<< "B" <<"\t"<< "L" <<"\t"<<"H" <<"\t"<<"Xecu" <<"\t"<< "Yecu" <<"\t"<< "Zecu" <<"\n";
   double H,B,L;
   double sko[5];
   for (int i = 0; i<=iter; i++)
@@ -424,7 +430,7 @@ void testf(int iter, int* n_iter)
    // Gauge1->SetValue(i);
     month_down = rand() %12+1;
     day_down = rand()%30+1;
-    hour_predsk = rand()%24;
+    hour_predsk = rand()%23;
     min_predsk = rand()%60;
     sec_predsk = rand()%60;
     B = rand()%180;
@@ -433,40 +439,97 @@ void testf(int iter, int* n_iter)
     L = rand()%180;
     if (L>90)
      L=90-L;
-    H = rand()%1000;
+    H = rand()%10000;
 
 
-    fcoord<<H<<"\t"<<B<<"\t"<<L<<"\n";
+    //fcoord<<H<<"\t"<<B<<"\t"<<L<<"\n";
     timeCalc calc(day_down,month_down,year_down,hour_predsk,min_predsk,sec_predsk,00);
     timeCalc calcGln(day_down,month_down,year_down,hour_predsk,min_predsk,sec_predsk,00);
     timeCalc calcGalileo(day_down,month_down,year_down, 0,0,0,0);
-    ftimes<<day_down<<"\t"<<month_down<<"\t"<<year_down<<"\t"<<hour_predsk<<"\t"<<min_predsk<<"\t"<<sec_predsk<<"\n";
+
+
+   // ftimes<<day_down<<"\t"<<month_down<<"\t"<<year_down<<"\t"<<hour_predsk<<"\t"<<min_predsk<<"\t"<<sec_predsk<<"\n";
 
     calccGPS( file, sko, calc,
               (B*M_PI/180.0),(L*M_PI/180.0),H);
     geoc2geod(sko[0], sko[1], sko[2],&Bg,&Lg,&Hg);
-    getENU(sko[0], sko[1], sko[2],Bg,Lg,COORDD);
+    if (sko[0] == -10.0 && sko[1] == -10.0)
+    {
+      COORDD[0] = -10;
+      COORDD[1] = -10;
+      COORDD[2] = -10;
 
-    fTEST<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<B<<"\t"<<L<<"\t"<<H<<"\t"<<COORDD[0] <<"\t"<< COORDD[1] <<"\t"<<COORDD[2]<<"\n";
-    fgps<<H<<"\t"<<L<<"\t"<<B<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\t"<<Bg<<"\t"<<Lg<<"\t"<<Hg<<"\n";
+    }
+    else{
+      getENU(sko[0], sko[1], sko[2],Bg,Lg,COORDD);
+    }
+
+ //   fTEST<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<B<<"\t"<<L<<"\t"<<H<<"\t"<<COORDD[0] <<"\t"<< COORDD[1] <<"\t"<<COORDD[2]<<"\n";
+    fgps<<H<<"\t"<<L<<"\t"<<B<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\t"<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\t"<<Bg<<"\t"<<Lg<<"\t"<<Hg<<"\n";
+  //  fgps<<H<<"\t"<<L<<"\t"<<B<<"\t"<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\n";
+
     calccGlonass( file2, sko, calcGln,(B*M_PI/180.0),(L*M_PI/180.0),H);
     geoc2geod(sko[0], sko[1], sko[2],&Bg,&Lg,&Hg);
-    fgl<<H<<"\t"<<L<<"\t"<<B<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\t"<<Bg<<"\t"<<Lg<<"\t"<<Hg<<"\n";
+      if (sko[0] == -10.0 && sko[1] == -10.0)
+    {
+      COORDD[0] = -10;
+      COORDD[1] = -10;
+      COORDD[2] = -10;
+
+    }
+    else{
+      getENU(sko[0], sko[1], sko[2],Bg,Lg,COORDD);
+    }
+    fgl<<H<<"\t"<<L<<"\t"<<B<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\t"<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\t"<<Bg<<"\t"<<Lg<<"\t"<<Hg<<"\n";
+ //  fgl<<H<<"\t"<<L<<"\t"<<B<<"\t"<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\n";
     calccGalileo(file3,
                sko,
                 calc,
                 calcGalileo,
                 (B*M_PI/180.0),(L*M_PI/180.0),H);
    geoc2geod(sko[0], sko[1], sko[2],&Bg,&Lg,&Hg);
-   fgal<<H<<"\t"<<L<<"\t"<<B<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\t"<<Bg<<"\t"<<Lg<<"\t"<<Hg<<"\n";
+     if (sko[0] == -10.0 && sko[1] == -10.0)
+    {
+      COORDD[0] = -10;
+      COORDD[1] = -10;
+      COORDD[2] = -10;
+
+    }
+    else{
+      getENU(sko[0], sko[1], sko[2],Bg,Lg,COORDD);
+    }
+  fgal<<H<<"\t"<<L<<"\t"<<B<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\t"<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\t"<<Bg<<"\t"<<Lg<<"\t"<<Hg<<"\n";
+ // fgal<<H<<"\t"<<L<<"\t"<<B<<"\t"<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\n";
+
+ // ftimes<<day_down<<"\t"<<month_down<<"\t"<<year_down<<"\t"<<hour_predsk<<"\t"<<min_predsk<<"\t"<<sec_predsk<<"\n";
+ //ftimes<<H<<"\t"<<"B:"<<B<<"\t"<<"L:"<<L<<endl;
+  calccBeidou(file4, sko, calc,
+              (B*M_PI/180.0),(L*M_PI/180.0),H);
+  geoc2geod(sko[0], sko[1], sko[2],&Bg,&Lg,&Hg);
+    if (sko[0] == -10.0 && sko[1] == -10.0)
+    {
+      COORDD[0] = -10;
+      COORDD[1] = -10;
+      COORDD[2] = -10;
+
+    }
+    else{
+      getENU(sko[0], sko[1], sko[2],Bg,Lg,COORDD);
+    }
+ //fbeidou<<H<<"\t"<<L<<"\t"<<B<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\t"<<"\n";
+ //   fTEST<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<B<<"\t"<<L<<"\t"<<H<<"\t"<<COORDD[0] <<"\t"<< COORDD[1] <<"\t"<<COORDD[2]<<"\n";
+   fbeidou<<H<<"\t"<<L<<"\t"<<B<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\t"<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\t"<<Bg<<"\t"<<Lg<<"\t"<<Hg<<"\n";
+
   }
-  fTEST.close();
+ // fTEST.close();
   fgps.close();
   fgl.close();
   fgal.close();
-  ftimes.close();
-  fcoord.close();
+  fbeidou.close();
+ // ftimes.close();
+ // fcoord.close();
 }
+//std::mutex mu;
 
 void GridDialog::OnButton2Click2(wxCommandEvent& event)
 {
@@ -476,11 +539,14 @@ void GridDialog::OnButton2Click2(wxCommandEvent& event)
   TextCtrl2 ->GetValue().ToDouble(&iteration);
   iter = static_cast<int>(iteration);
   int n_iter;
+  Gauge1->SetRange(iter);
+  testf(iter, &n_iter);
+ // std::thread tA(testf, iter, &n_iter);
+//  tA.join();
+ // tA.detach();
+  Gauge1->SetValue(n_iter);
+
   //Gauge1->SetRange(iter);
-  std::thread tA(testf, iter, &n_iter);
-  tA.join();
-  //Gauge1->SetValue(n_iter);
- // Gauge1->SetRange(iter);
 //  testf(iter);
 
  // testf(iteration);

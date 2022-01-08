@@ -101,10 +101,10 @@ void calccGalileo(const char* file,
 //        Visibles.push_back(i);  // добавление элемента в конец вектора
       }
     }
-      ofstream fsumvsbGal;
-     fsumvsbGal.open("test\\sumvsbGal.txt",ios::app);
-     fsumvsbGal<<sumvsb<<"\n";
-     fsumvsbGal.close();
+  //    ofstream fsumvsbGal;
+   //  fsumvsbGal.open("test\\sumvsbGal.txt",ios::app);
+  //   fsumvsbGal<<sumvsb<<"\n";
+  //   fsumvsbGal.close();
 //    f <<"sumvsb =" <<sumvsb<<endl;
     // получение матрицы Dn
     int i = 0;
@@ -115,7 +115,7 @@ void calccGalileo(const char* file,
       if ((vsb[k]) == 1)
       {
 
-        Dn(i,i) = SISerr_Gal[k-1].SISRE+ (SISerr_Gal[k-1].M0_SRE/3.0);
+        Dn(i,i) = pow((SISerr_Gal[k-1].SISRE+ (SISerr_Gal[k-1].M0_SRE/3.0)),2);
         i++;
       }
     }
@@ -177,7 +177,7 @@ void calccGalileo(const char* file,
     mat sko ;
   if (sumvsb >= 4)
   {
-  if (det(u) < 0.1)
+  if (det(u) < 0.000000001)
   {
   skoo[0]= -1;
   skoo[1]= -1;
@@ -203,6 +203,6 @@ void calccGalileo(const char* file,
   skoo[3]= -10;
   skoo[4] = -10;
   }
-  sko.save("test\\skoGal.txt", raw_ascii);
+ // sko.save("test\\skoGal.txt", raw_ascii);
 
 }

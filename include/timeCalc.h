@@ -11,6 +11,7 @@ double sum_sec;
 double numb_fouryear_period;
 double sec_after_week_plus_delta;
 };
+
 class timeCalc
 {
 public:
@@ -32,6 +33,8 @@ public:
   void timeGLNS();
   void timeGPS();
   void timeGLL();
+  void timeB();
+
   double timeSec;
   int c_date;
   int c_month;

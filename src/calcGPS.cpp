@@ -29,7 +29,7 @@ void calccGPS(const char* file,
               double B,double L, double h)
  { //double skoo[4];
   double N;
-  double e=0;
+  double e=0; //!вопрос!
   double a=6378136; // радиус З
 // Получение координат потребителя
   N=a/sqrt(1-(e*e)*(sin(B))*(sin(B)));
@@ -67,7 +67,8 @@ void calccGPS(const char* file,
    // f<<"toe()calc.sec_since_week="<<toe<<endl;
    // f<<"week="<<calc.week<<endl;
     Coordinates Coord_sp; // можно потом заменить в 482 строке и ниже.
-
+ofstream f;
+f.open("test\\cor_gps.txt");
     for (int i=1; i<=numberSput; i++)
     {
 // Получение коорд спутников
@@ -85,10 +86,19 @@ void calccGPS(const char* file,
       f<< "almanax_GPS[i-1].t_almanax = "<<almanax_GPS[i-1].t_almanax<<endl;
       f<< "almanax_GPS[i-1].time_week = "<<almanax_GPS[i-1].time_week<<endl;
       f <<"i-1 (номер спут)"<<i-1<<endl;
-
+*/  f<<almanax_GPS[i-1].PRN<<endl;
+     f << toe<<endl;
+                      f <<       almanax_GPS[i-1].t_almanax<<endl;
+                       f <<      almanax_GPS[i-1].M0<<endl;
+                        f <<     almanax_GPS[i-1].sqrtA<<endl;
+                       f <<      almanax_GPS[i-1].E<<endl;
+                        f <<     almanax_GPS[i-1].I<<endl;
+                        f <<     almanax_GPS[i-1].Om0<<endl;
+                         f <<    almanax_GPS[i-1].time_week<<endl;
+                         f<< "coord---------"<<endl;
       f<<"Coord_sp.X="<<Coord_sp.X<<endl;
       f <<"Coord_sp.Y =" <<Coord_sp.Y<<endl;
-      f <<"Coord_sp.Z =" <<Coord_sp.Z<<endl;*/
+      f <<"Coord_sp.Z =" <<Coord_sp.Z<<endl;
 
       Coord_sput[0] = Coord_sp.X;
       Coord_sput[1] = Coord_sp.Y;
@@ -106,7 +116,7 @@ void calccGPS(const char* file,
     }
 //ofstream f;
 //f.open("test\\m0_gps.txt");
-
+f.close();
 
 // получение матрицы Dn
     int i = 0;
@@ -116,7 +126,7 @@ void calccGPS(const char* file,
     {
       if ((vsb[k]) == 1)
       {
-        Dn(i,i) = SISerr_GPS[k-1].SISRE + (SISerr_GPS[k-1].M0_SRE/3.0);
+        Dn(i,i) = pow(((SISerr_GPS[k-1].SISRE) + (SISerr_GPS[k-1].M0_SRE/3.0)),2);
 //        f<<i<<"\t"<<SISerr_GPS[i].M0_SRE<<"\n";
         i++;
       }
@@ -167,8 +177,8 @@ void calccGPS(const char* file,
       }
     }
     mat Htr = H.t();
-    Htr.save("test\\Htr_GPS.txt", raw_ascii);
-    Dn.save("test\\Dn.txt", raw_ascii);
+  //  Htr.save("test\\Htr_GPS.txt", raw_ascii);
+  //  Dn.save("test\\Dn.txt", raw_ascii);
     mat u = Htr*inv(Dn)*H;
     mat sko ;
 
@@ -179,7 +189,7 @@ void calccGPS(const char* file,
   f.close();*/
   if (sumvsb >= 4)
   {
-  if (det(u) < 0.1)
+  if (det(u) < 0.000000001)
   {
   skoo[0]= -1;
   skoo[1]= -1;
@@ -205,7 +215,7 @@ void calccGPS(const char* file,
   skoo[3]= -10;
   skoo[4] = -10;
   }
-  sko.save("test\\skoGal.txt", raw_ascii);
+ // sko.save("test\\skoGal.txt", raw_ascii);
 
 }
  void downlGPS(   string *text1, //file alm

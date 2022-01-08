@@ -15,6 +15,7 @@
 #include <wininet.h>
 //
 #include <armadillo>
+#include <fstream>
 using namespace std;
 using namespace arma;
 
@@ -62,6 +63,10 @@ void calccGlonass(const char* file,
    // f <<"calc.GLNS_sec_since_week=" <<calc.GLNS_sec_since_week<<endl;;
     GlonassCoordinates Coord_sp;
     calc.timeGLNS();
+
+   // ofstream f;
+   // f.open("test\\GLNS_COORD.txt",ios::out | ios::app);
+   // f<<"iteratinon\n";
     for (int i=1; i<=numberSput; i++)
     {
 // Получение коорд спутников
@@ -81,11 +86,11 @@ void calccGlonass(const char* file,
                                 almanax_GLNS[i-1].w,
                                 almanax_GLNS[i-1].Lam);
 
-     // f <<"i-1 (номер спутн) ="<<i-1<<endl;
+  //  f <<"i-1 (номер спутн) ="<<i-1<<endl;
     //  f << "GLNS_numb_fouryear_period (Na)"<<  GLNSephemTime.GLNS_numb_fouryear_period<<endl;
-    //  f<<"Coord_sp.X="<<Coord_sp.X<<endl;
-    //  f <<"Coord_sp.Y =" <<Coord_sp.Y<<endl;
-    //  f <<"Coord_sp.Z =" <<Coord_sp.Z<<endl;
+   // f<<"Coord_sp.X="<<Coord_sp.X<<endl;
+  //  f <<"Coord_sp.Y =" <<Coord_sp.Y<<endl;
+  //  f <<"Coord_sp.Z =" <<Coord_sp.Z<<endl;
 
       Coord_sput[0] = Coord_sp.X;
       Coord_sput[1] = Coord_sp.Y;
@@ -97,15 +102,19 @@ void calccGlonass(const char* file,
       vsb[i]=0;
       if ((alpha) >5)
       {
+    // f <<"i (номер спутн) ="<<i<<endl;
+    // f<<"Coord_sp.X="<<Coord_sp.X<<endl;
+    //  f <<"Coord_sp.Y =" <<Coord_sp.Y<<endl;
+    // f <<"Coord_sp.Z =" <<Coord_sp.Z<<endl;
         vsb[i]=1;
         sumvsb++;
       //  Visibles.push_back(i);  // добавление элемента в конец вектора
       }
     }
-     ofstream fsumvsbGl;
-     fsumvsbGl.open("test\\sumvsbGl.txt",ios::app);
-     fsumvsbGl<<sumvsb<<"\n";
-     fsumvsbGl.close();
+   //  ofstream fsumvsbGl;
+    // fsumvsbGl.open("test\\sumvsbGl.txt",ios::app);
+    // fsumvsbGl<<sumvsb<<"\n";
+    // fsumvsbGl.close();
 // получение матрицы Dn
     int i = 0;
     mat Dn;
@@ -114,8 +123,9 @@ void calccGlonass(const char* file,
     {
       if ((vsb[k]) == 1)
       {
-        Dn(i,i) = SISerr_GLNS[k-1].SISRE+ (SISerr_GLNS[k-1].M0_SRE/3.0);
+        Dn(i,i) = pow(((SISerr_GLNS[k-1].SISRE)+ (SISerr_GLNS[k-1].M0_SRE/3.0)),2);
         i++;
+
       }
     }
     double max_val_Dn = Dn.max();
@@ -126,7 +136,7 @@ void calccGlonass(const char* file,
         Dn(i,i) = max_val_Dn;
       }
     }
-
+ // Dn.save("test\\DnGl.txt", raw_ascii);
 // получение матрицы H
     double dx;
     double dy;
@@ -167,12 +177,14 @@ void calccGlonass(const char* file,
         numsput++ ;
       }
     }
+   // H.save("test\\HGl.txt", raw_ascii);
     mat Htr = H.t();
     mat u = Htr*inv(Dn)*H;
     mat sko ;
+
   if (sumvsb > 4)
   {
-  if (det(u) < 0.1)
+  if (det(u) < 0.000000001)
   {
   skoo[0]= -1;
   skoo[1]= -1;
@@ -198,8 +210,12 @@ void calccGlonass(const char* file,
   skoo[3]= -10;
   skoo[4] = -10;
   }
-  sko.save("test\\skoGal.txt", raw_ascii);
-
+//  sko.save("test\\skoGl.txt", raw_ascii);
+//f<<skoo[0]<<"\t"<<skoo[1]<<"\t"<<skoo[2]<<"\t"<<skoo[3]<<"\t"<<skoo[4]<<endl;
+//f<<"B = "<<B*180.0/M_PI<<"\t L ="<<L*180.0/M_PI<<"\t h ="<<h<<endl;
+//f<<"date = "<<calc.c_date << "\t month = "<<calc.c_month<< "\t year = "<<calc.c_year<<endl;
+//f<<"hour = "<<calc.c_hour<<"\t min = "<<calc.c_minutes<< "\t sec = "<<calc.c_sec<<endl;
+//f.close();
 }
 
 void downlGlonass(   string *text1, //file alm

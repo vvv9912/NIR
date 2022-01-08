@@ -151,3 +151,21 @@ galileo.sec_after_week = fmod(galileo.sec,(60*60*24*7));
 week = static_cast<int>(galileo.week);
 sec_since_week = galileo.sec_after_week;
 }
+void timeCalc::timeB()
+{
+tm tmbeidou;
+tmbeidou.tm_year=106;//год (1900 год = 0)
+tmbeidou.tm_mon = 0; // мес€ц года (€нварь = 0) [0,11]
+tmbeidou.tm_mday = 1;// день мес€ца [1,31]
+tmbeidou.tm_hour = 0; // часы после полуночи [0,23]
+tmbeidou.tm_min=0; //минуты после часов [0,59]
+tmbeidou.tm_sec=0;  // секунды после минут [0,59]
+timee beidou;
+time_t timebaseB = mktime(&tmbeidou);
+double time2 = timeSec;
+beidou.sec =  (time2 - timebaseB)+dT;
+beidou.week = beidou.sec/(60*60*24*7);
+beidou.sec_after_week = fmod(beidou.sec,(60*60*24*7));
+week = static_cast<int>(beidou.week);
+sec_since_week = beidou.sec_after_week;
+}
