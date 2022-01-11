@@ -7,10 +7,10 @@ fileBeidou = "..\Beidou_rand.log";
  dataGl = importdata(fileGl);
  dataG = importdata(fileG);
 dataBeidou = importdata(fileBeidou);
- pars(dataGa,1,20000)
-  pars(dataGl,2,2000)
-  pars(dataG,3,2000)
-  pars(dataBeidou,4,10000)
+%  pars(dataGa,1,20000,-10,20,1)
+%   pars(dataGl,2,2000,-10,50,1)
+%   pars(dataG,3,2000,-10,20,1)
+  pars(dataBeidou,4,2000000,-10,500,10)
 %1 высота ;%ско по высоте
 % function p = pars(data, nfigure)
 % sigmax = data(:,4);
@@ -31,7 +31,7 @@ dataBeidou = importdata(fileBeidou);
 %    grid on;
 % endhistogram(dataG(:,4),500)
 % end
-function p = pars(data, nfigure,shag)
+function p = pars(data, nfigure,shag, min, max, shag2)
 sigmax = data(:,9);
 sigmay = data(:,10);
 sigmaz = data(:,11);
@@ -83,9 +83,9 @@ M0= 0; %от высоты зависимость
 %    xlabel('B, gr')
     histogram (sigma,shag);
   %       ylim([0 3500])
-      xlim([-10 50])
+      xlim([min max])
 %     axis auto
-      set(gca, 'XTick',-10:1:50)
+      set(gca, 'XTick',min:shag2:max)
        %set(gca, 'XTick',0:10:600)
     xlabel('3*\sigma, м')
     ylabel('кол-во экспериментов');

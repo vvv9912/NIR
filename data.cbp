@@ -74,16 +74,18 @@
 			<Add directory="$(#wx)/lib/gcc_lib" />
 			<Add directory="." />
 		</Linker>
+		<Unit filename="GridDialog.cpp" />
+		<Unit filename="GridDialog.h" />
 		<Unit filename="data.cbp" />
+		<Unit filename="dataMain.cpp" />
+		<Unit filename="dataMain.h" />
 		<Unit filename="include/FTPdownl.h" />
-		<Unit filename="include/GridDialog.h" />
 		<Unit filename="include/angle.h" />
 		<Unit filename="include/calcBeidou.h" />
 		<Unit filename="include/calcGPS.h" />
 		<Unit filename="include/calcGalileo.h" />
 		<Unit filename="include/calcGlonass.h" />
 		<Unit filename="include/dataApp.h" />
-		<Unit filename="include/dataMain.h" />
 		<Unit filename="include/downlGalileo.h" />
 		<Unit filename="include/ephemerids.h" />
 		<Unit filename="include/ephemeridsGLNS.h" />
@@ -106,14 +108,12 @@
 			<Option compilerVar="WINDRES" />
 		</Unit>
 		<Unit filename="src/FTPdownl.cpp" />
-		<Unit filename="src/GridDialog.cpp" />
 		<Unit filename="src/angle.cpp" />
 		<Unit filename="src/calcBeidou.cpp" />
 		<Unit filename="src/calcGPS.cpp" />
 		<Unit filename="src/calcGalileo.cpp" />
 		<Unit filename="src/calcGlonass.cpp" />
 		<Unit filename="src/dataApp.cpp" />
-		<Unit filename="src/dataMain.cpp" />
 		<Unit filename="src/downlGalileo.cpp" />
 		<Unit filename="src/ephemerids.cpp" />
 		<Unit filename="src/ephemeridsGLNS.cpp" />

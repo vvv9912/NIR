@@ -12,18 +12,18 @@
 			<size>280,328</size>
 			<style>wxSW_3D</style>
 			<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="TextCtrl1" member="yes">
-				<pos>15,161</pos>
+				<pos>16,161</pos>
 			</object>
 			<object class="wxStaticText" name="ID_STATICTEXT3" variable="StaticText3" member="yes">
 				<label></label>
 				<pos>176,188</pos>
 			</object>
 			<object class="wxTextCtrl" name="ID_TEXTCTRL7" variable="TextCtrl7" member="yes">
-				<pos>14,120</pos>
+				<pos>16,120</pos>
 			</object>
 			<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
 				<label>Конечное значение</label>
-				<pos>19,104</pos>
+				<pos>16,102</pos>
 			</object>
 			<object class="wxRadioBox" name="ID_RADIOBOX1" variable="RadioBox1" member="yes">
 				<label>Шаг</label>
@@ -38,27 +38,29 @@
 			</object>
 			<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
 				<label>Значение сетки</label>
-				<pos>23,144</pos>
+				<pos>16,145</pos>
 			</object>
 			<object class="wxButton" name="ID_BUTTON1" variable="Button1" member="yes">
 				<label>Получения сетки&#x0A; значений</label>
-				<pos>15,192</pos>
-				<size>112,36</size>
+				<pos>16,192</pos>
+				<size>101,39</size>
+				<handler function="OnButton1Click2" entry="EVT_BUTTON" />
 			</object>
 			<object class="wxGauge" name="ID_GAUGE1" variable="Gauge1" member="yes">
 				<pos>29,299</pos>
 				<size>223,28</size>
 			</object>
 			<object class="wxTextCtrl" name="ID_TEXTCTRL2" variable="TextCtrl2" member="yes">
-				<pos>167,168</pos>
+				<pos>166,161</pos>
 			</object>
 			<object class="wxStaticText" name="ID_STATICTEXT4" variable="StaticText4" member="yes">
 				<label>Кол-во итераций</label>
-				<pos>172,146</pos>
+				<pos>166,145</pos>
 			</object>
 			<object class="wxButton" name="ID_BUTTON2" variable="Button2" member="yes">
-				<label>Получения сетки &#x0A; со случайными &#x0A; значениями</label>
-				<pos>165,194</pos>
+				<label>Получения сетки со случайными &#x0A;значениями</label>
+				<pos>166,192</pos>
+				<size>101,53</size>
 				<handler function="OnButton2Click2" entry="EVT_BUTTON" />
 			</object>
 		</object>

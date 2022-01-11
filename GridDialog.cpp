@@ -19,7 +19,7 @@
 #include "include/getENU.h"
 #include <thread>
 #include <wx/window.h>
-#include <mutex>
+//#include <mutex>
 //#include <string>
 //#include <iostream>
 //thread
@@ -60,10 +60,10 @@ GridDialog::GridDialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,const w
   SetMinSize(wxSize(-1,-1));
   SetMaxSize(wxSize(-1,-1));
   SashWindow1 = new wxSashWindow(this, ID_SASHWINDOW1, wxPoint(0,0), wxSize(280,328), wxSW_3D, _T("ID_SASHWINDOW1"));
-  TextCtrl1 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL1, wxEmptyString, wxPoint(15,161), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
+  TextCtrl1 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL1, wxEmptyString, wxPoint(16,161), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
   StaticText3 = new wxStaticText(SashWindow1, ID_STATICTEXT3, wxEmptyString, wxPoint(176,188), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
-  TextCtrl7 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL7, wxEmptyString, wxPoint(14,120), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL7"));
-  StaticText1 = new wxStaticText(SashWindow1, ID_STATICTEXT1, _("Конечное значение"), wxPoint(19,104), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
+  TextCtrl7 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL7, wxEmptyString, wxPoint(16,120), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL7"));
+  StaticText1 = new wxStaticText(SashWindow1, ID_STATICTEXT1, _("Конечное значение"), wxPoint(16,102), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
   wxString __wxRadioBoxChoices_1[3] =
   {
   	_("Высоте"),
@@ -71,18 +71,19 @@ GridDialog::GridDialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,const w
   	_("Долготе")
   };
   RadioBox1 = new wxRadioBox(SashWindow1, ID_RADIOBOX1, _("Шаг"), wxPoint(14,10), wxSize(79,86), 3, __wxRadioBoxChoices_1, 1, 0, wxDefaultValidator, _T("ID_RADIOBOX1"));
-  StaticText2 = new wxStaticText(SashWindow1, ID_STATICTEXT2, _("Значение сетки"), wxPoint(23,144), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
-  Button1 = new wxButton(SashWindow1, ID_BUTTON1, _("Получения сетки\n значений"), wxPoint(15,192), wxSize(112,36), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+  StaticText2 = new wxStaticText(SashWindow1, ID_STATICTEXT2, _("Значение сетки"), wxPoint(16,145), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
+  Button1 = new wxButton(SashWindow1, ID_BUTTON1, _("Получения сетки\n значений"), wxPoint(16,192), wxSize(101,39), 0, wxDefaultValidator, _T("ID_BUTTON1"));
   Gauge1 = new wxGauge(SashWindow1, ID_GAUGE1, 100, wxPoint(29,299), wxSize(223,28), 0, wxDefaultValidator, _T("ID_GAUGE1"));
-  TextCtrl2 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL2, wxEmptyString, wxPoint(167,168), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
-  StaticText4 = new wxStaticText(SashWindow1, ID_STATICTEXT4, _("Кол-во итераций"), wxPoint(172,146), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
-  Button2 = new wxButton(SashWindow1, ID_BUTTON2, _("Получения сетки \n со случайными \n значениями"), wxPoint(165,194), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON2"));
+  TextCtrl2 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL2, wxEmptyString, wxPoint(166,161), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
+  StaticText4 = new wxStaticText(SashWindow1, ID_STATICTEXT4, _("Кол-во итераций"), wxPoint(166,145), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
+  Button2 = new wxButton(SashWindow1, ID_BUTTON2, _("Получения сетки со случайными \nзначениями"), wxPoint(166,192), wxSize(101,53), 0, wxDefaultValidator, _T("ID_BUTTON2"));
   SashWindow1->SetSashVisible(wxSASH_TOP,    true);
   SashWindow1->SetSashVisible(wxSASH_BOTTOM, true);
   SashWindow1->SetSashVisible(wxSASH_LEFT,   true);
   SashWindow1->SetSashVisible(wxSASH_RIGHT,  true);
   Center();
 
+  Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&GridDialog::OnButton1Click2);
   Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&GridDialog::OnButton2Click2);
   //*)
 
@@ -375,8 +376,10 @@ void GridDialog::testf(int iter)
   ftimes.close();
   fcoord.close();
 }*/
+//std::mutex coutt;
 void testf(int iter, int* n_iter)
 {
+
   int year_down=2021;
   int month_down;
   int day_down;
@@ -424,9 +427,10 @@ void testf(int iter, int* n_iter)
   // fTEST << "Xecef" <<"\t"<< "Yecef" <<"\t"<< "Zecef" <<"\t"<< "B" <<"\t"<< "L" <<"\t"<<"H" <<"\t"<<"Xecu" <<"\t"<< "Yecu" <<"\t"<< "Zecu" <<"\n";
   double H,B,L;
   double sko[5];
+  //double cout_cir;
   for (int i = 0; i<=iter; i++)
   {
-    *n_iter = i;
+*n_iter = i;
    // Gauge1->SetValue(i);
     month_down = rand() %12+1;
     day_down = rand()%30+1;
@@ -449,7 +453,7 @@ void testf(int iter, int* n_iter)
 
 
    // ftimes<<day_down<<"\t"<<month_down<<"\t"<<year_down<<"\t"<<hour_predsk<<"\t"<<min_predsk<<"\t"<<sec_predsk<<"\n";
-
+/*
     calccGPS( file, sko, calc,
               (B*M_PI/180.0),(L*M_PI/180.0),H);
     geoc2geod(sko[0], sko[1], sko[2],&Bg,&Lg,&Hg);
@@ -477,6 +481,13 @@ void testf(int iter, int* n_iter)
       COORDD[2] = -10;
 
     }
+    else if ((sko[0] == -1.0 && sko[1] == -1.0))
+    {
+      COORDD[0] = -1;
+      COORDD[1] = -1;
+      COORDD[2] = -1;
+
+    }
     else{
       getENU(sko[0], sko[1], sko[2],Bg,Lg,COORDD);
     }
@@ -495,6 +506,13 @@ void testf(int iter, int* n_iter)
       COORDD[2] = -10;
 
     }
+    else if ((sko[0] == -1.0 && sko[1] == -1.0))
+    {
+      COORDD[0] = -1;
+      COORDD[1] = -1;
+      COORDD[2] = -1;
+
+    }
     else{
       getENU(sko[0], sko[1], sko[2],Bg,Lg,COORDD);
     }
@@ -503,7 +521,7 @@ void testf(int iter, int* n_iter)
 
  // ftimes<<day_down<<"\t"<<month_down<<"\t"<<year_down<<"\t"<<hour_predsk<<"\t"<<min_predsk<<"\t"<<sec_predsk<<"\n";
  //ftimes<<H<<"\t"<<"B:"<<B<<"\t"<<"L:"<<L<<endl;
-  calccBeidou(file4, sko, calc,
+ */ calccBeidou(file4, sko, calc,
               (B*M_PI/180.0),(L*M_PI/180.0),H);
   geoc2geod(sko[0], sko[1], sko[2],&Bg,&Lg,&Hg);
     if (sko[0] == -10.0 && sko[1] == -10.0)
@@ -513,14 +531,30 @@ void testf(int iter, int* n_iter)
       COORDD[2] = -10;
 
     }
+    else if ((sko[0] == -1.0 && sko[1] == -1.0))
+    {
+      COORDD[0] = -1;
+      COORDD[1] = -1;
+      COORDD[2] = -1;
+
+    }
     else{
       getENU(sko[0], sko[1], sko[2],Bg,Lg,COORDD);
     }
  //fbeidou<<H<<"\t"<<L<<"\t"<<B<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\t"<<"\n";
  //   fTEST<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<B<<"\t"<<L<<"\t"<<H<<"\t"<<COORDD[0] <<"\t"<< COORDD[1] <<"\t"<<COORDD[2]<<"\n";
    fbeidou<<H<<"\t"<<L<<"\t"<<B<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\t"<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\t"<<Bg<<"\t"<<Lg<<"\t"<<Hg<<"\n";
+//  coutt.lock();
+ //  cout_cir = (i*100/iter);
+ /*  if (fmod(cout_cir,(round(cout_cir))) == 0)
+    {
+    *n_iter = static_cast<int>(cout_cir);
+    }*/
+//    coutt.unlock();
 
   }
+
+
  // fTEST.close();
   fgps.close();
   fgl.close();
@@ -542,7 +576,7 @@ void GridDialog::OnButton2Click2(wxCommandEvent& event)
   Gauge1->SetRange(iter);
   testf(iter, &n_iter);
  // std::thread tA(testf, iter, &n_iter);
-//  tA.join();
+ // tA.join();
  // tA.detach();
   Gauge1->SetValue(n_iter);
 

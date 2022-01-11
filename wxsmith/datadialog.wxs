@@ -88,18 +88,14 @@
 				<size>85,21</size>
 				<handler function="OnTimePickerCtrl1Changed" entry="EVT_DATE_CHANGED" />
 			</object>
-			<object class="wxButton" name="ID_BUTTON4" variable="Button3" member="yes">
-				<label>для отладки/test</label>
-				<pos>303,463</pos>
-				<handler function="OnButton3Click2" entry="EVT_BUTTON" />
-			</object>
 			<object class="wxStaticText" name="ID_STATICTEXT5" variable="StaticText5" member="yes">
 				<label>Время прогнозирования по UTC(+3)</label>
 				<pos>305,49</pos>
 			</object>
 			<object class="wxButton" name="ID_BUTTON3" variable="Button1" member="yes">
-				<label>grid</label>
-				<pos>312,436</pos>
+				<label>Сетка значений</label>
+				<pos>305,456</pos>
+				<size>127,23</size>
 				<handler function="OnButton1Click3" entry="EVT_BUTTON" />
 			</object>
 		</object>

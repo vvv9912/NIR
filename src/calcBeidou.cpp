@@ -6,7 +6,10 @@
 #include "include/angle.h"
 #include "include/ephemerids.h"
 #include "include/xyz2enu.h"
-
+//
+#include "ephemerids2.h"
+//#include "Kepler.h"
+//
 #include <wx/msgdlg.h>
 #include <windows.h>
 #include <wininet.h>
@@ -57,8 +60,8 @@ void calccBeidou(const char* file,
     double toe=calc.sec_since_week;
 ofstream f;
 f.open("test\\cor_be1.txt");
-    Coordinates Coord_sp; // можно потом заменить в 482 строке и ниже.
-
+  Coordinates Coord_sp; // можно потом заменить в 482 строке и ниже.
+  Coordinatess Coord_sp2;
 
     for (int i=1; i<=numberSput; i++)
     {
@@ -66,32 +69,46 @@ f.open("test\\cor_be1.txt");
 //ephemerids(double toe,int t_almanax, double M0, double sqrtA, double E, double I, double Om0, double time_week ))
       if (alm_b[i].PRN !=0 )
       {
-      Coord_sp = ephemerids(toe,
+          Coord_sp = ephemerids(toe,
                             alm_b[i].t,
                             (alm_b[i].m)/M_PI, // в рад -> полуцик
                             alm_b[i].sqrta,
-                            alm_b[i].e*100,
+                            alm_b[i].e,
                             (alm_b[i].di)/M_PI, //в рад -> полуцикл
                             (alm_b[i].Omega0)/M_PI, //в рад -> полуцик
                             alm_b[i].week);
+
+
+     Coord_sp2 = CoordGPS(toe,
+                            alm_b[i].t,
+                            (alm_b[i].m), // в рад -> полуцик
+                            alm_b[i].sqrta,
+                            alm_b[i].e,
+                            (alm_b[i].di), //в рад -> полуцикл
+                            (alm_b[i].Omega0));
       Coord_sput[0] = Coord_sp.X;
       Coord_sput[1] = Coord_sp.Y;
       Coord_sput[2] = Coord_sp.Z;
-/*      f<<alm_b[i].PRN<<endl;
-     f<<toe<<endl;
-    f<<alm_b[i].t<<endl;
-    f<<(alm_b[i].m)<<endl;
-    f<< alm_b[i].sqrta<<endl;
-      f<<  alm_b[i].e<<endl;
-  f<<  (alm_b[i].di)<<endl;
-  f<<  (alm_b[i].di)/M_PI<<endl;
-  f<<  (alm_b[i].Omega0)/M_PI<<endl;
-  f<<  (alm_b[i].Omega0)<<endl;
-  f<<  alm_b[i].week<<endl;
-  f<< "coord---------"<<endl;
-           f<<"Coord_sp.X="<<Coord_sp.X<<endl;
+
+     f<<alm_b[i].PRN<<endl;
+  //   f<<toe<<endl;
+  //  f<<alm_b[i].t<<endl;
+  //  f<<(alm_b[i].m)<<endl;
+  //  f<< alm_b[i].sqrta<<endl;
+ //     f<<  alm_b[i].e<<endl;
+ // f<<  (alm_b[i].di)<<endl;
+ // f<<  (alm_b[i].di)/M_PI<<endl;
+ //// f<<  (alm_b[i].Omega0)/M_PI<<endl;
+ // f<<  (alm_b[i].Omega0)<<endl;
+ // f<<  alm_b[i].week<<endl;
+
+      f<<"Coord_sp.X="<<Coord_sp.X<<endl;
      f <<"Coord_sp.Y =" <<Coord_sp.Y<<endl;
-    f <<"Coord_sp.Z =" <<Coord_sp.Z<<endl;*/
+    f <<"Coord_sp.Z =" <<Coord_sp.Z<<endl;
+    f<< "coord2---------"<<endl;
+     f<<"Coord_sp.X="<<Coord_sp2.X<<endl;
+     f <<"Coord_sp.Y =" <<Coord_sp2.Y<<endl;
+    f <<"Coord_sp.Z =" <<Coord_sp2.Z<<endl;
 // Определение угла
       alpha = 90 - (angle(Coord_sput, Coord_user, B, L)*180/M_PI);
  // f<<"alpha"<<alpha<<endl;
@@ -157,7 +174,7 @@ f.open("test\\cor_be1.txt");
     {
       if ((vsb[k]) == 1)
       {
-        Coord_sp = ephemerids(toe,
+       Coord_sp = ephemerids(toe,
                             alm_b[k].t,
                             alm_b[k].m/M_PI, // в рад -> полуцик
                             alm_b[k].sqrta,
@@ -165,6 +182,13 @@ f.open("test\\cor_be1.txt");
                             alm_b[k].di/M_PI, //в рад -> полуцикл
                             alm_b[k].Omega0/M_PI, //в рад -> полуцик
                             alm_b[k].week);
+            /* Coord_sp = CoordGPS(toe,
+                            alm_b[k].t,
+                            (alm_b[k].m), // в рад -> полуцик
+                            alm_b[k].sqrta,
+                            alm_b[k].e,
+                            (alm_b[k].di), //в рад -> полуцикл
+                            (alm_b[k].Omega0));*/
         dx=(Coord_sp.X-Coord_x);
         dy=(Coord_sp.Y-Coord_y);
         dz=(Coord_sp.Z- Coord_z);
@@ -182,7 +206,7 @@ f.open("test\\cor_be1.txt");
   //  Htr.save("test\\Htr_B.txt", raw_ascii);
     mat u = Htr*inv(Dn)*H;
     mat sko ;
-    if (det(u) < 0.000000000001)
+ /*   if (det(u) < 0.000000000000001)
     {
     skoo[0]= -1;
     skoo[1]= -1;
@@ -191,14 +215,14 @@ f.open("test\\cor_be1.txt");
     skoo[4] = -1;
     }
     else
-    {
+    {*/
     sko = sqrt((inv(u)).t());
     skoo[0]= sko(0,0);
     skoo[1]= sko(1,1);
     skoo[2]= sko(2,2);
     skoo[3]= sko(3,3);
     skoo[4] = sqrt (pow(sko(0,0),2)+pow(sko(1,1),2)+pow(sko(2,2),2) );
-    }
+   // }
   }
 }
 

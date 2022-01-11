@@ -17,7 +17,10 @@
 #include "include/parserGLNS.H"
 #include "include/ephemeridsGLNS.h"
 #include "include/timeCalc.h"
-
+//
+#include "ephemerids2.h"
+#include "Kepler.h"
+//
 #include "include/parserBeidou.h"
 #include "include/parserEphB.h"
 #include "include/calcBeidou.h"
@@ -113,7 +116,6 @@ const long dataDialog::ID_STATICTEXT2 = wxNewId();
 const long dataDialog::ID_STATICTEXT3 = wxNewId();
 const long dataDialog::ID_STATICTEXT4 = wxNewId();
 const long dataDialog::ID_TIMEPICKERCTRL1 = wxNewId();
-const long dataDialog::ID_BUTTON4 = wxNewId();
 const long dataDialog::ID_STATICTEXT5 = wxNewId();
 const long dataDialog::ID_BUTTON3 = wxNewId();
 const long dataDialog::ID_SASHWINDOW1 = wxNewId();
@@ -183,9 +185,8 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
   StaticText3 = new wxStaticText(SashWindow1, ID_STATICTEXT3, _("Введите значение L в градусах:"), wxPoint(305,217), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
   StaticText4 = new wxStaticText(SashWindow1, ID_STATICTEXT4, _("Значения СКО:"), wxPoint(306,294), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
   TimePickerCtrl1 = new wxTimePickerCtrl(SashWindow1, ID_TIMEPICKERCTRL1, wxDateTime::Now(), wxPoint(305,93), wxSize(85,21), 0, wxDefaultValidator, _T("ID_TIMEPICKERCTRL1"));
-  Button3 = new wxButton(SashWindow1, ID_BUTTON4, _("для отладки/test"), wxPoint(303,463), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON4"));
   StaticText5 = new wxStaticText(SashWindow1, ID_STATICTEXT5, _("Время прогнозирования по UTC(+3)"), wxPoint(305,49), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
-  Button1 = new wxButton(SashWindow1, ID_BUTTON3, _("grid"), wxPoint(312,436), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON3"));
+  Button1 = new wxButton(SashWindow1, ID_BUTTON3, _("Сетка значений"), wxPoint(305,456), wxSize(127,23), 0, wxDefaultValidator, _T("ID_BUTTON3"));
   SashWindow1->SetSashVisible(wxSASH_TOP,    true);
   SashWindow1->SetSashVisible(wxSASH_BOTTOM, true);
   SashWindow1->SetSashVisible(wxSASH_LEFT,   true);
@@ -199,7 +200,6 @@ dataDialog::dataDialog(wxWindow* parent,wxWindowID id)
   Connect(ID_TEXTCTRL2,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&dataDialog::OnTextCtrlBText);
   Connect(ID_TEXTCTRL3,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&dataDialog::OnTextCtrlLText1);
   Connect(ID_TIMEPICKERCTRL1,wxEVT_DATE_CHANGED,(wxObjectEventFunction)&dataDialog::OnTimePickerCtrl1Changed);
-  Connect(ID_BUTTON4,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton3Click2);
   Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&dataDialog::OnButton1Click3);
   Connect(ID_SASHWINDOW1,wxEVT_SASH_DRAGGED,(wxObjectEventFunction)&dataDialog::OnSashWindow1SashDragged);
   Connect(wxID_ANY,wxEVT_INIT_DIALOG,(wxObjectEventFunction)&dataDialog::OnInit);

@@ -12,8 +12,7 @@ int parserBeidou(const char* file1, almanaxBeidou *almanaxbeidou)
   char date[100];
   char dummy[50];
   char a[100];
-  int chh = 0;
-  int imax = 0;
+   int imax = 0;
   double _prn;
   int prn;
   ifstream F;
@@ -40,6 +39,7 @@ int parserBeidou(const char* file1, almanaxBeidou *almanaxbeidou)
        F >> almanaxbeidou[prn].af0;
        F >> almanaxbeidou[prn].af1;
        F >> almanaxbeidou[prn].week;
+       imax++;
     }
   }
 

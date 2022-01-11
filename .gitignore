@@ -51,3 +51,4 @@ doc/Отчет НИР 9 сем.docx
 *.log
 *.log
 test/Galileo_rand.log
+*.log
