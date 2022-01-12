@@ -13,21 +13,13 @@ obj/Debug/ephemerids.o
 obj/Debug/parser.o
 obj/Debug/resource.res
 obj/Debug/xyz2enu.o
-MERMS-CSC_C.ete
-MERMS-ESC_C.ete
-MERMS-GSC_C.ete
-MERMS-JSC_C.ete
 doc/~WRL1000.tmp
 doc/Можно дописать.txt
 doc/Отчет НИР 9 сем.docx
 doc/Отчет НИР 9 сем.docx
 doc/Отчет НИР 9 сем_2.docx
 doc/Отчет НИР 9 сем.docx
-*.txt
 *.tmp
-*.agl
-*.agp
-*.xml
 *.out
 *.o
 *.tif
