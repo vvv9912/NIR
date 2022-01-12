@@ -9,7 +9,7 @@
 #include "include/angle.h"
 #include "include/ephemerids.h"
 #include "include/xyz2enu.h"
-
+#include "ephemerids2.h"
 #include <wx/msgdlg.h>
 #include <windows.h>
 #include <wininet.h>
@@ -67,8 +67,10 @@ void calccGPS(const char* file,
    // f<<"toe()calc.sec_since_week="<<toe<<endl;
    // f<<"week="<<calc.week<<endl;
     Coordinates Coord_sp; // можно потом заменить в 482 строке и ниже.
-ofstream f;
+     //Coordinatess Coord_sp2;
+/*ofstream f;
 f.open("test\\cor_gps.txt");
+*/
     for (int i=1; i<=numberSput; i++)
     {
 // Получение коорд спутников
@@ -81,13 +83,21 @@ f.open("test\\cor_gps.txt");
                             almanax_GPS[i-1].I,
                             almanax_GPS[i-1].Om0,
                             almanax_GPS[i-1].time_week);
-/*      f<< "I = "<<almanax_GPS[i-1].I<<endl;
-      f<< "toe = "<<toe<<endl;
+       /*Coord_sp2 = CoordGPS(toe,
+                            almanax_GPS[i-1].t_almanax,
+                            almanax_GPS[i-1].M0*M_PI,
+                            almanax_GPS[i-1].sqrtA,
+                            almanax_GPS[i-1].E,
+                            almanax_GPS[i-1].I*M_PI,
+                            almanax_GPS[i-1].Om0*M_PI);
+
+     f<< "I = "<<almanax_GPS[i-1].I<<endl;*/
+   /*   f<< "toe = "<<toe<<endl;
       f<< "almanax_GPS[i-1].t_almanax = "<<almanax_GPS[i-1].t_almanax<<endl;
       f<< "almanax_GPS[i-1].time_week = "<<almanax_GPS[i-1].time_week<<endl;
       f <<"i-1 (номер спут)"<<i-1<<endl;
-*/  f<<almanax_GPS[i-1].PRN<<endl;
-     f << toe<<endl;
+  f<<almanax_GPS[i-1].PRN<<endl;
+  /*   f << toe<<endl;
                       f <<       almanax_GPS[i-1].t_almanax<<endl;
                        f <<      almanax_GPS[i-1].M0<<endl;
                         f <<     almanax_GPS[i-1].sqrtA<<endl;
@@ -95,11 +105,14 @@ f.open("test\\cor_gps.txt");
                         f <<     almanax_GPS[i-1].I<<endl;
                         f <<     almanax_GPS[i-1].Om0<<endl;
                          f <<    almanax_GPS[i-1].time_week<<endl;
-                         f<< "coord---------"<<endl;
-      f<<"Coord_sp.X="<<Coord_sp.X<<endl;
+                         f<< "coord---------"<<endl;*/
+  /*    f<<"Coord_sp.X="<<Coord_sp.X<<endl;
       f <<"Coord_sp.Y =" <<Coord_sp.Y<<endl;
       f <<"Coord_sp.Z =" <<Coord_sp.Z<<endl;
-
+    f<< "coord2---------"<<endl;
+     f<<"Coord_sp.X="<<Coord_sp2.X<<endl;
+     f <<"Coord_sp.Y =" <<Coord_sp2.Y<<endl;
+    f <<"Coord_sp.Z =" <<Coord_sp2.Z<<endl;*/
       Coord_sput[0] = Coord_sp.X;
       Coord_sput[1] = Coord_sp.Y;
       Coord_sput[2] = Coord_sp.Z;
@@ -116,7 +129,7 @@ f.open("test\\cor_gps.txt");
     }
 //ofstream f;
 //f.open("test\\m0_gps.txt");
-f.close();
+//f.close();
 
 // получение матрицы Dn
     int i = 0;
@@ -163,6 +176,7 @@ f.close();
                               almanax_GPS[k-1].I,
                               almanax_GPS[k-1].Om0,
                               almanax_GPS[k-1].time_week);
+
         dx=(Coord_sp.X-Coord_x);
         dy=(Coord_sp.Y-Coord_y);
         dz=(Coord_sp.Z- Coord_z);

@@ -453,8 +453,8 @@ void testf(int iter, int* n_iter)
 
 
    // ftimes<<day_down<<"\t"<<month_down<<"\t"<<year_down<<"\t"<<hour_predsk<<"\t"<<min_predsk<<"\t"<<sec_predsk<<"\n";
-/*
-    calccGPS( file, sko, calc,
+
+   calccGPS( file, sko, calc,
               (B*M_PI/180.0),(L*M_PI/180.0),H);
     geoc2geod(sko[0], sko[1], sko[2],&Bg,&Lg,&Hg);
     if (sko[0] == -10.0 && sko[1] == -10.0)
@@ -472,7 +472,7 @@ void testf(int iter, int* n_iter)
     fgps<<H<<"\t"<<L<<"\t"<<B<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\t"<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\t"<<Bg<<"\t"<<Lg<<"\t"<<Hg<<"\n";
   //  fgps<<H<<"\t"<<L<<"\t"<<B<<"\t"<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\n";
 
-    calccGlonass( file2, sko, calcGln,(B*M_PI/180.0),(L*M_PI/180.0),H);
+   calccGlonass( file2, sko, calcGln,(B*M_PI/180.0),(L*M_PI/180.0),H);
     geoc2geod(sko[0], sko[1], sko[2],&Bg,&Lg,&Hg);
       if (sko[0] == -10.0 && sko[1] == -10.0)
     {
@@ -493,7 +493,7 @@ void testf(int iter, int* n_iter)
     }
     fgl<<H<<"\t"<<L<<"\t"<<B<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\t"<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\t"<<Bg<<"\t"<<Lg<<"\t"<<Hg<<"\n";
  //  fgl<<H<<"\t"<<L<<"\t"<<B<<"\t"<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\n";
-    calccGalileo(file3,
+   calccGalileo(file3,
                sko,
                 calc,
                 calcGalileo,
@@ -521,7 +521,7 @@ void testf(int iter, int* n_iter)
 
  // ftimes<<day_down<<"\t"<<month_down<<"\t"<<year_down<<"\t"<<hour_predsk<<"\t"<<min_predsk<<"\t"<<sec_predsk<<"\n";
  //ftimes<<H<<"\t"<<"B:"<<B<<"\t"<<"L:"<<L<<endl;
- */ calccBeidou(file4, sko, calc,
+  calccBeidou(file4, sko, calc,
               (B*M_PI/180.0),(L*M_PI/180.0),H);
   geoc2geod(sko[0], sko[1], sko[2],&Bg,&Lg,&Hg);
     if (sko[0] == -10.0 && sko[1] == -10.0)
@@ -544,6 +544,7 @@ void testf(int iter, int* n_iter)
  //fbeidou<<H<<"\t"<<L<<"\t"<<B<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\t"<<"\n";
  //   fTEST<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<B<<"\t"<<L<<"\t"<<H<<"\t"<<COORDD[0] <<"\t"<< COORDD[1] <<"\t"<<COORDD[2]<<"\n";
    fbeidou<<H<<"\t"<<L<<"\t"<<B<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\t"<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\t"<<Bg<<"\t"<<Lg<<"\t"<<Hg<<"\n";
+
 //  coutt.lock();
  //  cout_cir = (i*100/iter);
  /*  if (fmod(cout_cir,(round(cout_cir))) == 0)

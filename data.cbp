@@ -76,9 +76,13 @@
 		</Linker>
 		<Unit filename="GridDialog.cpp" />
 		<Unit filename="GridDialog.h" />
+		<Unit filename="Kepler.cpp" />
+		<Unit filename="Kepler.h" />
 		<Unit filename="data.cbp" />
 		<Unit filename="dataMain.cpp" />
 		<Unit filename="dataMain.h" />
+		<Unit filename="ephemerids2.cpp" />
+		<Unit filename="ephemerids2.h" />
 		<Unit filename="include/FTPdownl.h" />
 		<Unit filename="include/angle.h" />
 		<Unit filename="include/calcBeidou.h" />

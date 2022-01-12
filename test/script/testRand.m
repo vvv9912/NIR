@@ -1,4 +1,4 @@
-clear
+
 fileGa = "..\Galileo_rand.log";
 fileGl = "..\Glonass_rand.log";
 fileG = "..\GPS_rand.log";
@@ -9,7 +9,7 @@ fileBeidou = "..\Beidou_rand.log";
 dataBeidou = importdata(fileBeidou);
 %  pars(dataGa,1,20000,-10,20,1)
 %   pars(dataGl,2,2000,-10,50,1)
-%   pars(dataG,3,2000,-10,20,1)
+ % pars(dataG,3,2000,-10,20,1)
   pars(dataBeidou,4,2000000,-10,500,10)
 %1 высота ;%ско по высоте
 % function p = pars(data, nfigure)
@@ -84,6 +84,7 @@ M0= 0; %от высоты зависимость
     histogram (sigma,shag);
   %       ylim([0 3500])
       xlim([min max])
+       ylim([0 30])
 %     axis auto
       set(gca, 'XTick',min:shag2:max)
        %set(gca, 'XTick',0:10:600)

@@ -60,8 +60,8 @@ void calccBeidou(const char* file,
     double toe=calc.sec_since_week;
 ofstream f;
 f.open("test\\cor_be1.txt");
-  Coordinates Coord_sp; // можно потом заменить в 482 строке и ниже.
-  Coordinatess Coord_sp2;
+ Coordinates Coord_sp; // можно потом заменить в 482 строке и ниже.
+ //Coordinatess Coord_sp2;
 
     for (int i=1; i<=numberSput; i++)
     {
@@ -69,7 +69,7 @@ f.open("test\\cor_be1.txt");
 //ephemerids(double toe,int t_almanax, double M0, double sqrtA, double E, double I, double Om0, double time_week ))
       if (alm_b[i].PRN !=0 )
       {
-          Coord_sp = ephemerids(toe,
+        Coord_sp = ephemerids(toe,
                             alm_b[i].t,
                             (alm_b[i].m)/M_PI, // в рад -> полуцик
                             alm_b[i].sqrta,
@@ -79,18 +79,18 @@ f.open("test\\cor_be1.txt");
                             alm_b[i].week);
 
 
-     Coord_sp2 = CoordGPS(toe,
+    /* Coord_sp2 = CoordGPS(toe,
                             alm_b[i].t,
                             (alm_b[i].m), // в рад -> полуцик
                             alm_b[i].sqrta,
                             alm_b[i].e,
                             (alm_b[i].di), //в рад -> полуцикл
-                            (alm_b[i].Omega0));
+                            (alm_b[i].Omega0));*/
       Coord_sput[0] = Coord_sp.X;
       Coord_sput[1] = Coord_sp.Y;
       Coord_sput[2] = Coord_sp.Z;
 
-     f<<alm_b[i].PRN<<endl;
+  //  f<<alm_b[i].PRN<<endl;
   //   f<<toe<<endl;
   //  f<<alm_b[i].t<<endl;
   //  f<<(alm_b[i].m)<<endl;
@@ -102,13 +102,13 @@ f.open("test\\cor_be1.txt");
  // f<<  (alm_b[i].Omega0)<<endl;
  // f<<  alm_b[i].week<<endl;
 
-      f<<"Coord_sp.X="<<Coord_sp.X<<endl;
+  /*    f<<"Coord_sp.X="<<Coord_sp.X<<endl;
      f <<"Coord_sp.Y =" <<Coord_sp.Y<<endl;
     f <<"Coord_sp.Z =" <<Coord_sp.Z<<endl;
     f<< "coord2---------"<<endl;
      f<<"Coord_sp.X="<<Coord_sp2.X<<endl;
      f <<"Coord_sp.Y =" <<Coord_sp2.Y<<endl;
-    f <<"Coord_sp.Z =" <<Coord_sp2.Z<<endl;
+    f <<"Coord_sp.Z =" <<Coord_sp2.Z<<endl;*/
 // Определение угла
       alpha = 90 - (angle(Coord_sput, Coord_user, B, L)*180/M_PI);
  // f<<"alpha"<<alpha<<endl;
@@ -168,7 +168,8 @@ f.open("test\\cor_be1.txt");
 
     mat H(sumvsb, 4);
     H.zeros();
-
+//ofstream f2;
+//f2.open("test\\cor_be12.txt");
     int numsput = 0;
     for (int k=1; k<=numberSput; k++)
     {
@@ -182,7 +183,7 @@ f.open("test\\cor_be1.txt");
                             alm_b[k].di/M_PI, //в рад -> полуцикл
                             alm_b[k].Omega0/M_PI, //в рад -> полуцик
                             alm_b[k].week);
-            /* Coord_sp = CoordGPS(toe,
+        /*   Coord_sp2 = CoordGPS(toe,
                             alm_b[k].t,
                             (alm_b[k].m), // в рад -> полуцик
                             alm_b[k].sqrta,
@@ -198,9 +199,17 @@ f.open("test\\cor_be1.txt");
         H(numsput, 2) = dz/Ri;
         H(numsput, 3) = 1;
         numsput++ ;
+    /*       f2<<alm_b[k].PRN<<endl;
+             f2<<"Coord_sp.X="<<Coord_sp.X<<endl;
+     f2 <<"Coord_sp.Y =" <<Coord_sp.Y<<endl;
+    f2 <<"Coord_sp.Z =" <<Coord_sp.Z<<endl;
+    f2<< "coord2---------"<<endl;
+     f2<<"Coord_sp.X="<<Coord_sp2.X<<endl;
+     f2 <<"Coord_sp.Y =" <<Coord_sp2.Y<<endl;
+    f2 <<"Coord_sp.Z =" <<Coord_sp2.Z<<endl;*/
       }
     }
-
+//f2.close();
  //   H.save("test\\H_B.txt", raw_ascii);
     mat Htr = H.t();
   //  Htr.save("test\\Htr_B.txt", raw_ascii);

@@ -18,7 +18,10 @@
 #include <wx/spinctrl.h>
 #include <wx/intl.h>
 #include <wx/settings.h>
-
+//
+#include <fstream>
+#include <iostream>
+using namespace std;
 Coordinates ephemerids(double toe,
                               double t_almanax,
                               double almanax_M0,
@@ -56,11 +59,12 @@ Coordinates ephemerids(double toe,
  double Ek;
  double Ekold = 0;
 Ek = en*sin(0)+Mk;
-while (abs(Ek- Ekold)>0.000000001 )
+while (fabs(Ek- Ekold)>0.000000001 )
 { Ekold = Ek;
  Ek = en*sin(Ek)+Mk;
 }
-
+  //ofstream f;
+//f.open("test\\ephem.txt", ios::app);
 double vk = atan2(sqrt(1-(pow(en,2)))*sin(Ek), (cos(Ek)-en) );
 double Ak = A0;
 double rk = Ak*(1-en*cos(Ek));
@@ -71,6 +75,13 @@ double ykk = rk*sin(uk);
 double OMEGA = OMEGA_REF;
 double OMEGAk = Omega0n+(OMEGA-OMEGA_e)*tk-OMEGA_e*t_sec_almanax;
 double ik = i0n;
+ /* f<<"---ephem2---"<<endl;
+  f<<"vk = " <<vk<<endl;
+  f<<"uk = " <<uk<<endl;
+  f<<"rk = " <<rk<<endl;
+  f<<"ik = " <<ik<<endl;
+  f<<"OMEGAk (lymbdak_ECEF) = " <<OMEGAk<<endl;
+f.close();*/
 //double xk = xkk*cos(OMEGAk)-ykk*cos(ik)*sin(OMEGAk);
 //double yk = xkk*sin(OMEGAk)+ykk*cos(ik)*cos(OMEGAk);
 //double zk = ykk*sin(ik);
