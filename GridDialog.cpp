@@ -21,7 +21,7 @@
 #include <wx/window.h>
 //#include <mutex>
 //#include <string>
-//#include <iostream>
+#include <iostream>
 //thread
 
 using namespace std;
@@ -123,7 +123,7 @@ void GridDialog::OnButton1Click2(wxCommandEvent& event)
   TextCtrl7->GetValue().ToDouble(&endd);
   timeCalc calc(gData.day,gData.month,gData.year,gData.hour,gData.minutes,gData.sec,00);
   timeCalc calcGln(gData.day,gData.month,gData.year,gData.hour,gData.minutes,gData.sec,00);
-
+/*
   string text1="MCCJ_211024.agp";//gps
   const char* file; // הכÿ פאיכא ס אכל
   file = (text1).c_str();
@@ -134,8 +134,20 @@ void GridDialog::OnButton1Click2(wxCommandEvent& event)
   const char* file3;
   string text3 = "2021-10-22.xml";//gal
   file3 = (text3).c_str();
-
-
+*/
+  string text1="MCCJ_211226.agp";//gps
+  const char* file; // הכÿ פאיכא ס אכל
+  file = (text1).c_str();
+  timeCalc calcGalileo(gData.day, gData.month, gData.year, 0,0,0,0);
+  string text2 = "MCCJ_211226.agl";//gl
+  const char* file2; // הכÿ פאיכא ס אכל
+  file2 = (text2).c_str();
+  const char* file3;
+  string text3 = "2021-12-24.xml";//gal
+  file3 = (text3).c_str();
+  string text4 = "alm_beidou.txt";//gal
+  const char* file4;
+  file4 = (text4).c_str();
 
   double sko[5];
   double Bg,Lg,Hg;
@@ -161,11 +173,11 @@ void GridDialog::OnButton1Click2(wxCommandEvent& event)
     range = endd-gData.H;
     Gauge1->SetRange(range);
     ofstream fgps;
-    fgps.open("test\\Gps_H.txt");
+    fgps.open("test\\Gps_B.txt");
     ofstream fgl;
-    fgl.open("test\\Glonass_H.txt");
+    fgl.open("test\\Glonass_B.txt");
     ofstream fgal;
-    fgal.open("test\\Galileo_H.txt");
+    fgal.open("test\\Galileo_B.txt");
     for (int i=0; i<=(endd-gData.H); i+=grid)
     {
       Gauge1->SetValue(i);
@@ -201,7 +213,7 @@ void GridDialog::OnButton1Click2(wxCommandEvent& event)
     ofstream fgal;
     fgal.open("test\\Galileo_B.txt");
 
-    for (int i=0; i<=(endd-gData.B); i+=grid)
+    for (double i= 0; i<=(endd-gData.B); i+=grid)
     {
       Gauge1->SetValue(i);
       calccGPS( file, sko, calc,
@@ -408,7 +420,7 @@ void testf(int iter, int* n_iter)
   fgl.open("test\\Glonass_rand.log");
   ofstream fgal;
   fgal.open("test\\Galileo_rand.log");
-    ofstream fbeidou;
+  ofstream fbeidou;
   fbeidou.open("test\\Beidou_rand.log");
  // ofstream ftimes;
  // ftimes.open("test\\times_rand.log");
@@ -427,6 +439,7 @@ void testf(int iter, int* n_iter)
   // fTEST << "Xecef" <<"\t"<< "Yecef" <<"\t"<< "Zecef" <<"\t"<< "B" <<"\t"<< "L" <<"\t"<<"H" <<"\t"<<"Xecu" <<"\t"<< "Yecu" <<"\t"<< "Zecu" <<"\n";
   double H,B,L;
   double sko[5];
+    double sko2[5];
   //double cout_cir;
   for (int i = 0; i<=iter; i++)
   {
@@ -440,9 +453,9 @@ void testf(int iter, int* n_iter)
     B = rand()%180;
     if (B>90)
       B =90-B;
-    L = rand()%180;
-    if (L>90)
-     L=90-L;
+    L = rand()%360;
+    if (L>180)
+     L=180-L;
     H = rand()%10000;
 
 
@@ -451,7 +464,29 @@ void testf(int iter, int* n_iter)
     timeCalc calcGln(day_down,month_down,year_down,hour_predsk,min_predsk,sec_predsk,00);
     timeCalc calcGalileo(day_down,month_down,year_down, 0,0,0,0);
 
+calccBeidou(file4, sko2, calc,
+              (B*M_PI/180.0),(L*M_PI/180.0),H);
+  geoc2geod(sko2[0], sko2[1], sko2[2],&Bg,&Lg,&Hg);
+    if (sko2[0] == -10.0 && sko2[1] == -10.0)
+    {
+      COORDD[0] = -10;
+      COORDD[1] = -10;
+      COORDD[2] = -10;
 
+    }
+    else if ((sko2[0] == -1.0 && sko2[1] == -1.0))
+    {
+      COORDD[0] = -1;
+      COORDD[1] = -1;
+      COORDD[2] = -1;
+
+    }
+    else{
+      getENU(sko2[0], sko2[1], sko2[2],Bg,Lg,COORDD);
+    }
+ //fbeidou<<H<<"\t"<<L<<"\t"<<B<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\t"<<"\n";
+ //   fTEST<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<B<<"\t"<<L<<"\t"<<H<<"\t"<<COORDD[0] <<"\t"<< COORDD[1] <<"\t"<<COORDD[2]<<"\n";
+   fbeidou<<H<<"\t"<<L<<"\t"<<B<<"\t"<< sko2[0]<<"\t"<<sko2[1]<<"\t"<<sko2[2]<<"\t"<<sko2[3]<<"\t"<<sko2[4]<<"\t"<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\t"<<Bg<<"\t"<<Lg<<"\t"<<Hg<<"\n";
    // ftimes<<day_down<<"\t"<<month_down<<"\t"<<year_down<<"\t"<<hour_predsk<<"\t"<<min_predsk<<"\t"<<sec_predsk<<"\n";
 
    calccGPS( file, sko, calc,
@@ -521,29 +556,7 @@ void testf(int iter, int* n_iter)
 
  // ftimes<<day_down<<"\t"<<month_down<<"\t"<<year_down<<"\t"<<hour_predsk<<"\t"<<min_predsk<<"\t"<<sec_predsk<<"\n";
  //ftimes<<H<<"\t"<<"B:"<<B<<"\t"<<"L:"<<L<<endl;
-  calccBeidou(file4, sko, calc,
-              (B*M_PI/180.0),(L*M_PI/180.0),H);
-  geoc2geod(sko[0], sko[1], sko[2],&Bg,&Lg,&Hg);
-    if (sko[0] == -10.0 && sko[1] == -10.0)
-    {
-      COORDD[0] = -10;
-      COORDD[1] = -10;
-      COORDD[2] = -10;
 
-    }
-    else if ((sko[0] == -1.0 && sko[1] == -1.0))
-    {
-      COORDD[0] = -1;
-      COORDD[1] = -1;
-      COORDD[2] = -1;
-
-    }
-    else{
-      getENU(sko[0], sko[1], sko[2],Bg,Lg,COORDD);
-    }
- //fbeidou<<H<<"\t"<<L<<"\t"<<B<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\t"<<"\n";
- //   fTEST<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<B<<"\t"<<L<<"\t"<<H<<"\t"<<COORDD[0] <<"\t"<< COORDD[1] <<"\t"<<COORDD[2]<<"\n";
-   fbeidou<<H<<"\t"<<L<<"\t"<<B<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\t"<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\t"<<Bg<<"\t"<<Lg<<"\t"<<Hg<<"\n";
 
 //  coutt.lock();
  //  cout_cir = (i*100/iter);

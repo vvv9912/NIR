@@ -1,0 +1,216 @@
+1
+Coord_sp.X=3.81862e+007
+Coord_sp.Y =1.79048e+007
+Coord_sp.Z =-377391
+coord2---------
+Coord_sp.X=3.81725e+007
+Coord_sp.Y =1.78989e+007
+Coord_sp.Z =-1.18547e+006
+2
+Coord_sp.X=-4.07821e+007
+Coord_sp.Y =-1.04927e+007
+Coord_sp.Z =1.02387e+006
+coord2---------
+Coord_sp.X=-4.06911e+007
+Coord_sp.Y =-1.04039e+007
+Coord_sp.Z =3.21285e+006
+3
+Coord_sp.X=-3.02916e+007
+Coord_sp.Y =2.92768e+007
+Coord_sp.Z =400001
+coord2---------
+Coord_sp.X=-3.02462e+007
+Coord_sp.Y =2.92995e+007
+Coord_sp.Z =1.25512e+006
+4
+Coord_sp.X=3.73263e+007
+Coord_sp.Y =1.9614e+007
+Coord_sp.Z =-631232
+coord2---------
+Coord_sp.X=3.72829e+007
+Coord_sp.Y =1.96063e+007
+Coord_sp.Z =-1.98235e+006
+5
+Coord_sp.X=-4.1797e+007
+Coord_sp.Y =5.23892e+006
+Coord_sp.Z =1.15637e+006
+coord2---------
+Coord_sp.X=-4.16434e+007
+Coord_sp.Y =5.33409e+006
+Coord_sp.Z =3.62617e+006
+6
+Coord_sp.X=3.29314e+007
+Coord_sp.Y =-2.62383e+007
+Coord_sp.Z =104264
+coord2---------
+Coord_sp.X=3.29305e+007
+Coord_sp.Y =-2.62375e+007
+Coord_sp.Z =327552
+7
+Coord_sp.X=2.55988e+007
+Coord_sp.Y =-3.34221e+007
+Coord_sp.Z =1.43935e+006
+coord2---------
+Coord_sp.X=2.57184e+007
+Coord_sp.Y =-3.30566e+007
+Coord_sp.Z =4.4975e+006
+8
+Coord_sp.X=2.5011e+007
+Coord_sp.Y =-3.40102e+007
+Coord_sp.Z =-1.5422e+006
+coord2---------
+Coord_sp.X=2.43221e+007
+Coord_sp.Y =-3.42104e+007
+Coord_sp.Z =-4.7652e+006
+9
+Coord_sp.X=-6.54227e+006
+Coord_sp.Y =-4.12864e+007
+Coord_sp.Z =157376
+coord2---------
+Coord_sp.X=-6.54626e+006
+Coord_sp.Y =-4.12831e+007
+Coord_sp.Z =494370
+10
+Coord_sp.X=-3.9255e+006
+Coord_sp.Y =-4.19988e+007
+Coord_sp.Z =2.40294e+006
+coord2---------
+Coord_sp.X=-3.72845e+006
+Coord_sp.Y =-4.14098e+007
+Coord_sp.Z =7.511e+006
+11
+Coord_sp.X=2.14989e+007
+Coord_sp.Y =-1.77885e+007
+Coord_sp.Z =-1.32415e+006
+coord2---------
+Coord_sp.X=2.12882e+007
+Coord_sp.Y =-1.7607e+007
+Coord_sp.Z =-4.14611e+006
+12
+Coord_sp.X=2.78814e+007
+Coord_sp.Y =-35135.7
+Coord_sp.Z =-964048
+coord2---------
+Coord_sp.X=2.77341e+007
+Coord_sp.Y =94839.9
+Coord_sp.Z =-3.01917e+006
+13
+Coord_sp.X=388220
+Coord_sp.Y =-4.22895e+007
+Coord_sp.Z =705721
+coord2---------
+Coord_sp.X=591213
+Coord_sp.Y =-4.22356e+007
+Coord_sp.Z =2.20226e+006
+14
+Coord_sp.X=-1.26209e+007
+Coord_sp.Y =-2.48567e+007
+Coord_sp.Z =627845
+coord2---------
+Coord_sp.X=-1.26069e+007
+Coord_sp.Y =-2.47935e+007
+Coord_sp.Z =1.97086e+006
+16
+Coord_sp.X=1.00905e+007
+Coord_sp.Y =-4.07826e+007
+Coord_sp.Z =625487
+coord2---------
+Coord_sp.X=1.0054e+007
+Coord_sp.Y =-4.07491e+007
+Coord_sp.Z =1.9641e+006
+19
+Coord_sp.X=3.89533e+006
+Coord_sp.Y =2.76313e+007
+Coord_sp.Z =-721100
+coord2---------
+Coord_sp.X=3.87737e+006
+Coord_sp.Y =2.75504e+007
+Coord_sp.Z =-2.26315e+006
+20
+Coord_sp.X=-249407
+Coord_sp.Y =2.78999e+007
+Coord_sp.Z =-704536
+coord2---------
+Coord_sp.X=-266907
+Coord_sp.Y =2.78209e+007
+Coord_sp.Z =-2.21117e+006
+21
+Coord_sp.X=2.52366e+007
+Coord_sp.Y =-1.19316e+007
+Coord_sp.Z =157058
+coord2---------
+Coord_sp.X=2.52404e+007
+Coord_sp.Y =-1.19145e+007
+Coord_sp.Z =492951
+22
+Coord_sp.X=2.01699e+007
+Coord_sp.Y =-1.92886e+007
+Coord_sp.Z =365642
+coord2---------
+Coord_sp.X=2.01787e+007
+Coord_sp.Y =-1.92487e+007
+Coord_sp.Z =1.14762e+006
+23
+Coord_sp.X=-1.87901e+007
+Coord_sp.Y =2.06395e+007
+Coord_sp.Z =-63131.4
+coord2---------
+Coord_sp.X=-1.87886e+007
+Coord_sp.Y =2.064e+007
+Coord_sp.Z =-198324
+24
+Coord_sp.X=-2.5318e+007
+Coord_sp.Y =-1.17541e+007
+Coord_sp.Z =-152101
+coord2---------
+Coord_sp.X=-2.53145e+007
+Coord_sp.Y =-1.17529e+007
+Coord_sp.Z =-477817
+25
+Coord_sp.X=-2.61201e+007
+Coord_sp.Y =9.86122e+006
+Coord_sp.Z =-151155
+coord2---------
+Coord_sp.X=-2.61157e+007
+Coord_sp.Y =9.86252e+006
+Coord_sp.Z =-474835
+26
+Coord_sp.X=-8.75381e+006
+Coord_sp.Y =-2.64858e+007
+Coord_sp.Z =-109369
+coord2---------
+Coord_sp.X=-8.75062e+006
+Coord_sp.Y =-2.64849e+007
+Coord_sp.Z =-343568
+27
+Coord_sp.X=1.95291e+007
+Coord_sp.Y =1.99154e+007
+Coord_sp.Z =-33952.7
+coord2---------
+Coord_sp.X=1.95265e+007
+Coord_sp.Y =1.99177e+007
+Coord_sp.Z =-106579
+28
+Coord_sp.X=-9.13128e+006
+Coord_sp.Y =-2.63742e+007
+Coord_sp.Z =-247689
+coord2---------
+Coord_sp.X=-9.15045e+006
+Coord_sp.Y =-2.63573e+007
+Coord_sp.Z =-777513
+29
+Coord_sp.X=2.11325e+007
+Coord_sp.Y =-1.82163e+007
+Coord_sp.Z =-615360
+coord2---------
+Coord_sp.X=2.10889e+007
+Coord_sp.Y =-1.81747e+007
+Coord_sp.Z =-1.93182e+006
+30
+Coord_sp.X=1.84e+007
+Coord_sp.Y =2.09652e+007
+Coord_sp.Z =25528.9
+coord2---------
+Coord_sp.X=1.84018e+007
+Coord_sp.Y =2.09634e+007
+Coord_sp.Z =80143.7

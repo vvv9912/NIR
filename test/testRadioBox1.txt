@@ -1,0 +1,10 @@
+choise =1grid = 0.1day_down =17
+month_down =1
+year_down =2022
+gData.hour =21
+minutes =47
+sec =42
+B =-90
+L =60
+H =15000
+t =2

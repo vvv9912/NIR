@@ -7,7 +7,7 @@
 #include "include/ephemerids.h"
 #include "include/xyz2enu.h"
 //
-#include "ephemerids2.h"
+//#include "ephemerids2.h"
 //#include "Kepler.h"
 //
 #include <wx/msgdlg.h>
@@ -19,7 +19,7 @@
 #include <iostream>
 #include <string>
 #include <stdio.h>
-#include <fstream>
+//#include <fstream>
 
 using namespace std;
 using namespace arma;
@@ -58,8 +58,8 @@ void calccBeidou(const char* file,
     vector<int> Visibles; //вектор из кол-во элементов - visibles
     calc.timeB();
     double toe=calc.sec_since_week;
-ofstream f;
-f.open("test\\cor_be1.txt");
+//ofstream f;
+//f.open("test\\cor_be1.txt", ios::app);
  Coordinates Coord_sp; // можно потом заменить в 482 строке и ниже.
  //Coordinatess Coord_sp2;
 
@@ -102,13 +102,13 @@ f.open("test\\cor_be1.txt");
  // f<<  (alm_b[i].Omega0)<<endl;
  // f<<  alm_b[i].week<<endl;
 
-  /*    f<<"Coord_sp.X="<<Coord_sp.X<<endl;
-     f <<"Coord_sp.Y =" <<Coord_sp.Y<<endl;
-    f <<"Coord_sp.Z =" <<Coord_sp.Z<<endl;
-    f<< "coord2---------"<<endl;
-     f<<"Coord_sp.X="<<Coord_sp2.X<<endl;
-     f <<"Coord_sp.Y =" <<Coord_sp2.Y<<endl;
-    f <<"Coord_sp.Z =" <<Coord_sp2.Z<<endl;*/
+  //   f<<"Coord_sp.X="<<Coord_sp.X<<endl;
+  //   f <<"Coord_sp.Y =" <<Coord_sp.Y<<endl;
+  //  f <<"Coord_sp.Z =" <<Coord_sp.Z<<endl;
+  //  f<< "coord---------"<<endl;/*
+    // f<<"Coord_sp.X="<<Coord_sp2.X<<endl;
+  //   f <<"Coord_sp.Y =" <<Coord_sp2.Y<<endl;
+  //  f <<"Coord_sp.Z =" <<Coord_sp2.Z<<endl;*/
 // Определение угла
       alpha = 90 - (angle(Coord_sput, Coord_user, B, L)*180/M_PI);
  // f<<"alpha"<<alpha<<endl;
@@ -123,6 +123,7 @@ f.open("test\\cor_be1.txt");
      // f<<vsb[i]<<endl;
     }
     }
+//    f<<sumvsb<<endl;
      // f<<sumvsb<<endl;
 //ofstream f;
 //f.open("test\\coord_beidou2.txt");
@@ -150,7 +151,7 @@ f.open("test\\cor_be1.txt");
       }
     }
 
-    //  Dn.save("test\\Dn_B.txt", raw_ascii);
+    // Dn.save("test\\Dn_B.txt", raw_ascii);
     double max_val_Dn = Dn.max();
     for (int i= 0; i<sumvsb; i++)
     {
@@ -210,11 +211,12 @@ f.open("test\\cor_be1.txt");
       }
     }
 //f2.close();
- //   H.save("test\\H_B.txt", raw_ascii);
+ //  H.save("test\\H_B.txt", raw_ascii);
     mat Htr = H.t();
   //  Htr.save("test\\Htr_B.txt", raw_ascii);
     mat u = Htr*inv(Dn)*H;
     mat sko ;
+  //  f<< det(u)<<endl;
  /*   if (det(u) < 0.000000000000001)
     {
     skoo[0]= -1;
@@ -233,5 +235,6 @@ f.open("test\\cor_be1.txt");
     skoo[4] = sqrt (pow(sko(0,0),2)+pow(sko(1,1),2)+pow(sko(2,2),2) );
    // }
   }
+//  f.close();
 }
 
