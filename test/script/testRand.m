@@ -7,9 +7,9 @@ fileBeidou = "..\Beidou_rand.log";
  dataGl = importdata(fileGl);
  dataG = importdata(fileG);
 dataBeidou = importdata(fileBeidou);
-  pars(dataGa,1,200000,-10,20,1)
-   pars(dataGl,2,20000,-10,50,1)
- pars(dataG,3,2000,-10,20,1)
+  pars(dataGa,1,1000000,-10,20,1)
+   pars(dataGl,2,2000,-10,50,1)
+ pars(dataG,3,100000,-10,20,1)
 %   pars(dataBeidou,4,20000000,-10,500,10)
 %1 высота ;%ско по высоте
 % function p = pars(data, nfigure)
