@@ -13,7 +13,12 @@
 #include <include/downlGalileo.h>
 #include <include/calcGalileo.h>
 #include <include/calcBeidou.h>
-
+//
+#include <include/parserEphB.h>
+#include <include/parserEphGAL.h>
+#include <include/parserEphGLNS.h>
+#include <include/parserEphGPS.h>
+//
 #include "include/geoc2geod.h"
 
 #include "include/getENU.h"
@@ -151,7 +156,7 @@ void GridDialog::OnButton1Click2(wxCommandEvent& event)
 
   double sko[5];
   double Bg,Lg,Hg;
-
+  double COORDD[3];
 
   //  wxDateTime T;
 //  T = DatePickerCtrl1->GetValue();
@@ -212,21 +217,71 @@ void GridDialog::OnButton1Click2(wxCommandEvent& event)
     fgl.open("test\\Glonass_B.txt");
     ofstream fgal;
     fgal.open("test\\Galileo_B.txt");
+      ofstream fbei;
+    fbei.open("test\\Beidou_B.txt");
 
     for (double i= 0; i<=(endd-gData.B); i+=grid)
     {
       Gauge1->SetValue(i);
       calccGPS( file, sko, calc,
                 (b*M_PI/180.0),(gData.L*M_PI/180.0),gData.H);
-      fgps<<b<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\n";
+     if (sko[0] == -10.0 && sko[1] == -10.0)
+    {
+      COORDD[0] = -10;
+      COORDD[1] = -10;
+      COORDD[2] = -10;
+
+    }
+    else{
+      getENU(sko[0], sko[1], sko[2],Bg,Lg,COORDD);
+    }
+
+    fgps<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\t"<<b<<"\t"<<gData.L<<"\t"<<gData.H<<"\n";
+     // fgps<<b<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\n";
       calccGlonass( file2, sko, calcGln,(b*M_PI/180.0),(gData.L*M_PI/180.0),gData.H);
-      fgl<<b<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\n";
+      if (sko[0] == -10.0 && sko[1] == -10.0)
+    {
+      COORDD[0] = -10;
+      COORDD[1] = -10;
+      COORDD[2] = -10;
+
+    }
+    else{
+      getENU(sko[0], sko[1], sko[2],Bg,Lg,COORDD);
+    }
+     fgl<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\t"<<b<<"\t"<<gData.L<<"\t"<<gData.H<<"\n";
+    // fgl<<b<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\n";
       calccGalileo(file3,
                    sko,
                    calc,
                    calcGalileo,
                    (b*M_PI/180.0),(gData.L*M_PI/180.0),gData.H);
-      fgal<<b<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\n";
+        if (sko[0] == -10.0 && sko[1] == -10.0)
+    {
+      COORDD[0] = -10;
+      COORDD[1] = -10;
+      COORDD[2] = -10;
+
+    }
+    else{
+      getENU(sko[0], sko[1], sko[2],Bg,Lg,COORDD);
+    }
+     // fgal<<b<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\n";
+      fgal<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\t"<<b<<"\t"<<gData.L<<"\t"<<gData.H<<"\n";
+      calccBeidou(file4, sko, calc,
+              (b*M_PI/180.0),(gData.L*M_PI/180.0),gData.H);
+           if (sko[0] == -10.0 && sko[1] == -10.0)
+    {
+      COORDD[0] = -10;
+      COORDD[1] = -10;
+      COORDD[2] = -10;
+
+    }
+    else{
+      getENU(sko[0], sko[1], sko[2],Bg,Lg,COORDD);
+    }
+   //   fbei<<b<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\n";
+ fbei<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\t"<<b<<"\t"<<gData.L<<"\t"<<gData.H<<"\n";
       b +=grid;
     }
     fgps.close();
@@ -391,7 +446,49 @@ void GridDialog::testf(int iter)
 //std::mutex coutt;
 void testf(int iter, int* n_iter)
 {
+  /*SISerr_Beidou.M0_SRE
+  SISerr_Beidou.SISRE
+  SISerr_Gal.SISRE
+  SISerr_Gal.M0_SRE
+  SISerr_GLNS.M0_SRE
 
+  SISerr_GLNS.SISRE
+  SISerr_GPS.M0_SRE
+  SISerr_GPS.SISRE*/
+
+   ofstream fbeidou_err;
+  fbeidou_err.open("test\\erorr\\beidou_err.log");
+   ofstream fgps_err;
+  fgps_err.open("test\\erorr\\gpserr.log");
+   ofstream fglonass_err;
+  fglonass_err.open("test\\erorr\\GLNSerr.log");
+    ofstream fGalileo_err;
+  fGalileo_err.open("test\\erorr\\fGalileo_err.log");
+  for (int i = 1; i<=47; i++)
+  {
+    if (SISerr_Beidou[i].M0_SRE != 0)
+    {
+    fbeidou_err<<i<<"\t"<<SISerr_Beidou[i].M0_SRE<<"\t"<<SISerr_Beidou[i].SISRE<<endl;
+    }
+    if (SISerr_Gal[i-1].M0_SRE != 0)
+    {
+    fGalileo_err<<i<<"\t"<<SISerr_Gal[i-1].M0_SRE<<"\t"<<SISerr_Gal[i-1].SISRE<<endl;
+    }
+
+     if (SISerr_GPS[i-1].M0_SRE != 0)
+    {
+    fgps_err<<i<<"\t"<<SISerr_GPS[i-1].M0_SRE<<"\t"<<SISerr_GPS[i-1].SISRE<<endl;
+    }
+      if (SISerr_GLNS[i-1].M0_SRE != 0)
+    {
+    fglonass_err<<i<<"\t"<<SISerr_GLNS[i-1].M0_SRE<<"\t"<<SISerr_GLNS[i-1].SISRE<<endl;
+    }
+
+}
+fbeidou_err.close();
+fgps_err.close();
+fGalileo_err.close();
+fglonass_err.close();
   int year_down=2021;
   int month_down;
   int day_down;

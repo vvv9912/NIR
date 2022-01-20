@@ -118,6 +118,7 @@ void parserstruct(char a[100], double *d)
   }
 //sscanf(z, "%lf", &d ) ;
   *d = atof(z);
+
 }
 
 int Downloadhttp(const char* url, const char* file2)

@@ -61,6 +61,7 @@
 #include <wx/choice.h>
 #include <wx/timectrl.h>
 //
+#include <stdlib.h>  //atoi
 
 #define SQUARE(val) val * val
 
