@@ -9,11 +9,11 @@ fileBeidou = "..\Beidou_rand.log";
  dataGl = importdata(fileGl);
  dataG = importdata(fileG);
 dataBeidou = importdata(fileBeidou);
-%   pars(dataGa,1,2000,0,20,1,2500)
-%    pars(dataGl,2,2000,0,20,1,350)
-%  pars(dataG,3,2000,0,20,1,700)
-%   pars(dataBeidou,4,10000000,-10,500,10,100)
-  pars(dataBeidou,4,50,0,300,10,100)
+  pars(dataGa,1,2000,0,20,1,2500)
+   pars(dataGl,2,2000,0,20,1,350)
+ pars(dataG,3,2000,0,20,1,700)
+  pars(dataBeidou,4,10000000,-10,500,10,100)
+%   pars(dataBeidou,4,50,0,300,10,100)
 %1 высота ;%ско по высоте
 
 function p = pars(data, nfigure,shag, min, max, shag2,ymax)
@@ -73,16 +73,16 @@ M0= 0; %от высоты зависимость
 %    ylabel('3*\sigma');
 %    xlabel('B, gr')
  if (mod(nfigure,1) == 0)
-       name ='Galileo';
+       name ='GALILEO';
     end
      if (mod(nfigure,2) == 0)
-        name ='Glonass';
+        name ='ГЛОНАСС';
      end
      if (mod(nfigure,3) == 0)
         name ='GPS';
      end
        if (mod(nfigure,4) == 0)
-        name ='Beidou';
+        name ='BEIDOU';
     end
     histogram (sigma,shag);
   %       ylim([0 3500])

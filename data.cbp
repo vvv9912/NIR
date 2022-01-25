@@ -27,6 +27,30 @@
 					<Add library="libwininet.a" />
 				</Linker>
 			</Target>
+			<Target title="rel">
+				<Option platforms="Windows;" />
+				<Option output="data" prefix_auto="1" extension_auto="1" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O1" />
+					<Add option="-Weffc++" />
+					<Add option="-pedantic" />
+					<Add option="-Og" />
+				</Compiler>
+				<Linker>
+					<Add option="-static-libstdc++" />
+					<Add option="-static-libgcc" />
+					<Add option="-static" />
+					<Add option="-lurlmon" />
+					<Add library="libwxmsw30u.a" />
+					<Add library="libwxpng.a" />
+					<Add library="libwxjpeg.a" />
+					<Add library="libwxtiff.a" />
+					<Add library="libwxzlib.a" />
+					<Add library="libwininet.a" />
+				</Linker>
+			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
@@ -71,6 +95,7 @@
 			<Add library="libshlwapi.a" />
 			<Add library="libversion.a" />
 			<Add library="liboleacc.a" />
+			<Add library="libwininet.a" />
 			<Add directory="$(#wx)/lib/gcc_lib" />
 			<Add directory="." />
 		</Linker>

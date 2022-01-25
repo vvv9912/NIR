@@ -47,6 +47,9 @@ const long GridDialog::ID_GAUGE1 = wxNewId();
 const long GridDialog::ID_TEXTCTRL2 = wxNewId();
 const long GridDialog::ID_STATICTEXT4 = wxNewId();
 const long GridDialog::ID_BUTTON2 = wxNewId();
+const long GridDialog::ID_BUTTON3 = wxNewId();
+const long GridDialog::ID_TEXTCTRL3 = wxNewId();
+const long GridDialog::ID_STATICTEXT5 = wxNewId();
 const long GridDialog::ID_SASHWINDOW1 = wxNewId();
 //*)
 
@@ -61,10 +64,10 @@ GridDialog::GridDialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,const w
   wxSashWindow* SashWindow1;
 
   Create(parent, wxID_ANY, _("Grid"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
-  SetClientSize(wxSize(288,325));
+  SetClientSize(wxSize(472,325));
   SetMinSize(wxSize(-1,-1));
   SetMaxSize(wxSize(-1,-1));
-  SashWindow1 = new wxSashWindow(this, ID_SASHWINDOW1, wxPoint(0,0), wxSize(280,328), wxSW_3D, _T("ID_SASHWINDOW1"));
+  SashWindow1 = new wxSashWindow(this, ID_SASHWINDOW1, wxPoint(0,0), wxSize(464,328), wxSW_3D, _T("ID_SASHWINDOW1"));
   TextCtrl1 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL1, wxEmptyString, wxPoint(16,161), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
   StaticText3 = new wxStaticText(SashWindow1, ID_STATICTEXT3, wxEmptyString, wxPoint(176,188), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
   TextCtrl7 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL7, wxEmptyString, wxPoint(16,120), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL7"));
@@ -82,6 +85,9 @@ GridDialog::GridDialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,const w
   TextCtrl2 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL2, wxEmptyString, wxPoint(166,161), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
   StaticText4 = new wxStaticText(SashWindow1, ID_STATICTEXT4, _("Кол-во итераций"), wxPoint(166,145), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
   Button2 = new wxButton(SashWindow1, ID_BUTTON2, _("Получения сетки со случайными \nзначениями"), wxPoint(166,192), wxSize(101,53), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+  Button3 = new wxButton(SashWindow1, ID_BUTTON3, _("Методом Монте-Карло\n получение распределение\n по широте"), wxPoint(295,190), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON3"));
+  TextCtrl3 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL3, _("0"), wxPoint(307,160), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL3"));
+  StaticText5 = new wxStaticText(SashWindow1, ID_STATICTEXT5, _("Кол-во итераций"), wxPoint(309,142), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
   SashWindow1->SetSashVisible(wxSASH_TOP,    true);
   SashWindow1->SetSashVisible(wxSASH_BOTTOM, true);
   SashWindow1->SetSashVisible(wxSASH_LEFT,   true);
@@ -90,6 +96,7 @@ GridDialog::GridDialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,const w
 
   Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&GridDialog::OnButton1Click2);
   Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&GridDialog::OnButton2Click2);
+  Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&GridDialog::OnButton3Click);
   //*)
 
 }
@@ -778,3 +785,178 @@ fTEST << "Xecef" <<"\t"<< "Yecef" <<"\t"<< "Zecef" <<"\t"<< "B" <<"\t"<< "L" <<"
   fcoord.close();*/
 }
 
+void Get_B(int iter, double shag)
+{
+
+  int year_down=2021;
+  int month_down;
+  int day_down;
+  int hour_predsk;
+  int min_predsk;
+  int sec_predsk;
+  string text1="MCCJ_211226.agp";//gps
+  const char* file; // для файла с алм
+  file = (text1).c_str();
+  timeCalc calcGalileo(gData.day, gData.month, gData.year, 0,0,0,0);
+  string text2 = "MCCJ_211226.agl";//gl
+  const char* file2; // для файла с алм
+  file2 = (text2).c_str();
+  const char* file3;
+  string text3 = "2021-12-24.xml";//gal
+  file3 = (text3).c_str();
+  string text4 = "alm_beidou.txt";//gal
+  const char* file4;
+  file4 = (text4).c_str();
+  double Bg,Lg,Hg;
+
+ // Gauge1->SetRange(iter);
+  ofstream fgps;
+  fgps.open("test\\Gps_B_rand.log");
+  ofstream fgl;
+  fgl.open("test\\Glonass_B_rand.log");
+  ofstream fgal;
+  fgal.open("test\\Galileo_B_rand.log");
+  ofstream fbeidou;
+  fbeidou.open("test\\Beidou_B_rand.log");
+    double COORDD[3];
+    double H,B,L;
+    double sko[5];
+    double sko2[5];
+  //double cout_cir;
+  for (double B = -90; B <=90; B= B+shag )
+  {
+    for (int i = 0; i<=iter; i++)
+    {
+
+   // Gauge1->SetValue(i);
+    month_down = rand() %12+1;
+    day_down = rand()%30+1;
+    hour_predsk = rand()%23;
+    min_predsk = rand()%60;
+    sec_predsk = rand()%60;
+    L = rand()%360;
+    if (L>180)
+     L=180-L;
+    H = rand()%10000;
+
+
+    //fcoord<<H<<"\t"<<B<<"\t"<<L<<"\n";
+    timeCalc calc(day_down,month_down,year_down,hour_predsk,min_predsk,sec_predsk,00);
+    timeCalc calcGln(day_down,month_down,year_down,hour_predsk,min_predsk,sec_predsk,00);
+    timeCalc calcGalileo(day_down,month_down,year_down, 0,0,0,0);
+
+calccBeidou(file4, sko2, calc,
+              (B*M_PI/180.0),(L*M_PI/180.0),H);
+  geoc2geod(sko2[0], sko2[1], sko2[2],&Bg,&Lg,&Hg);
+    if (sko2[0] == -10.0 && sko2[1] == -10.0)
+    {
+      COORDD[0] = 0;
+      COORDD[1] = 0;
+      COORDD[2] = 0;
+
+    }
+    else if ((sko2[0] == -1.0 && sko2[1] == -1.0))
+    {
+      COORDD[0] = 0;
+      COORDD[1] = 0;
+      COORDD[2] = 0;
+
+    }
+    else{
+      getENU(sko2[0], sko2[1], sko2[2],Bg,Lg,COORDD);
+    }
+ //fbeidou<<H<<"\t"<<L<<"\t"<<B<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\t"<<"\n";
+ //   fTEST<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<B<<"\t"<<L<<"\t"<<H<<"\t"<<COORDD[0] <<"\t"<< COORDD[1] <<"\t"<<COORDD[2]<<"\n";
+   //fbeidou<<H<<"\t"<<L<<"\t"<<B<<"\t"<< sko2[0]<<"\t"<<sko2[1]<<"\t"<<sko2[2]<<"\t"<<sko2[3]<<"\t"<<sko2[4]<<"\t"<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\t"<<Bg<<"\t"<<Lg<<"\t"<<Hg<<"\n";
+   fbeidou<<B<<"\t"<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\n";
+   // ftimes<<day_down<<"\t"<<month_down<<"\t"<<year_down<<"\t"<<hour_predsk<<"\t"<<min_predsk<<"\t"<<sec_predsk<<"\n";
+
+   calccGPS( file, sko, calc,
+              (B*M_PI/180.0),(L*M_PI/180.0),H);
+    geoc2geod(sko[0], sko[1], sko[2],&Bg,&Lg,&Hg);
+    if (sko[0] == -10.0 && sko[1] == -10.0)
+    {
+      COORDD[0] = 0;
+      COORDD[1] = 0;
+      COORDD[2] = 0;
+
+    }
+      else if ((sko[0] == -1.0 && sko[1] == -1.0))
+    {
+      COORDD[0] = 0;
+      COORDD[1] = 0;
+      COORDD[2] = 0;
+
+    }
+    else{
+      getENU(sko[0], sko[1], sko[2],Bg,Lg,COORDD);
+    }
+
+ //   fTEST<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<B<<"\t"<<L<<"\t"<<H<<"\t"<<COORDD[0] <<"\t"<< COORDD[1] <<"\t"<<COORDD[2]<<"\n";
+   // fgps<<H<<"\t"<<L<<"\t"<<B<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\t"<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\t"<<Bg<<"\t"<<Lg<<"\t"<<Hg<<"\n";
+    fgps<<B<<"\t"<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\n";
+  //  fgps<<H<<"\t"<<L<<"\t"<<B<<"\t"<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\n";
+
+   calccGlonass( file2, sko, calcGln,(B*M_PI/180.0),(L*M_PI/180.0),H);
+    geoc2geod(sko[0], sko[1], sko[2],&Bg,&Lg,&Hg);
+      if (sko[0] == -10.0 && sko[1] == -10.0)
+    {
+      COORDD[0] = 0;
+      COORDD[1] = 0;
+      COORDD[2] = 0;
+
+    }
+    else if ((sko[0] == -1.0 && sko[1] == -1.0))
+    {
+      COORDD[0] = 0;
+      COORDD[1] = 0;
+      COORDD[2] = 0;
+
+    }
+    else{
+      getENU(sko[0], sko[1], sko[2],Bg,Lg,COORDD);
+    }
+   // fgl<<H<<"\t"<<L<<"\t"<<B<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\t"<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\t"<<Bg<<"\t"<<Lg<<"\t"<<Hg<<"\n";
+    fgl<<B<<"\t"<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\n";
+ //  fgl<<H<<"\t"<<L<<"\t"<<B<<"\t"<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\n";
+   calccGalileo(file3,
+               sko,
+                calc,
+                calcGalileo,
+                (B*M_PI/180.0),(L*M_PI/180.0),H);
+   geoc2geod(sko[0], sko[1], sko[2],&Bg,&Lg,&Hg);
+     if (sko[0] == -10.0 && sko[1] == -10.0)
+    {
+      COORDD[0] = 0;
+      COORDD[1] = 0;
+      COORDD[2] = 0;
+
+    }
+    else if ((sko[0] == -1.0 && sko[1] == -1.0))
+    {
+      COORDD[0] = 0;
+      COORDD[1] = 0;
+      COORDD[2] = 0;
+
+    }
+    else{
+      getENU(sko[0], sko[1], sko[2],Bg,Lg,COORDD);
+    }
+  //fgal<<H<<"\t"<<L<<"\t"<<B<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\t"<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\t"<<Bg<<"\t"<<Lg<<"\t"<<Hg<<"\n";
+  fgal<<B<<"\t"<< COORDD[0]<<"\t"<<COORDD[1]<<"\t"<<COORDD[2]<<"\n";
+    }
+
+  }
+fbeidou.close();
+fgps.close();
+fgal.close();
+fgl.close();
+}
+void GridDialog::OnButton3Click(wxCommandEvent& event)
+{
+  int iter;
+  double iteration;
+  TextCtrl3 ->GetValue().ToDouble(&iteration);
+  iter = static_cast<int>(iteration);
+  Get_B(iter,1);
+}

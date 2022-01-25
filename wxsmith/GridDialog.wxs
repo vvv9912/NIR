@@ -3,13 +3,13 @@
 	<object class="wxDialog" name="GridDialog">
 		<title>Grid</title>
 		<centered>1</centered>
-		<size>288,325</size>
+		<size>472,325</size>
 		<minsize>-1,-1</minsize>
 		<maxsize>-1,-1</maxsize>
 		<id_arg>0</id_arg>
 		<object class="wxSashWindow" name="ID_SASHWINDOW1" variable="SashWindow1" member="no">
 			<pos>0,0</pos>
-			<size>280,328</size>
+			<size>464,328</size>
 			<style>wxSW_3D</style>
 			<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="TextCtrl1" member="yes">
 				<pos>16,161</pos>
@@ -62,6 +62,19 @@
 				<pos>166,192</pos>
 				<size>101,53</size>
 				<handler function="OnButton2Click2" entry="EVT_BUTTON" />
+			</object>
+			<object class="wxButton" name="ID_BUTTON3" variable="Button3" member="yes">
+				<label>Методом Монте-Карло&#x0A; получение распределение&#x0A; по широте</label>
+				<pos>295,190</pos>
+				<handler function="OnButton3Click" entry="EVT_BUTTON" />
+			</object>
+			<object class="wxTextCtrl" name="ID_TEXTCTRL3" variable="TextCtrl3" member="yes">
+				<value>0</value>
+				<pos>307,160</pos>
+			</object>
+			<object class="wxStaticText" name="ID_STATICTEXT5" variable="StaticText5" member="yes">
+				<label>Кол-во итераций</label>
+				<pos>309,142</pos>
 			</object>
 		</object>
 	</object>

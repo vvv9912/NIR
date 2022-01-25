@@ -25,22 +25,30 @@ void calccGalileo(const char* file,
                   double B,double L, double h )
 
 
-{    double N;
+{  /*  double N;
   double e=0;
   double a=6378136; // радиус З
 // Получение координат потребителя
   N=a/sqrt(1-(e*e)*(sin(B))*(sin(B)));
-
+*/
+double a = 6378137.0; //большая полуось
+double b = 6356752.3142; // малая полуосб
+double f = (a-b)/a; //сжатие
+//double e = (sqrt(pow(a,2)+pow(b,2)))/a; //эксцентриситет
+double epow2 = f*(2-f);
+double e2; // второй эксцентриситет
+e2 = epow2/(1-epow2);
+double N = a/sqrt(1-epow2*pow(sin(B),2));
   double Coord_x;
   double Coord_y;
   double Coord_z;
   Coord_x = (N+h)*cos(B)*cos(L);
   Coord_y = (N+h)*cos(B)*sin(L);
-  Coord_z = ((1-e*e)*N+h)*sin(B);
+  Coord_z = ((1-epow2)*N+h)*sin(B);
   double Coord_user[3];
   Coord_user[0]=(N+h)*cos(B)*cos(L);
   Coord_user[1]= (N+h)*cos(B)*sin(L);
-  Coord_user[2]= ((1-e*e)*N+h)*sin(B);
+  Coord_user[2]= ((1-epow2)*N+h)*sin(B);
 
   double Coord_sput[3];
   double alpha;

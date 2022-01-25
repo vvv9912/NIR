@@ -11,6 +11,8 @@
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
 //*)
+void testf( int iter);
+void Get_B(int iter, double shag);
 extern struct GlobalData{
   int year;
   int month;
@@ -34,14 +36,17 @@ class GridDialog: public wxDialog
 		//(*Declarations(GridDialog)
 		wxButton* Button1;
 		wxButton* Button2;
+		wxButton* Button3;
 		wxGauge* Gauge1;
 		wxRadioBox* RadioBox1;
 		wxStaticText* StaticText1;
 		wxStaticText* StaticText2;
 		wxStaticText* StaticText3;
 		wxStaticText* StaticText4;
+		wxStaticText* StaticText5;
 		wxTextCtrl* TextCtrl1;
 		wxTextCtrl* TextCtrl2;
+		wxTextCtrl* TextCtrl3;
 		wxTextCtrl* TextCtrl7;
 		//*)
 //void testf( int iter);
@@ -59,6 +64,9 @@ class GridDialog: public wxDialog
 		static const long ID_TEXTCTRL2;
 		static const long ID_STATICTEXT4;
 		static const long ID_BUTTON2;
+		static const long ID_BUTTON3;
+		static const long ID_TEXTCTRL3;
+		static const long ID_STATICTEXT5;
 		static const long ID_SASHWINDOW1;
 		//*)
 
@@ -77,6 +85,7 @@ class GridDialog: public wxDialog
 		void OnButton2Click1(wxCommandEvent& event);
 		void OnButton2Click2(wxCommandEvent& event);
 		void OnButton2Click3(wxCommandEvent& event);
+		void OnButton3Click(wxCommandEvent& event);
 		//*)
 
 		DECLARE_EVENT_TABLE()
