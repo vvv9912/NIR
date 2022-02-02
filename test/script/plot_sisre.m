@@ -34,10 +34,10 @@ pars(dataB,1);
 %     end
 %  figure (nfigure)
 %  
-%    bar(nsp,SISRE)
+%    bar(nsp,sqrt(SISRE))
 %    
 %    xlabel('Номер спутника')
-%    ylabel('{\sigma^2}_{SISRE}, м');
+%    ylabel('{\sigma}_{SISRE}, м');
 %    hold on;
 %    grid on;
 %    title(name);
@@ -93,9 +93,9 @@ M0 = data(:,3);
 %        end
     name ='ВСЕ_ГРАФИКИ';
  figure (nfigure)
-   bar(nsp,SISRE)
+   bar(nsp,sqrt(SISRE))
    xlabel('Номер спутника')
-   ylabel('{\sigma^2}_{SISRE}, м');
+   ylabel('{\sigma}_{SISRE}, м');
    hold on;
    grid on;
   % title(name);
@@ -108,7 +108,7 @@ M0 = data(:,3);
    nn = "_"
    n2 = ".jpg"
    SKOO = "_SKO_";
-   legend('GALILEO','ГЛОНАСС','GPS','BEIDOU','Location','northwest' );
+   legend({'GALILEO','ГЛОНАСС','GPS','BEIDOU'},'Location','northwest', 'FontSize', 10 );
    saveas(nfigure,name+SKOO+n+n2);
    
    figure (nfigure+4)
@@ -125,7 +125,7 @@ M0 = data(:,3);
 %   title(name);
    set(findall(gcf,'type','axes'),'fontsize',5)
    set(findall(gcf,'type','text'),'fontSize',12) 
-    legend('GALILEO','ГЛОНАСС','GPS','BEIDOU','Location','northwest' );
+    legend({'GALILEO','ГЛОНАСС','GPS','BEIDOU'},'Location','northwest', 'FontSize', 10 );
 saveas(nfigure+4,name+M+n+n2);
 
 end

@@ -8,6 +8,7 @@
 #include <wx/gauge.h>
 #include <wx/radiobox.h>
 #include <wx/sashwin.h>
+#include <wx/statbox.h>
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
 //*)
@@ -39,11 +40,17 @@ class GridDialog: public wxDialog
 		wxButton* Button3;
 		wxGauge* Gauge1;
 		wxRadioBox* RadioBox1;
+		wxStaticBox* StaticBox1;
+		wxStaticBox* StaticBox2;
+		wxStaticBox* StaticBox3;
 		wxStaticText* StaticText1;
 		wxStaticText* StaticText2;
 		wxStaticText* StaticText3;
 		wxStaticText* StaticText4;
 		wxStaticText* StaticText5;
+		wxStaticText* StaticText6;
+		wxStaticText* StaticText7;
+		wxStaticText* StaticText8;
 		wxTextCtrl* TextCtrl1;
 		wxTextCtrl* TextCtrl2;
 		wxTextCtrl* TextCtrl3;
@@ -67,6 +74,11 @@ class GridDialog: public wxDialog
 		static const long ID_BUTTON3;
 		static const long ID_TEXTCTRL3;
 		static const long ID_STATICTEXT5;
+		static const long ID_STATICBOX1;
+		static const long ID_STATICTEXT6;
+		static const long ID_STATICTEXT7;
+		static const long ID_STATICTEXT8;
+		static const long ID_STATICBOX3;
 		static const long ID_SASHWINDOW1;
 		//*)
 

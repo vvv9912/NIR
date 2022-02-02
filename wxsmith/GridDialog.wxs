@@ -3,27 +3,29 @@
 	<object class="wxDialog" name="GridDialog">
 		<title>Grid</title>
 		<centered>1</centered>
-		<size>472,325</size>
+		<size>548,475</size>
 		<minsize>-1,-1</minsize>
 		<maxsize>-1,-1</maxsize>
 		<id_arg>0</id_arg>
 		<object class="wxSashWindow" name="ID_SASHWINDOW1" variable="SashWindow1" member="no">
 			<pos>0,0</pos>
-			<size>464,328</size>
+			<size>552,480</size>
 			<style>wxSW_3D</style>
 			<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="TextCtrl1" member="yes">
-				<pos>16,161</pos>
+				<value>0</value>
+				<pos>38,306</pos>
 			</object>
 			<object class="wxStaticText" name="ID_STATICTEXT3" variable="StaticText3" member="yes">
 				<label></label>
 				<pos>176,188</pos>
 			</object>
 			<object class="wxTextCtrl" name="ID_TEXTCTRL7" variable="TextCtrl7" member="yes">
-				<pos>16,120</pos>
+				<value>0</value>
+				<pos>37,245</pos>
 			</object>
 			<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
 				<label>Конечное значение</label>
-				<pos>16,102</pos>
+				<pos>38,225</pos>
 			</object>
 			<object class="wxRadioBox" name="ID_RADIOBOX1" variable="RadioBox1" member="yes">
 				<label>Шаг</label>
@@ -33,48 +35,77 @@
 					<item>Долготе</item>
 				</content>
 				<default>3</default>
-				<pos>14,10</pos>
+				<pos>38,125</pos>
 				<size>79,86</size>
 			</object>
 			<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
 				<label>Значение сетки</label>
-				<pos>16,145</pos>
+				<pos>38,286</pos>
 			</object>
 			<object class="wxButton" name="ID_BUTTON1" variable="Button1" member="yes">
-				<label>Получения сетки&#x0A; значений</label>
-				<pos>16,192</pos>
+				<label>Получение сетки&#x0A; значений</label>
+				<pos>38,340</pos>
 				<size>101,39</size>
 				<handler function="OnButton1Click2" entry="EVT_BUTTON" />
 			</object>
 			<object class="wxGauge" name="ID_GAUGE1" variable="Gauge1" member="yes">
-				<pos>29,299</pos>
-				<size>223,28</size>
+				<pos>66,433</pos>
+				<size>422,28</size>
 			</object>
 			<object class="wxTextCtrl" name="ID_TEXTCTRL2" variable="TextCtrl2" member="yes">
-				<pos>166,161</pos>
+				<value>0</value>
+				<pos>213,306</pos>
 			</object>
 			<object class="wxStaticText" name="ID_STATICTEXT4" variable="StaticText4" member="yes">
 				<label>Кол-во итераций</label>
-				<pos>166,145</pos>
+				<pos>213,286</pos>
 			</object>
 			<object class="wxButton" name="ID_BUTTON2" variable="Button2" member="yes">
-				<label>Получения сетки со случайными &#x0A;значениями</label>
-				<pos>166,192</pos>
-				<size>101,53</size>
+				<label>Получение сетки&#x0A;значений&#x0A;</label>
+				<pos>213,342</pos>
+				<size>101,39</size>
 				<handler function="OnButton2Click2" entry="EVT_BUTTON" />
 			</object>
 			<object class="wxButton" name="ID_BUTTON3" variable="Button3" member="yes">
-				<label>Методом Монте-Карло&#x0A; получение распределение&#x0A; по широте</label>
-				<pos>295,190</pos>
+				<label>Получение сетки&#x0A;значений&#x0A;</label>
+				<pos>388,340</pos>
+				<size>101,39</size>
 				<handler function="OnButton3Click" entry="EVT_BUTTON" />
 			</object>
 			<object class="wxTextCtrl" name="ID_TEXTCTRL3" variable="TextCtrl3" member="yes">
 				<value>0</value>
-				<pos>307,160</pos>
+				<pos>388,306</pos>
 			</object>
 			<object class="wxStaticText" name="ID_STATICTEXT5" variable="StaticText5" member="yes">
 				<label>Кол-во итераций</label>
-				<pos>309,142</pos>
+				<pos>388,286</pos>
+			</object>
+			<object class="wxStaticBox" name="ID_STATICBOX1" variable="StaticBox1" member="yes">
+				<label>Эксперимент 1</label>
+				<pos>30,25</pos>
+				<size>159,380</size>
+			</object>
+			<object class="wxStaticText" name="ID_STATICTEXT6" variable="StaticText6" member="yes">
+				<label>Распределение ошибки&#x0A;по широте или долготе,&#x0A;или высоте, с заданными&#x0A;начальными и конечными&#x0A;значениями&#x0A;</label>
+				<pos>38,43</pos>
+			</object>
+			<object class="wxStaticText" name="ID_STATICTEXT7" variable="StaticText7" member="yes">
+				<label>Методом Монте-Карло&#x0A;получение распределения&#x0A;ошибки со случайными &#x0A;значениями</label>
+				<pos>213,43</pos>
+			</object>
+			<object class="wxStaticText" name="ID_STATICTEXT8" variable="StaticText8" member="yes">
+				<label>Методом Монте-Карло&#x0A;получение распределения&#x0A;ошибки по широте</label>
+				<pos>388,43</pos>
+			</object>
+			<object class="wxStaticBox" name="wxID_ANY" variable="StaticBox2" member="yes">
+				<label>Эксперимент 2</label>
+				<pos>203,25</pos>
+				<size>159,380</size>
+			</object>
+			<object class="wxStaticBox" name="ID_STATICBOX3" variable="StaticBox3" member="yes">
+				<label>Эксперимент 3</label>
+				<pos>379,25</pos>
+				<size>159,380</size>
 			</object>
 		</object>
 	</object>

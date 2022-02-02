@@ -44,12 +44,12 @@ double epow2 = f*(2-f);
 double e2; // второй эксцентриситет
 e2 = epow2/(1-epow2);
 double N = a/sqrt(1-epow2*pow(sin(B),2));
-  double Coord_x;
+  /*double Coord_x;
   double Coord_y;
   double Coord_z;
   Coord_x = (N+h)*cos(B)*cos(L);
   Coord_y = (N+h)*cos(B)*sin(L);
-  Coord_z = ((1-epow2)*N+h)*sin(B);
+  Coord_z = ((1-epow2)*N+h)*sin(B);*/
   double Coord_user[3];
   Coord_user[0]=(N+h)*cos(B)*cos(L);
   Coord_user[1]= (N+h)*cos(B)*sin(L);
@@ -138,11 +138,11 @@ double N = a/sqrt(1-epow2*pow(sin(B),2));
 //f.close();
   if (sumvsb < 4)
   {
-  skoo[0]= -10;
-  skoo[1]= -10;
-  skoo[2]= -10;
-  skoo[3]= -10;
-  skoo[4] = -10;
+  skoo[0]= 0;
+  skoo[1]= 0;
+  skoo[2]= 0;
+  skoo[3]= 0;
+  skoo[4] = 0;
   }
   else
   {
@@ -199,9 +199,9 @@ double N = a/sqrt(1-epow2*pow(sin(B),2));
                             alm_b[k].e,
                             (alm_b[k].di), //в рад -> полуцикл
                             (alm_b[k].Omega0));*/
-        dx=(Coord_sp.X-Coord_x);
-        dy=(Coord_sp.Y-Coord_y);
-        dz=(Coord_sp.Z- Coord_z);
+        dx=(Coord_sp.X-Coord_user[0]);
+        dy=(Coord_sp.Y-Coord_user[1]);
+        dz=(Coord_sp.Z- Coord_user[2]);
         Ri = sqrt (pow(dx,2)+pow(dy,2)+pow(dz,2));
         H(numsput, 0 ) = dx/Ri;
         H(numsput, 1) = dy/Ri;

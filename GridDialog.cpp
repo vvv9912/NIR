@@ -50,6 +50,11 @@ const long GridDialog::ID_BUTTON2 = wxNewId();
 const long GridDialog::ID_BUTTON3 = wxNewId();
 const long GridDialog::ID_TEXTCTRL3 = wxNewId();
 const long GridDialog::ID_STATICTEXT5 = wxNewId();
+const long GridDialog::ID_STATICBOX1 = wxNewId();
+const long GridDialog::ID_STATICTEXT6 = wxNewId();
+const long GridDialog::ID_STATICTEXT7 = wxNewId();
+const long GridDialog::ID_STATICTEXT8 = wxNewId();
+const long GridDialog::ID_STATICBOX3 = wxNewId();
 const long GridDialog::ID_SASHWINDOW1 = wxNewId();
 //*)
 
@@ -64,30 +69,36 @@ GridDialog::GridDialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,const w
   wxSashWindow* SashWindow1;
 
   Create(parent, wxID_ANY, _("Grid"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
-  SetClientSize(wxSize(472,325));
+  SetClientSize(wxSize(548,475));
   SetMinSize(wxSize(-1,-1));
   SetMaxSize(wxSize(-1,-1));
-  SashWindow1 = new wxSashWindow(this, ID_SASHWINDOW1, wxPoint(0,0), wxSize(464,328), wxSW_3D, _T("ID_SASHWINDOW1"));
-  TextCtrl1 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL1, wxEmptyString, wxPoint(16,161), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
+  SashWindow1 = new wxSashWindow(this, ID_SASHWINDOW1, wxPoint(0,0), wxSize(552,480), wxSW_3D, _T("ID_SASHWINDOW1"));
+  TextCtrl1 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL1, _("0"), wxPoint(38,306), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
   StaticText3 = new wxStaticText(SashWindow1, ID_STATICTEXT3, wxEmptyString, wxPoint(176,188), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
-  TextCtrl7 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL7, wxEmptyString, wxPoint(16,120), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL7"));
-  StaticText1 = new wxStaticText(SashWindow1, ID_STATICTEXT1, _("Конечное значение"), wxPoint(16,102), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
+  TextCtrl7 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL7, _("0"), wxPoint(37,245), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL7"));
+  StaticText1 = new wxStaticText(SashWindow1, ID_STATICTEXT1, _("Конечное значение"), wxPoint(38,225), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
   wxString __wxRadioBoxChoices_1[3] =
   {
   	_("Высоте"),
   	_("Широте"),
   	_("Долготе")
   };
-  RadioBox1 = new wxRadioBox(SashWindow1, ID_RADIOBOX1, _("Шаг"), wxPoint(14,10), wxSize(79,86), 3, __wxRadioBoxChoices_1, 1, 0, wxDefaultValidator, _T("ID_RADIOBOX1"));
-  StaticText2 = new wxStaticText(SashWindow1, ID_STATICTEXT2, _("Значение сетки"), wxPoint(16,145), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
-  Button1 = new wxButton(SashWindow1, ID_BUTTON1, _("Получения сетки\n значений"), wxPoint(16,192), wxSize(101,39), 0, wxDefaultValidator, _T("ID_BUTTON1"));
-  Gauge1 = new wxGauge(SashWindow1, ID_GAUGE1, 100, wxPoint(29,299), wxSize(223,28), 0, wxDefaultValidator, _T("ID_GAUGE1"));
-  TextCtrl2 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL2, wxEmptyString, wxPoint(166,161), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
-  StaticText4 = new wxStaticText(SashWindow1, ID_STATICTEXT4, _("Кол-во итераций"), wxPoint(166,145), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
-  Button2 = new wxButton(SashWindow1, ID_BUTTON2, _("Получения сетки со случайными \nзначениями"), wxPoint(166,192), wxSize(101,53), 0, wxDefaultValidator, _T("ID_BUTTON2"));
-  Button3 = new wxButton(SashWindow1, ID_BUTTON3, _("Методом Монте-Карло\n получение распределение\n по широте"), wxPoint(295,190), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON3"));
-  TextCtrl3 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL3, _("0"), wxPoint(307,160), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL3"));
-  StaticText5 = new wxStaticText(SashWindow1, ID_STATICTEXT5, _("Кол-во итераций"), wxPoint(309,142), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
+  RadioBox1 = new wxRadioBox(SashWindow1, ID_RADIOBOX1, _("Шаг"), wxPoint(38,125), wxSize(79,86), 3, __wxRadioBoxChoices_1, 1, 0, wxDefaultValidator, _T("ID_RADIOBOX1"));
+  StaticText2 = new wxStaticText(SashWindow1, ID_STATICTEXT2, _("Значение сетки"), wxPoint(38,286), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
+  Button1 = new wxButton(SashWindow1, ID_BUTTON1, _("Получение сетки\n значений"), wxPoint(38,340), wxSize(101,39), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+  Gauge1 = new wxGauge(SashWindow1, ID_GAUGE1, 100, wxPoint(66,433), wxSize(422,28), 0, wxDefaultValidator, _T("ID_GAUGE1"));
+  TextCtrl2 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL2, _("0"), wxPoint(213,306), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
+  StaticText4 = new wxStaticText(SashWindow1, ID_STATICTEXT4, _("Кол-во итераций"), wxPoint(213,286), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
+  Button2 = new wxButton(SashWindow1, ID_BUTTON2, _("Получение сетки\nзначений\n"), wxPoint(213,342), wxSize(101,39), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+  Button3 = new wxButton(SashWindow1, ID_BUTTON3, _("Получение сетки\nзначений\n"), wxPoint(388,340), wxSize(101,39), 0, wxDefaultValidator, _T("ID_BUTTON3"));
+  TextCtrl3 = new wxTextCtrl(SashWindow1, ID_TEXTCTRL3, _("0"), wxPoint(388,306), wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL3"));
+  StaticText5 = new wxStaticText(SashWindow1, ID_STATICTEXT5, _("Кол-во итераций"), wxPoint(388,286), wxDefaultSize, 0, _T("ID_STATICTEXT5"));
+  StaticBox1 = new wxStaticBox(SashWindow1, ID_STATICBOX1, _("Эксперимент 1"), wxPoint(30,25), wxSize(159,380), 0, _T("ID_STATICBOX1"));
+  StaticText6 = new wxStaticText(SashWindow1, ID_STATICTEXT6, _("Распределение ошибки\nпо широте или долготе,\nили высоте, с заданными\nначальными и конечными\nзначениями\n"), wxPoint(38,43), wxDefaultSize, 0, _T("ID_STATICTEXT6"));
+  StaticText7 = new wxStaticText(SashWindow1, ID_STATICTEXT7, _("Методом Монте-Карло\nполучение распределения\nошибки со случайными \nзначениями"), wxPoint(213,43), wxDefaultSize, 0, _T("ID_STATICTEXT7"));
+  StaticText8 = new wxStaticText(SashWindow1, ID_STATICTEXT8, _("Методом Монте-Карло\nполучение распределения\nошибки по широте"), wxPoint(388,43), wxDefaultSize, 0, _T("ID_STATICTEXT8"));
+  StaticBox2 = new wxStaticBox(SashWindow1, wxID_ANY, _("Эксперимент 2"), wxPoint(203,25), wxSize(159,380), 0, _T("wxID_ANY"));
+  StaticBox3 = new wxStaticBox(SashWindow1, ID_STATICBOX3, _("Эксперимент 3"), wxPoint(379,25), wxSize(159,380), 0, _T("ID_STATICBOX3"));
   SashWindow1->SetSashVisible(wxSASH_TOP,    true);
   SashWindow1->SetSashVisible(wxSASH_BOTTOM, true);
   SashWindow1->SetSashVisible(wxSASH_LEFT,   true);
@@ -571,22 +582,12 @@ fglonass_err.close();
 calccBeidou(file4, sko2, calc,
               (B*M_PI/180.0),(L*M_PI/180.0),H);
   geoc2geod(sko2[0], sko2[1], sko2[2],&Bg,&Lg,&Hg);
-    if (sko2[0] == -10.0 && sko2[1] == -10.0)
+  if (sko[0] == 0.0 && sko[1] == 0.0)
     {
-      COORDD[0] = -10;
-      COORDD[1] = -10;
-      COORDD[2] = -10;
-
-    }
-    else if ((sko2[0] == -1.0 && sko2[1] == -1.0))
-    {
-      COORDD[0] = -1;
-      COORDD[1] = -1;
-      COORDD[2] = -1;
 
     }
     else{
-      getENU(sko2[0], sko2[1], sko2[2],Bg,Lg,COORDD);
+      getENU(sko[0], sko[1], sko[2],Bg,Lg,COORDD);
     }
  //fbeidou<<H<<"\t"<<L<<"\t"<<B<<"\t"<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<sko[3]<<"\t"<<sko[4]<<"\t"<<"\n";
  //   fTEST<< sko[0]<<"\t"<<sko[1]<<"\t"<<sko[2]<<"\t"<<B<<"\t"<<L<<"\t"<<H<<"\t"<<COORDD[0] <<"\t"<< COORDD[1] <<"\t"<<COORDD[2]<<"\n";
@@ -596,11 +597,8 @@ calccBeidou(file4, sko2, calc,
    calccGPS( file, sko, calc,
               (B*M_PI/180.0),(L*M_PI/180.0),H);
     geoc2geod(sko[0], sko[1], sko[2],&Bg,&Lg,&Hg);
-    if (sko[0] == -10.0 && sko[1] == -10.0)
+   if (sko[0] == 0.0 && sko[1] == 0.0)
     {
-      COORDD[0] = -10;
-      COORDD[1] = -10;
-      COORDD[2] = -10;
 
     }
     else{
@@ -613,18 +611,8 @@ calccBeidou(file4, sko2, calc,
 
    calccGlonass( file2, sko, calcGln,(B*M_PI/180.0),(L*M_PI/180.0),H);
     geoc2geod(sko[0], sko[1], sko[2],&Bg,&Lg,&Hg);
-      if (sko[0] == -10.0 && sko[1] == -10.0)
+ if (sko[0] == 0.0 && sko[1] == 0.0)
     {
-      COORDD[0] = -10;
-      COORDD[1] = -10;
-      COORDD[2] = -10;
-
-    }
-    else if ((sko[0] == -1.0 && sko[1] == -1.0))
-    {
-      COORDD[0] = -1;
-      COORDD[1] = -1;
-      COORDD[2] = -1;
 
     }
     else{
@@ -638,18 +626,8 @@ calccBeidou(file4, sko2, calc,
                 calcGalileo,
                 (B*M_PI/180.0),(L*M_PI/180.0),H);
    geoc2geod(sko[0], sko[1], sko[2],&Bg,&Lg,&Hg);
-     if (sko[0] == -10.0 && sko[1] == -10.0)
+    if (sko[0] == 0.0 && sko[1] == 0.0)
     {
-      COORDD[0] = -10;
-      COORDD[1] = -10;
-      COORDD[2] = -10;
-
-    }
-    else if ((sko[0] == -1.0 && sko[1] == -1.0))
-    {
-      COORDD[0] = -1;
-      COORDD[1] = -1;
-      COORDD[2] = -1;
 
     }
     else{
@@ -848,18 +826,8 @@ void Get_B(int iter, double shag)
 calccBeidou(file4, sko2, calc,
               (B*M_PI/180.0),(L*M_PI/180.0),H);
   geoc2geod(sko2[0], sko2[1], sko2[2],&Bg,&Lg,&Hg);
-    if (sko2[0] == -10.0 && sko2[1] == -10.0)
+    if (sko2[0] == 0.0 && sko2[1] == 0.0)
     {
-      COORDD[0] = 0;
-      COORDD[1] = 0;
-      COORDD[2] = 0;
-
-    }
-    else if ((sko2[0] == -1.0 && sko2[1] == -1.0))
-    {
-      COORDD[0] = 0;
-      COORDD[1] = 0;
-      COORDD[2] = 0;
 
     }
     else{
@@ -874,18 +842,8 @@ calccBeidou(file4, sko2, calc,
    calccGPS( file, sko, calc,
               (B*M_PI/180.0),(L*M_PI/180.0),H);
     geoc2geod(sko[0], sko[1], sko[2],&Bg,&Lg,&Hg);
-    if (sko[0] == -10.0 && sko[1] == -10.0)
+    if (sko[0] == 0.0 && sko[1] == 0.0)
     {
-      COORDD[0] = 0;
-      COORDD[1] = 0;
-      COORDD[2] = 0;
-
-    }
-      else if ((sko[0] == -1.0 && sko[1] == -1.0))
-    {
-      COORDD[0] = 0;
-      COORDD[1] = 0;
-      COORDD[2] = 0;
 
     }
     else{
@@ -899,18 +857,8 @@ calccBeidou(file4, sko2, calc,
 
    calccGlonass( file2, sko, calcGln,(B*M_PI/180.0),(L*M_PI/180.0),H);
     geoc2geod(sko[0], sko[1], sko[2],&Bg,&Lg,&Hg);
-      if (sko[0] == -10.0 && sko[1] == -10.0)
+   if (sko[0] == 0.0 && sko[1] == 0.0)
     {
-      COORDD[0] = 0;
-      COORDD[1] = 0;
-      COORDD[2] = 0;
-
-    }
-    else if ((sko[0] == -1.0 && sko[1] == -1.0))
-    {
-      COORDD[0] = 0;
-      COORDD[1] = 0;
-      COORDD[2] = 0;
 
     }
     else{
@@ -925,18 +873,8 @@ calccBeidou(file4, sko2, calc,
                 calcGalileo,
                 (B*M_PI/180.0),(L*M_PI/180.0),H);
    geoc2geod(sko[0], sko[1], sko[2],&Bg,&Lg,&Hg);
-     if (sko[0] == -10.0 && sko[1] == -10.0)
+   if (sko[0] == 0.0 && sko[1] == 0.0)
     {
-      COORDD[0] = 0;
-      COORDD[1] = 0;
-      COORDD[2] = 0;
-
-    }
-    else if ((sko[0] == -1.0 && sko[1] == -1.0))
-    {
-      COORDD[0] = 0;
-      COORDD[1] = 0;
-      COORDD[2] = 0;
 
     }
     else{
